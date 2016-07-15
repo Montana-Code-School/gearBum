@@ -4,11 +4,17 @@ import {
   Text,
   TouchableHighlight,
   View,
-  Image
+  Image,
+  AlertIOS
 } from 'react-native';
 
 class Activity extends Component {
-
+  constructor(props) {
+    super(props);
+    this.state = {
+      results: ''
+    };
+  }
   _navigate(name) {
     this.props.navigator.push({
       name: name,
@@ -17,7 +23,67 @@ class Activity extends Component {
       }
     })
   }
-
+  _onPressButtonGet(category){
+    var self = this
+    fetch("http://localhost:3000/api/v1/equip/" + category , {method: "GET"})
+      .then((response) => response.json())
+      .then((responseData) => {
+        self.setState({results: responseData})
+      })
+  }
+  display(){
+    if (this.state.results === ''){
+      return (
+        <View style={ styles.picMenu }>
+          <TouchableHighlight style={ styles.picBtn } onPress={() => this._onPressButtonGet('bike')}>
+            <Image 
+              style={ styles.pic }
+              source={require('../img/sports.png')}
+            />
+          </TouchableHighlight>
+          <TouchableHighlight style={ styles.picBtn } onPress={() => this._onPressButtonGet('winter')}>  
+            <Image 
+              style={ styles.pic }
+              source={require('../img/ski-lift.png')}
+            />
+          </TouchableHighlight>
+          <TouchableHighlight style={ styles.picBtn } onPress={() => this._onPressButtonGet('camp')}>    
+            <Image 
+              style={ styles.pic }
+              source={require('../img/night-camping.png')}
+            />
+          </TouchableHighlight>
+          <TouchableHighlight style={ styles.picBtn } onPress={() => this._onPressButtonGet('boat')}>
+            <Image 
+              style={ styles.pic }
+              source={require('../img/boat.png')}
+            />
+          </TouchableHighlight>   
+        </View>
+      )
+    } else {
+      return (
+        <View>
+          <Text>
+            {this.state.results.map(function(values){
+              return (
+                <Text key={values.equipid}>
+                    {values.category}
+                    {'\n'}
+                    {values.price}
+                    {'\n'}
+                    {values.description}
+                    {'\n'}
+                    {values.location}
+                    {'\n'}
+                    {'\n'}
+                </Text>
+              )
+            })}
+          </Text>
+        </View>
+    )}
+  }
 
   render() {
     return (
@@ -27,25 +93,7 @@ class Activity extends Component {
             Home
           </Text>
         </TouchableHighlight>
-        <View style={ styles.picMenu }>
-          <Image 
-            style={styles.pic}
-            source={require('../img/sports.png')}
-          />  
-          <Image 
-            style={styles.pic}
-            source={require('../img/ski-lift.png')}
-          />  
-
-          <Image 
-            style={styles.pic}
-            source={require('../img/night-camping.png')}
-          />  
-          <Image 
-            style={styles.pic}
-            source={require('../img/boat.png')}
-          />  
-        </View>
+        {this.display()}
           <Text>
             Activity
           </Text>
@@ -66,10 +114,19 @@ const styles = StyleSheet.create({
     flexWrap: 'wrap',
   },
   pic: {
-    width: 125,
+    width: 100,
+    height: 100,
     resizeMode: 'contain',
-    margin: 10,
+    margin: 20,
+    borderColor: 'black',
+    borderWidth: 3,
+    borderRadius: 5,
+    padding: 50,
   },
+  picBtn: {
+    margin:20,
+    height:110
+  }
   
 });
 module.exports = Activity

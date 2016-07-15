@@ -9,7 +9,7 @@ import {
   AppRegistry,
   StyleSheet,
   Text,
-  TouchableHighlights,
+  TouchableHighlight,
   View,
   Navigator,
   Image

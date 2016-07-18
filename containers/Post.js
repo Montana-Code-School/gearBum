@@ -27,6 +27,22 @@ class Post extends Component {
     })
   }
 
+  submitPost(){
+    fetch("http://localhost:3000/api/v1/equip/", {
+    method: 'POST',
+    headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json'
+    },
+      body: JSON.stringify(this.state)
+    }).then(function(response) {
+      return response.json()
+    }).catch(function(ex) {
+      console.log('parsing failed', ex)
+    })
+  }
+
+
   render() {
     return (
       <View style={ styles.mainPost }>
@@ -39,32 +55,34 @@ class Post extends Component {
           <Text>Category</Text>
           <TextInput
             style={ styles.inputBar }
-            onChangeText={(event) => this.setState({category: event.target.value})}
+            onChangeText={(category) => this.setState({category})}
             value={this.state.category}
           />
           <Text>Price</Text>
           <TextInput
             style={ styles.inputBar }
-            onChangeText={(event) => this.setState({price: event.target.value})}
+            onChangeText={(price) => this.setState({price})}
             value={this.state.price}
           />
           <Text>Description</Text>
           <TextInput
             style={ styles.inputBar }
             multiline = {true}
-            onChangeText={(event) => this.setState({description: event.target.value})}
+            onChangeText={(description) => this.setState({description})}
             value={this.state.description}
           />
           <Text>Location</Text>
           <TextInput
             style={ styles.inputBar }
-            onChangeText={(event) => this.setState({location: event.target.value})}
+            onChangeText={(location) => this.setState({location})}
             value={this.state.location}
           />
         </View>
-        <Text>
-          Post a listing
-        </Text>
+        <TouchableHighlight onPress={ () => this.submitPost()}>
+              <Text>
+                Post your listing
+              </Text>
+            </TouchableHighlight>
       </View>
     );
   }

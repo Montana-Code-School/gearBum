@@ -6,6 +6,7 @@ import {
   View,
   TextInput
 } from 'react-native';
+import loginPostStyles from '../CSS/LoginPostStyle';
 
 class Post extends Component {
   constructor(props) {
@@ -45,35 +46,35 @@ class Post extends Component {
 
   render() {
     return (
-      <View style={ styles.mainPost }>
+      <View style={ loginPostStyles.mainPost }>
         <TouchableHighlight onPress={ () => this.props.navigator.pop() }>
           <Text>
             Home
           </Text>
         </TouchableHighlight>
-        <View style={ styles.inputContainer }>
+        <View style={ loginPostStyles.inputContainer }>
           <Text>Category</Text>
           <TextInput
-            style={ styles.inputBar }
+            style={ loginPostStyles.inputBar }
             onChangeText={(category) => this.setState({category})}
             value={this.state.category}
           />
           <Text>Price</Text>
           <TextInput
-            style={ styles.inputBar }
+            style={ loginPostStyles.inputBar }
             onChangeText={(price) => this.setState({price})}
             value={this.state.price}
           />
           <Text>Description</Text>
           <TextInput
-            style={ styles.inputBar }
+            style={ loginPostStyles.inputBar }
             multiline = {true}
             onChangeText={(description) => this.setState({description})}
             value={this.state.description}
           />
           <Text>Location</Text>
           <TextInput
-            style={ styles.inputBar }
+            style={ loginPostStyles.inputBar }
             onChangeText={(location) => this.setState({location})}
             value={this.state.location}
           />
@@ -88,23 +89,4 @@ class Post extends Component {
   }
 }
 
-const styles = StyleSheet.create({
-  mainPost: {
-    justifyContent: 'space-around',
-    flex: 1,
-    flexDirection: 'column',
-    alignItems: 'center',
-  },
-  inputBar: {
-    height: 40,
-    width: 350,
-    borderColor: 'black',
-    borderWidth: 2,
-    borderRadius: 5,
-    margin: 15,
-  },
-  inputContainer: {
-    alignItems: 'center',
-  }
-})
 module.exports = Post

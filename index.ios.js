@@ -17,6 +17,7 @@ import {
 import Activity from './containers/Activity';
 import Home from './containers/Home';
 import Post from './containers/Post';
+import Login from './containers/Login';
 
 export default class gearBum extends Component {
 
@@ -29,6 +30,9 @@ export default class gearBum extends Component {
     }
     if(route.name == 'Post') {
       return <Post navigator={navigator} {...route.passProps}  />
+    }
+    if(route.name == 'Login') {
+      return <Login navigator={navigator} {...route.passProps} />
     }
   }
 

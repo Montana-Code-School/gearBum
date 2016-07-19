@@ -7,6 +7,7 @@ import {
   Image,
   AlertIOS
 } from 'react-native';
+import activityStyles from '../CSS/ActivityStyle';
 
 class Activity extends Component {
   constructor(props) {
@@ -34,28 +35,28 @@ class Activity extends Component {
   display(){
     if (this.state.results === ''){
       return (
-        <View style={ styles.picMenu }>
-          <TouchableHighlight style={ styles.picBtn } onPress={() => this._onPressButtonGet('bike')}>
+        <View style={ activityStyles.picMenu }>
+          <TouchableHighlight style={ activityStyles.picBtn } onPress={() => this._onPressButtonGet('bike')}>
             <Image 
-              style={ styles.pic }
+              style={ activityStyles.pic }
               source={require('../img/sports.png')}
             />
           </TouchableHighlight>
-          <TouchableHighlight style={ styles.picBtn } onPress={() => this._onPressButtonGet('winter')}>  
+          <TouchableHighlight style={ activityStyles.picBtn } onPress={() => this._onPressButtonGet('winter')}>  
             <Image 
-              style={ styles.pic }
+              style={ activityStyles.pic }
               source={require('../img/ski-lift.png')}
             />
           </TouchableHighlight>
-          <TouchableHighlight style={ styles.picBtn } onPress={() => this._onPressButtonGet('camp')}>    
+          <TouchableHighlight style={ activityStyles.picBtn } onPress={() => this._onPressButtonGet('camp')}>    
             <Image 
-              style={ styles.pic }
+              style={ activityStyles.pic }
               source={require('../img/night-camping.png')}
             />
           </TouchableHighlight>
-          <TouchableHighlight style={ styles.picBtn } onPress={() => this._onPressButtonGet('boat')}>
+          <TouchableHighlight style={ activityStyles.picBtn } onPress={() => this._onPressButtonGet('boat')}>
             <Image 
-              style={ styles.pic }
+              style={ activityStyles.pic }
               source={require('../img/boat.png')}
             />
           </TouchableHighlight>   
@@ -87,7 +88,7 @@ class Activity extends Component {
 
   render() {
     return (
-      <View style={ styles.mainActivity }>
+      <View style={ activityStyles.mainActivity }>
         <TouchableHighlight onPress={ () => this.props.navigator.pop() }>
           <Text>
             Home
@@ -102,31 +103,4 @@ class Activity extends Component {
   }
 }
 
-const styles = StyleSheet.create({
-  mainActivity: {
-    justifyContent: 'space-around',
-    flex: 1,
-    flexDirection: 'column',
-    alignItems: 'center',
-  },
-  picMenu: {
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-  },
-  pic: {
-    width: 100,
-    height: 100,
-    resizeMode: 'contain',
-    margin: 20,
-    borderColor: 'black',
-    borderWidth: 3,
-    borderRadius: 5,
-    padding: 50,
-  },
-  picBtn: {
-    margin:20,
-    height:110
-  }
-  
-});
 module.exports = Activity

@@ -18,8 +18,9 @@ import Activity from './containers/Activity';
 import Home from './containers/Home';
 import Post from './containers/Post';
 import Login from './containers/Login';
+import ProfilePage from './containers/Profile';
 
-export default class gearBum extends Component {
+export default class GearBum extends Component {
 
   renderScene(route, navigator) {
     if(route.name == 'Home') {
@@ -33,6 +34,9 @@ export default class gearBum extends Component {
     }
     if(route.name == 'Login') {
       return <Login navigator={navigator} {...route.passProps} />
+    }
+    if(route.name == 'ProfilePage') {
+      return <ProfilePage navigator={navigator} {...route.passProps} />
     }
   }
 
@@ -49,4 +53,4 @@ export default class gearBum extends Component {
 }
 
 
-AppRegistry.registerComponent('gearBum', () => gearBum);
+AppRegistry.registerComponent('gearBum', () => GearBum);

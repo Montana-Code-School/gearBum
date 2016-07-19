@@ -13,11 +13,20 @@ class Login extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      email: '',
-      password: '',
+      email: 'Pete@gmail.com',
+      password: 'test',
       verifyPwd: '',
       toggleDisplay: true
     };
+  }
+
+  _navigate(name) {
+    this.props.navigator.push({
+      name: name,
+      passProps: {
+        name: name
+      }
+    })
   }
 
   display(){
@@ -34,6 +43,7 @@ class Login extends Component {
             <Text>Password</Text>
             <TextInput
               style={ loginPostStyles.inputBar }
+              secureTextEntry={true}
               onChangeText={(password) => this.setState({password})}
               value={this.state.password}
             />
@@ -79,13 +89,13 @@ class Login extends Component {
         </View> 
       );
     }  
-  }
+  }r
 
   login(){
+    var self = this
     if (!this.validateEmail(this.state.email)) {
       AlertIOS.alert("Please enter a valid email address.")
     } else {
-      var self = this
       fetch('http://localhost:3000/api/v1/login/', {
         method: 'POST',
         headers: {
@@ -98,13 +108,14 @@ class Login extends Component {
         })
       }).then(function(response) {
         return response.json()
-      }).catch(function(ex) {
+      }).then(() => AlertIOS.alert("Login Success")
+      ).then(() => this._navigate('ProfilePage')
+      ).catch(function(ex) {
         AlertIOS.alert("Login Failed")
         console.log('parsing failed', ex)
-      })  
+      })
     }
   }
-   
 
   signUp(){
     if (this.state.password !== this.state.verifyPwd) {

@@ -21,11 +21,6 @@ class Home extends Component {
   render() {
     return (
       <View style={homeStyles.mainContainer}>
-        <View style={homeStyles.container}>
-          <Text style={homeStyles.welcome}>
-            Welcome to Gear Bum!
-          </Text>
-        </View>
         <View style={homeStyles.btn}>
             <TouchableHighlight onPress={ () => this._navigate('Activity') }>
               <Text>
@@ -37,13 +32,6 @@ class Home extends Component {
             <TouchableHighlight onPress={ () => this._navigate('Post') }>
               <Text>
                 Gear Provider
-              </Text>
-            </TouchableHighlight>
-        </View>
-         <View style={homeStyles.btn}>
-            <TouchableHighlight onPress={ () => this._navigate('Login') }>
-              <Text>
-                Login/Create Account
               </Text>
             </TouchableHighlight>
         </View>

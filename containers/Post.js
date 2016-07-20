@@ -4,15 +4,18 @@ import {
   Text,
   TouchableHighlight,
   View,
-  TextInput
+  TextInput,
+  PickerIOS
 } from 'react-native';
+var PickerItemIOS = PickerIOS.Item;
 import loginPostStyles from '../CSS/LoginPostStyle';
 
 class Post extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      category: '',
+      categoryList: ['Bike', 'Snow', 'Camp', 'Boat', 'Golf'],
+      category: 'Bike',
       price: '',
       description: '',
       location: ''
@@ -52,12 +55,21 @@ class Post extends Component {
           </Text>
         </TouchableHighlight>
         <View style={ loginPostStyles.inputContainer }>
-          <Text>Category</Text>
-          <TextInput
-            style={ loginPostStyles.inputBar }
-            onChangeText={(category) => this.setState({category})}
-            value={this.state.category}
-          />
+          <View>
+            <Text>Please choose a gear category:</Text>
+              <PickerIOS
+                selectedValue={this.state.category}
+                onValueChange={(category) => this.setState({category: category})}>
+                {this.state.categoryList.map((category, i) => (
+                  <PickerItemIOS
+                    key={category}
+                    value={category}
+                    label={category}
+                  />
+                ))}
+              </PickerIOS>
+            <Text>{this.state.category}</Text>
+          </View>
           <Text>Price</Text>
           <TextInput
             style={ loginPostStyles.inputBar }

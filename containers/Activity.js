@@ -42,7 +42,7 @@ class Activity extends Component {
               source={require('../img/sports.png')}
             />
           </TouchableHighlight>
-          <TouchableHighlight style={ activityStyles.picBtn } onPress={() => this._onPressButtonGet('winter')}>  
+          <TouchableHighlight style={ activityStyles.picBtn } onPress={() => this._onPressButtonGet('snow')}>  
             <Image 
               style={ activityStyles.pic }
               source={require('../img/ski-lift.png')}

@@ -4,9 +4,10 @@ import {
   Text,
   TouchableHighlight,
   View,
+  Image,
   TextInput
 } from 'react-native';
-import loginPostStyles from '../CSS/LoginPostStyle';
+import profileStyles from '../CSS/ProfileStyle';
 
 class ProfilePage extends Component {
   constructor(props) {
@@ -17,10 +18,22 @@ class ProfilePage extends Component {
 
   render() {
     return (
-      <View>
+      <View style={ profileStyles.profileContainer }>
         <Text>
           Provider Home Page
         </Text>
+        <View style={ profileStyles.picBorder }>
+          <Image
+            style={ profileStyles.pic }
+            source={require('../img/images.png')}/>
+        </View>
+         <TouchableHighlight onPress={ () => {
+          this.props.navigator.popToTop('Home')
+        }}>
+          <Text>
+            Home
+          </Text>
+        </TouchableHighlight>
       </View>
     );
   }

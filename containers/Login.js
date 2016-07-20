@@ -8,6 +8,7 @@ import {
   AlertIOS
 } from 'react-native';
 import loginPostStyles from '../CSS/LoginPostStyle'
+import homeStyles from '../CSS/HomeStyle';
 
 class Login extends Component {
   constructor(props) {
@@ -108,8 +109,7 @@ class Login extends Component {
         })
       }).then(function(response) {
         return response.json()
-      }).then(() => AlertIOS.alert("Login Success")
-      ).then(() => this._navigate('ProfilePage')
+      }).then(() => this._navigate('Home')
       ).catch(function(ex) {
         AlertIOS.alert("Login Failed")
         console.log('parsing failed', ex)
@@ -149,11 +149,11 @@ class Login extends Component {
   render() {
     return (
       <View style={ loginPostStyles.mainPost }>
-        <TouchableHighlight onPress={ () => this.props.navigator.pop() }>
-          <Text>
-            Home
-          </Text>
-        </TouchableHighlight>
+        <View style={homeStyles.container}>
+            <Text style={homeStyles.welcome}>
+              Welcome to Gear Bum!
+            </Text>
+          </View>
         <View style={ loginPostStyles.bodyContainer }>
           <View style={ loginPostStyles.toggleContainer }>
             <TouchableHighlight 

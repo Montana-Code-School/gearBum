@@ -9,6 +9,8 @@ import {
 } from 'react-native';
 var PickerItemIOS = PickerIOS.Item;
 import loginPostStyles from '../CSS/LoginPostStyle';
+//import ImageUpload from './ImageUpload'
+import ImageUploadFB from './ImageUploadFB'
 
 class Post extends Component {
   constructor(props) {
@@ -89,6 +91,11 @@ class Post extends Component {
             onChangeText={(location) => this.setState({location})}
             value={this.state.location}
           />
+        <View>
+        {// <ImageUpload />
+        }
+        <ImageUploadFB />
+        </View>
         </View>
         <TouchableHighlight onPress={ () => this.submitPost()}>
               <Text>

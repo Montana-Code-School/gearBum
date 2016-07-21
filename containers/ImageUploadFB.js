@@ -14,7 +14,7 @@ const {
   TouchableOpacity
 } = ReactNative;
 
-const CameraRollView = require('../components/CameraRollView');
+const CameraRollView = require('../components/cameraRoll');
 
 const AssetScaledImageExampleView = require('../components/AssetScaledImageExample');
 
@@ -26,25 +26,17 @@ const CameraRollExample = React.createClass({
     return {
       groupTypes: 'SavedPhotos',
       sliderValue: 1,
-      bigImages: true,
+      bigImages: false,
+      batchSize: 2,
     };
   },
 
   render() {
     return (
       <View>
-        <Switch
-          onValueChange={this._onSwitchChange}
-          value={this.state.bigImages} />
-        <Text>{(this.state.bigImages ? 'Big' : 'Small') + ' Images'}</Text>
-        <Slider
-          value={this.state.sliderValue}
-          onValueChange={this._onSliderChange}
-        />
-        <Text>{'Group Type: ' + this.state.groupTypes}</Text>
         <CameraRollView
           ref={CAMERA_ROLL_VIEW}
-          batchSize={20}
+          batchSize={1}
           groupTypes={this.state.groupTypes}
           renderImage={this._renderImage}
         />
@@ -64,10 +56,8 @@ const CameraRollExample = React.createClass({
   },
 
   _renderImage(asset) {
-    const imageSize = this.state.bigImages ? 150 : 75;
+    const imageSize =  75;
     const imageStyle = [styles.image, {width: imageSize, height: imageSize}];
-    const location = asset.node.location.longitude ?
-      JSON.stringify(asset.node.location) : 'Unknown location';
     return (
       <TouchableOpacity key={asset} onPress={ this.loadAsset.bind( this, asset ) }>
         <View style={styles.row}>
@@ -75,12 +65,6 @@ const CameraRollExample = React.createClass({
             source={asset.node.image}
             style={imageStyle}
           />
-          <View style={styles.info}>
-            <Text style={styles.url}>{asset.node.image.uri}</Text>
-            <Text>{location}</Text>
-            <Text>{asset.node.group_name}</Text>
-            <Text>{new Date(asset.node.timestamp).toString()}</Text>
-          </View>
         </View>
       </TouchableOpacity>
     );

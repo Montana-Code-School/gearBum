@@ -24,6 +24,7 @@ const loginPostStyles = StyleSheet.create({
     alignItems: 'center',
     marginTop: 50,
     marginBottom: 50,
+    flex: 1,
   },
   toggleContainer: {
   	alignItems:'center',
@@ -35,6 +36,9 @@ const loginPostStyles = StyleSheet.create({
   },
   bodyContainer: {
   	alignItems: 'center',
+  },
+  scrollView: {
+    flex: 1,
   }
 })
 

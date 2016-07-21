@@ -5,13 +5,14 @@ import {
   TouchableHighlight,
   View,
   TextInput,
-  PickerIOS
+  PickerIOS,
+  ScrollView
 } from 'react-native';
 var PickerItemIOS = PickerIOS.Item;
 import loginPostStyles from '../CSS/LoginPostStyle';
 //import ImageUpload from './ImageUpload'
 // import {component} from './ImageUploadFB' as 
-var ImageUploadFB = require('./ImageUploadFB').component
+var ImageUpload = require('./ImageUpload').component
 
 class Post extends Component {
   constructor(props) {
@@ -52,55 +53,56 @@ class Post extends Component {
   render() {
     return (
       <View style={ loginPostStyles.mainPost }>
-        <TouchableHighlight onPress={ () => this.props.navigator.pop() }>
-          <Text>
-            Home
-          </Text>
-        </TouchableHighlight>
-        <View style={ loginPostStyles.inputContainer }>
-          <View>
-            <Text>Please choose a gear category:</Text>
-              <PickerIOS
-                selectedValue={this.state.category}
-                onValueChange={(category) => this.setState({category: category})}>
-                {this.state.categoryList.map((category, i) => (
-                  <PickerItemIOS
-                    key={category}
-                    value={category}
-                    label={category}
-                  />
-                ))}
-              </PickerIOS>
-            <Text>{this.state.category}</Text>
+        <ScrollView style={ loginPostStyles.scrollView }>
+          <TouchableHighlight onPress={ () => this.props.navigator.pop() }>
+            <Text>
+              Home
+            </Text>
+          </TouchableHighlight>
+          <View style={ loginPostStyles.inputContainer }>
+            <View>
+              <Text>Please choose a gear category:</Text>
+                <PickerIOS
+                  selectedValue={this.state.category}
+                  onValueChange={(category) => this.setState({category: category})}>
+                  {this.state.categoryList.map((category, i) => (
+                    <PickerItemIOS
+                      key={category}
+                      value={category}
+                      label={category}
+                    />
+                  ))}
+                </PickerIOS>
+            </View>
+            <Text>Price</Text>
+            <TextInput
+              style={ loginPostStyles.inputBar }
+              onChangeText={(price) => this.setState({price})}
+              value={this.state.price}
+            />
+            <Text>Description</Text>
+            <TextInput
+              style={ loginPostStyles.inputBar }
+              multiline = {true}
+              onChangeText={(description) => this.setState({description})}
+              value={this.state.description}
+            />
+            <Text>Location</Text>
+            <TextInput
+              style={ loginPostStyles.inputBar }
+              onChangeText={(location) => this.setState({location})}
+              value={this.state.location}
+            />
+            <View>
+              <ImageUpload />
+            </View>
           </View>
-          <Text>Price</Text>
-          <TextInput
-            style={ loginPostStyles.inputBar }
-            onChangeText={(price) => this.setState({price})}
-            value={this.state.price}
-          />
-          <Text>Description</Text>
-          <TextInput
-            style={ loginPostStyles.inputBar }
-            multiline = {true}
-            onChangeText={(description) => this.setState({description})}
-            value={this.state.description}
-          />
-          <Text>Location</Text>
-          <TextInput
-            style={ loginPostStyles.inputBar }
-            onChangeText={(location) => this.setState({location})}
-            value={this.state.location}
-          />
-        <View>
-        <ImageUploadFB />
-        </View>
-        </View>
-        <TouchableHighlight onPress={ () => this.submitPost()}>
-              <Text>
-                Post your listing
-              </Text>
-            </TouchableHighlight>
+          <TouchableHighlight onPress={ () => this.submitPost()}>
+            <Text>
+              Post your listing
+            </Text>
+          </TouchableHighlight>
+        </ScrollView>
       </View>
     );
   }

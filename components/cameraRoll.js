@@ -1,8 +1,25 @@
-
+/**
+ * The examples provided by Facebook are for non-commercial testing and
+ * evaluation purposes only.
+ *
+ * Facebook reserves all rights not expressly granted.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS
+ * OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NON INFRINGEMENT. IN NO EVENT SHALL
+ * FACEBOOK BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN
+ * AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
+ * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+ *
+ * @providesModule CameraRollView
+ * @flow
+ */
+'use strict';
 
 var React = require('react');
 var ReactNative = require('react-native');
 var {
+  TouchableHighlight,
   ActivityIndicator,
   CameraRoll,
   Image,
@@ -10,6 +27,7 @@ var {
   Platform,
   StyleSheet,
   View,
+  Text
 } = ReactNative;
 
 var groupByEveryN = require('groupByEveryN');
@@ -63,8 +81,8 @@ var CameraRollView = React.createClass({
   getDefaultProps: function(): Object {
     return {
       groupTypes: 'SavedPhotos',
-      batchSize: 2,
-      imagesPerRow: 2,
+      batchSize: 5,
+      imagesPerRow: 3,
       assetType: 'Photos',
       renderImage: function(asset) {
         var imageSize = 150;
@@ -121,7 +139,7 @@ var CameraRollView = React.createClass({
     }
 
     var fetchParams: Object = {
-      first: this.props.batchSize,
+      first: 1,
       groupTypes: this.props.groupTypes,
       assetType: this.props.assetType,
     };
@@ -152,7 +170,6 @@ var CameraRollView = React.createClass({
       <ListView
         renderRow={this._renderRow}
         renderFooter={this._renderFooterSpinner}
-        onEndReached={this._onEndReached}
         style={styles.container}
         dataSource={this.state.dataSource}
       />
@@ -174,10 +191,13 @@ var CameraRollView = React.createClass({
   },
 
   _renderFooterSpinner: function() {
-    if (!this.state.noMore) {
-      return <ActivityIndicator style={styles.spinner} />;
-    }
-    return null;
+    console.log('rendering footer')
+    // if (!this.state.noMore) {
+      return ( <TouchableHighlight onPress={this._onEndReached}>
+          <Text>Get MORE PHOTOS</Text>
+        </TouchableHighlight>);
+    // }
+    // return null;
   },
 
   // rowData is an array of images
@@ -216,6 +236,7 @@ var CameraRollView = React.createClass({
   },
 
   _onEndReached: function() {
+    console.log('End Reached')
     if (!this.state.noMore) {
       this.fetch();
     }

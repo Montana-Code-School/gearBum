@@ -10,7 +10,8 @@ import {
 var PickerItemIOS = PickerIOS.Item;
 import loginPostStyles from '../CSS/LoginPostStyle';
 //import ImageUpload from './ImageUpload'
-import ImageUploadFB from './ImageUploadFB'
+// import {component} from './ImageUploadFB' as 
+var ImageUploadFB = require('./ImageUploadFB').component
 
 class Post extends Component {
   constructor(props) {
@@ -92,8 +93,6 @@ class Post extends Component {
             value={this.state.location}
           />
         <View>
-        {// <ImageUpload />
-        }
         <ImageUploadFB />
         </View>
         </View>

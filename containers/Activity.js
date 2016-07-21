@@ -60,13 +60,12 @@ class Activity extends Component {
               source={require('../img/boat.png')}
             />
           </TouchableHighlight>
-           <TouchableHighlight style={ activityStyles.picBtn } onPress={() => this._onPressButtonGet('golf')}>
+          <TouchableHighlight style={ activityStyles.picBtn } onPress={() => this._onPressButtonGet('golf')}>
             <Image 
               style={ activityStyles.pic }
               source={require('../img/golf.png')}
             />
-          </TouchableHighlight>   
-   
+          </TouchableHighlight>
         </View>
       )
     } else {

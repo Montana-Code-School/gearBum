@@ -22,7 +22,7 @@
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		140ED2AC1D01E1AD002B40FF /* libReact.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 146834041AC3E56700842450 /* libReact.a */; };
 		146834051AC3E58100842450 /* libReact.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 146834041AC3E56700842450 /* libReact.a */; };
-		459CC91C1D40120E00A1BD4F /* golf-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 459CC91B1D40120E00A1BD4F /* golf-icon.png */; };
+		455D9D841D41368F00713F92 /* golf.png in Resources */ = {isa = PBXBuildFile; fileRef = 455D9D831D41368F00713F92 /* golf.png */; };
 		459CC9231D40144900A1BD4F /* libRCTCameraRoll.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 459CC9221D40142700A1BD4F /* libRCTCameraRoll.a */; };
 		832341BD1AAA6AB300B99B32 /* libRCTText.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 832341B51AAA6A8300B99B32 /* libRCTText.a */; };
 /* End PBXBuildFile section */
@@ -134,7 +134,7 @@
 		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = gearBum/Info.plist; sourceTree = "<group>"; };
 		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = gearBum/main.m; sourceTree = "<group>"; };
 		146833FF1AC3E56700842450 /* React.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = React.xcodeproj; path = "../node_modules/react-native/React/React.xcodeproj"; sourceTree = "<group>"; };
-		459CC91B1D40120E00A1BD4F /* golf-icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "golf-icon.png"; path = "../../../Downloads/golf-icon.png"; sourceTree = "<group>"; };
+		455D9D831D41368F00713F92 /* golf.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = golf.png; path = ../../../Downloads/golf.png; sourceTree = "<group>"; };
 		459CC91D1D40142700A1BD4F /* RCTCameraRoll.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTCameraRoll.xcodeproj; path = "../node_modules/react-native/Libraries/CameraRoll/RCTCameraRoll.xcodeproj"; sourceTree = "<group>"; };
 		78C398B01ACF4ADC00677621 /* RCTLinking.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTLinking.xcodeproj; path = "../node_modules/react-native/Libraries/LinkingIOS/RCTLinking.xcodeproj"; sourceTree = "<group>"; };
 		832341B01AAA6A8300B99B32 /* RCTText.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTText.xcodeproj; path = "../node_modules/react-native/Libraries/Text/RCTText.xcodeproj"; sourceTree = "<group>"; };
@@ -314,7 +314,7 @@
 				832341AE1AAA6A7D00B99B32 /* Libraries */,
 				00E356EF1AD99517003FC87E /* gearBumTests */,
 				83CBBA001A601CBA00E9B192 /* Products */,
-				459CC91B1D40120E00A1BD4F /* golf-icon.png */,
+				455D9D831D41368F00713F92 /* golf.png */,
 			);
 			indentWidth = 2;
 			sourceTree = "<group>";
@@ -545,7 +545,7 @@
 			files = (
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
 				13B07FBD1A68108700A75B9A /* LaunchScreen.xib in Resources */,
-				459CC91C1D40120E00A1BD4F /* golf-icon.png in Resources */,
+				455D9D841D41368F00713F92 /* golf.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

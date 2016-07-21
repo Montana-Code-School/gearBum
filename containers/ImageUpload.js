@@ -42,7 +42,9 @@ const reactImageProject = React.createClass({
     const fetchParams = {
       first: 25,
     };
-    CameraRoll.getPhotos(fetchParams, this.storeImages, this.logImageError);
+    CameraRoll.getPhotos(fetchParams)
+    .then(this.storeImages)
+    .catch(this.logImageError)
   },
 
   storeImages(data) {
@@ -58,10 +60,11 @@ const reactImageProject = React.createClass({
   },
 
   render() {
+    console.log(this.state.images)
     return (
       <ScrollView style={styles.container}>
         <View style={styles.imageGrid}>
-          { this.state.images.map((image) => <Image style={styles.image} source={{ uri: image.uri }} />) }
+          { this.state.images.map((image) => <Image key={image.uri} style={styles.image} source={{ uri: image.uri }} />) }
         </View>
       </ScrollView>
     );

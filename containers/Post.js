@@ -22,7 +22,8 @@ class Post extends Component {
       category: 'Bike',
       price: '',
       description: '',
-      location: ''
+      location: '',
+      displayAddPhotos: false
     };
   }
 
@@ -48,6 +49,16 @@ class Post extends Component {
     }).catch(function(ex) {
       console.log('parsing failed', ex)
     })
+  }
+
+  addPhotos() {
+    if(this.state.displayAddPhotos) {
+      return (
+        <View>
+          <ImageUpload />
+        </View>
+      )
+    } 
   }
 
   render() {
@@ -93,9 +104,12 @@ class Post extends Component {
               onChangeText={(location) => this.setState({location})}
               value={this.state.location}
             />
-            <View>
-              <ImageUpload />
-            </View>
+            <TouchableHighlight onPress={ () => this.setState({displayAddPhotos: !this.state.displayAddPhotos})}>
+              <Text>
+                Select Photo
+              </Text>
+            </TouchableHighlight>
+            {this.addPhotos()}
           </View>
           <TouchableHighlight onPress={ () => this.submitPost()}>
             <Text>

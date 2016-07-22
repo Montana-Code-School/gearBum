@@ -11,7 +11,11 @@ const {
   ScrollView,
   Image,
   CameraRoll,
+  TouchableHighlight,
+  NativeModules,
 } = ReactNative;
+
+
 
 const styles = StyleSheet.create({
   container: {
@@ -35,6 +39,7 @@ const reactImageProject = React.createClass({
   getInitialState() {
     return {
       images: [],
+      selected: '',
     };
   },
 
@@ -59,14 +64,61 @@ const reactImageProject = React.createClass({
     console.log(err);
   },
 
+  selectImage(uri) {
+    NativeModules.ReadImageData.readImage(uri, (image) => {
+        this.setState({
+            selected: image,
+        });
+        
+        fetch("http://localhost:3000/api/v1/equip/", {
+          method: 'POST',
+          headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+          },
+            body: JSON.stringify({ imageData: image 
+          })
+          })
+         console.log('posted image is:', image )
+      })
+    },
+
+  // postImage(){
+  // fetch("http://localhost:3000/api/v1/equip/", {
+  // method: 'POST',
+  // headers: {
+  //   'Accept': 'application/json',
+  //   'Content-Type': 'application/json'
+  // },
+  //   body: JSON.stringify({ imageData: image 
+  // }).then(function(response) {
+  //   return response.json()
+  //   console.log('success', response)
+  // }).catch(function(ex) {
+  //   console.log('parsing failed', ex)
+  // })
+  // })
+  // },
+
+  // submitImage(uri){
+  //   this.selectImage(uri);
+  //   this.postImage()
+  // },
+
   render() {
-    console.log(this.state.images)
-    return (
-      <ScrollView style={styles.container}>
-        <View style={styles.imageGrid}>
-          { this.state.images.map((image) => <Image key={image.uri} style={styles.image} source={{ uri: image.uri }} />) }
-        </View>
-      </ScrollView>
+  return (
+    <ScrollView style={styles.container}>
+      <View style={styles.imageGrid}>
+        { this.state.images.map((image) => {
+            return (
+              <TouchableHighlight onPress={this.selectImage.bind(null, image.uri)} style={styles.image} key={image.uri}>
+                <Image style={styles.image} source={{ uri: image.uri }} />
+              </TouchableHighlight>
+            );
+          })
+        }
+      </View>
+    </ScrollView>
     );
   }
 });

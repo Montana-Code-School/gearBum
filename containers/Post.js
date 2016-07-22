@@ -10,8 +10,6 @@ import {
 } from 'react-native';
 var PickerItemIOS = PickerIOS.Item;
 import loginPostStyles from '../CSS/LoginPostStyle';
-//import ImageUpload from './ImageUpload'
-// import {component} from './ImageUploadFB' as 
 var ImageUpload = require('./ImageUpload').component
 
 class Post extends Component {

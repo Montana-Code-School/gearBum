@@ -6,6 +6,9 @@ import {
 
 
 const loginPostStyles = StyleSheet.create({
+  backgroundImage: {//not currently in use
+  flex: 1,
+  },
   mainPost: {
     justifyContent: 'space-around',
     flex: 1,

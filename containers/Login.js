@@ -5,7 +5,8 @@ import {
   TouchableHighlight,
   View,
   TextInput,
-  AlertIOS
+  AlertIOS,
+  Image,
 } from 'react-native';
 import loginPostStyles from '../CSS/LoginPostStyle'
 import homeStyles from '../CSS/HomeStyle';
@@ -150,6 +151,10 @@ class Login extends Component {
     return (
       <View style={ loginPostStyles.mainPost }>
         <View style={homeStyles.container}>
+            <Image
+             resizeMode="stretch"
+             source={require('../img/gearBumlogo1.png')} 
+             />
             <Text style={homeStyles.welcome}>
               Welcome to Gear Bum!
             </Text>

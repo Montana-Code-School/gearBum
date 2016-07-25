@@ -2,10 +2,11 @@ import React, { Component } from 'react';
 import {
   StyleSheet,
   Text,
-  TouchableHighlight,
+  TouchableOpacity,
   View,
 } from 'react-native';
 import homeStyles from '../CSS/HomeStyle';
+import loginPostStyles from '../CSS/LoginPostStyle'
 
 class Home extends Component {
 
@@ -21,20 +22,20 @@ class Home extends Component {
   render() {
     return (
       <View style={homeStyles.mainContainer}>
-        <View style={homeStyles.btn}>
-            <TouchableHighlight onPress={ () => this._navigate('Activity') }>
-              <Text>
+        <TouchableOpacity onPress={ () => this._navigate('Activity') }>
+          <View style={ loginPostStyles.loginBtn }>
+              <Text style={ homeStyles.textWhite }>
                 Gear Seeker
               </Text>
-            </TouchableHighlight>
-        </View>
-        <View style={homeStyles.btn}>
-            <TouchableHighlight onPress={ () => this._navigate('Post') }>
-              <Text>
+          </View>
+        </TouchableOpacity>
+        <TouchableOpacity onPress={ () => this._navigate('Post') }>
+          <View style={ loginPostStyles.loginBtn }>
+              <Text style={ homeStyles.textWhite }>
                 Gear Provider
               </Text>
-            </TouchableHighlight>
-        </View>
+          </View>
+        </TouchableOpacity>
       </View>
     );
   }

@@ -2,7 +2,9 @@ import React, { Component } from 'react';
 import {
   StyleSheet,
   Text,
+  Image,
   TouchableHighlight,
+  TouchableOpacity,
   View,
   TextInput,
   PickerIOS,
@@ -10,8 +12,11 @@ import {
   ScrollView
 } from 'react-native';
 var PickerItemIOS = PickerIOS.Item;
+
 import loginPostStyles from '../CSS/LoginPostStyle';
-var ImageUpload = require('./ImageUpload').component
+import homeStyles from '../CSS/HomeStyle';
+var ImageUpload = require('./ImageUpload').component;
+var imageUploadStyles = require ('../CSS/ImageUploadStyle');
 
 class Post extends Component {
   constructor(props) {
@@ -22,7 +27,8 @@ class Post extends Component {
       price: '',
       description: '',
       location: '',
-      image: '',
+      image: [],
+      imageUri: [],
       displayAddPhotos: false
     };
   }
@@ -53,27 +59,35 @@ class Post extends Component {
   }
 
   addPhotos() {
+    var self = this
     if(this.state.displayAddPhotos) {
       return (
         <View>
           <ImageUpload getImage={this.getImage.bind(this)}/>
+          <ScrollView style={ imageUploadStyles.addImageContainer } stickyHeaderIndices={[0]}>
+            <Text style={ loginPostStyles.selectHeader }>Selected Images: </Text>
+            <View style={ imageUploadStyles.addImageGrid }>
+              {self.state.imageUri.map((image)=>
+                <Image style={ imageUploadStyles.image } source={{ uri: image }} key={image.uri}/>
+              )}          
+            </View>
+          </ScrollView>
         </View>
       )
-    }
+    }      
   }
-
+  
   getImage(uri){
+    this.setState({imageUri: this.state.imageUri.concat([uri])})
     NativeModules.ReadImageData.readImage(uri, (image) => {
-      this.setState({
-          image: image,
-      });
+      this.setState({image: this.state.image.concat([image])})
     })
   }
 
   render() {
     return (
-      <View style={ loginPostStyles.mainPost }>
-        <ScrollView style={ loginPostStyles.scrollView }>
+      <ScrollView style={ loginPostStyles.scrollView }> 
+        <View style={ loginPostStyles.mainPost }>
           <TouchableHighlight onPress={ () => this.props.navigator.pop() }>
             <Text>
               Home
@@ -94,39 +108,42 @@ class Post extends Component {
                   ))}
                 </PickerIOS>
             </View>
-            <Text>Price</Text>
             <TextInput
+              placeholder="Price"
               style={ loginPostStyles.inputBar }
               onChangeText={(price) => this.setState({price})}
               value={this.state.price}
             />
-            <Text>Description</Text>
             <TextInput
-              style={ loginPostStyles.inputBar }
+              placeholder="Description"
+              style={ loginPostStyles.inputArea }
               multiline = {true}
               onChangeText={(description) => this.setState({description})}
               value={this.state.description}
             />
-            <Text>Location</Text>
             <TextInput
+              placeholder="Location"
               style={ loginPostStyles.inputBar }
               onChangeText={(location) => this.setState({location})}
               value={this.state.location}
             />
-            <TouchableHighlight onPress={ () => this.setState({displayAddPhotos: !this.state.displayAddPhotos})}>
-              <Text>
+            <TouchableOpacity
+              style={ loginPostStyles.loginBtn } 
+              onPress={ () => this.setState({displayAddPhotos: !this.state.displayAddPhotos})}
+            >
+              <Text style={ homeStyles.textWhite }>
                 Select Photo
               </Text>
-            </TouchableHighlight>
+            </TouchableOpacity>
             {this.addPhotos()}
           </View>
-          <TouchableHighlight onPress={ () => this.submitPost()}>
-            <Text>
+          <TouchableOpacity style={ loginPostStyles.loginBtn } onPress={ () => this.submitPost()}>
+            <Text style={ homeStyles.textWhite }>
               Post your listing
             </Text>
-          </TouchableHighlight>
-        </ScrollView>
-      </View>
+          </TouchableOpacity>
+        </View>
+      </ScrollView>
     );
   }
 }

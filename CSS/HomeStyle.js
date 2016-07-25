@@ -17,14 +17,23 @@ const homeStyles = StyleSheet.create({
     marginTop: 50,
     padding: 10,
   },
+  welcome: {
+    marginTop: 10,
+  },
   btn: {
     borderColor: 'black',
     borderWidth: 1,
-    borderRadius: 5,
     justifyContent: 'center',
     alignItems: 'center',
     padding: 5,
+    height: 40,
     width: 300,
+  },
+  textWhite: {
+    color: 'white',
+  },
+  textRed: {
+    color: '#bc2025',
   },
 })
 

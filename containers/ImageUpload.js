@@ -15,31 +15,12 @@ const {
   NativeModules,
 } = ReactNative;
 
-
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#F5FCFF',
-  },
-  imageGrid: {
-    flex: 1,
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    justifyContent: 'center'
-  },
-  image: {
-    width: 100,
-    height: 100,
-    margin: 10,
-  },
-});
+var imageUploadStyles = require ('../CSS/ImageUploadStyle')
 
 const reactImageProject = React.createClass({
   getInitialState() {
     return {
       images: [],
-      selected: '',
     };
   },
 
@@ -66,12 +47,12 @@ const reactImageProject = React.createClass({
 
   render() {
   return (
-    <ScrollView style={styles.container}>
-      <View style={styles.imageGrid}>
+    <ScrollView style={imageUploadStyles.container}>
+      <View style={imageUploadStyles.firstImageGrid}>
         { this.state.images.map((image) => {
             return (
-              <TouchableHighlight onPress={this.props.getImage.bind(null, image.uri)} style={styles.image} key={image.uri}>
-                <Image style={styles.image} source={{ uri: image.uri }} />
+              <TouchableHighlight onPress={this.props.getImage.bind(null, image.uri)} style={imageUploadStyles.image} key={image.uri}>
+                <Image style={imageUploadStyles.image} source={{ uri: image.uri }} />
               </TouchableHighlight>
             );
           })

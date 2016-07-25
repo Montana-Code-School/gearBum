@@ -3,12 +3,13 @@ import {
   StyleSheet,
   Text,
   TouchableHighlight,
+  TouchableOpacity,
   View,
   TextInput,
   AlertIOS,
   Image,
 } from 'react-native';
-import loginPostStyles from '../CSS/LoginPostStyle'
+import loginPostStyles from '../CSS/LoginPostStyle';
 import homeStyles from '../CSS/HomeStyle';
 
 class Login extends Component {
@@ -36,21 +37,21 @@ class Login extends Component {
       return (
         <View>
           <View style={ loginPostStyles.inputContainer }>
-            <Text>Email</Text>
             <TextInput
+              placeholder='Email'
               style={ loginPostStyles.inputBar }
               onChangeText={(email) => this.setState({email})}
               value={this.state.email}
             />
-            <Text>Password</Text>
             <TextInput
+              placeholder='Password'
               style={ loginPostStyles.inputBar }
               secureTextEntry={true}
               onChangeText={(password) => this.setState({password})}
               value={this.state.password}
             />
-            <TouchableHighlight onPress={ () => this.login()}>
-              <Text>
+            <TouchableHighlight onPress={ () => this.login()} style={ loginPostStyles.loginBtn }>
+              <Text style={ homeStyles.textWhite }>
                 Login
               </Text>
             </TouchableHighlight>
@@ -62,28 +63,28 @@ class Login extends Component {
       return (
         <View>
           <View style={ loginPostStyles.inputContainer }>
-            <Text>Email</Text>
             <TextInput
+              placeholder='Email'
               style={ loginPostStyles.inputBar }
               onChangeText={(email) => this.setState({email})}
               value={this.state.email}
             />
-            <Text>Password</Text>
             <TextInput
+              placeholder='Password'
               style={ loginPostStyles.inputBar }
               secureTextEntry={true}
               onChangeText={(password) => this.setState({password})}
               value={this.state.password}
             />
             <TextInput
-              placeholder=" RETYPE PASSWORD"
+              placeholder="Re-Type Password"
               secureTextEntry={true}
               style={ loginPostStyles.inputBar }
               onChangeText={(verifyPwd) => this.setState({verifyPwd})}
               value={this.state.verifyPwd}
             />
-            <TouchableHighlight onPress={ () => this.signUp()}>
-              <Text>
+            <TouchableHighlight onPress={ () => this.signUp()} style={ loginPostStyles.loginBtn }>
+              <Text style={ homeStyles.textWhite }>
                 Create Account
               </Text>
             </TouchableHighlight>
@@ -161,20 +162,20 @@ class Login extends Component {
           </View>
         <View style={ loginPostStyles.bodyContainer }>
           <View style={ loginPostStyles.toggleContainer }>
-            <TouchableHighlight 
+            <TouchableOpacity 
               onPress={ () => this.setState({toggleDisplay: true})}
               style={ loginPostStyles.toggleBtn }>
-              <Text>
+              <Text style={ homeStyles.textWhite }>
                 Login
               </Text>
-            </TouchableHighlight>
-            <TouchableHighlight 
+            </TouchableOpacity>
+            <TouchableOpacity 
               onPress={ () => this.setState({toggleDisplay: false})}
               style={ loginPostStyles.toggleBtn }>  
-              <Text>
+              <Text style={ homeStyles.textWhite }>
                 Create Account
               </Text>  
-            </TouchableHighlight>
+            </TouchableOpacity>
           </View>
           {this.display()}
         </View>

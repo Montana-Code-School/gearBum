@@ -6,6 +6,7 @@ import {
   View,
   TextInput,
   PickerIOS,
+  NativeModules,
   ScrollView
 } from 'react-native';
 var PickerItemIOS = PickerIOS.Item;
@@ -21,6 +22,7 @@ class Post extends Component {
       price: '',
       description: '',
       location: '',
+      image: '',
       displayAddPhotos: false
     };
   }
@@ -35,6 +37,7 @@ class Post extends Component {
   }
 
   submitPost(){
+    console.log('the state', this.state)
     fetch("http://localhost:3000/api/v1/equip/", {
     method: 'POST',
     headers: {
@@ -53,10 +56,18 @@ class Post extends Component {
     if(this.state.displayAddPhotos) {
       return (
         <View>
-          <ImageUpload />
+          <ImageUpload getImage={this.getImage.bind(this)}/>
         </View>
       )
-    } 
+    }
+  }
+
+  getImage(uri){
+    NativeModules.ReadImageData.readImage(uri, (image) => {
+      this.setState({
+          image: image,
+      });
+    })
   }
 
   render() {

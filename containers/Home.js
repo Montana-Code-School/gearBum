@@ -29,7 +29,7 @@ class Home extends Component {
               </Text>
           </View>
         </TouchableOpacity>
-        <TouchableOpacity onPress={ () => this._navigate('Post') }>
+        <TouchableOpacity onPress={ () => this._navigate('ProfilePage') }>
           <View style={ loginPostStyles.loginBtn }>
               <Text style={ homeStyles.textWhite }>
                 Gear Provider

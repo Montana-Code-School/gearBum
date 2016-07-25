@@ -11,7 +11,9 @@ import {
   NativeModules,
   ScrollView
 } from 'react-native';
+// var { Icon } = require ('react-native-icons');
 var PickerItemIOS = PickerIOS.Item;
+const SideMenu = require('react-native-side-menu'); 
 
 import loginPostStyles from '../CSS/LoginPostStyle';
 import homeStyles from '../CSS/HomeStyle';
@@ -68,7 +70,7 @@ class Post extends Component {
             <Text style={ loginPostStyles.selectHeader }>Selected Images: </Text>
             <View style={ imageUploadStyles.addImageGrid }>
               {self.state.imageUri.map((image)=>
-                <Image style={ imageUploadStyles.image } source={{ uri: image }} key={image.uri}/>
+                <Image style={ imageUploadStyles.image } source={{ uri: image }} key={image}/>
               )}          
             </View>
           </ScrollView>

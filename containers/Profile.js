@@ -2,18 +2,29 @@ import React, { Component } from 'react';
 import {
   StyleSheet,
   Text,
-  TouchableHighlight,
+  TouchableOpacity,
   View,
   Image,
   TextInput
 } from 'react-native';
 import profileStyles from '../CSS/ProfileStyle';
+import Menu from '../components/SideMenu';
+const SideMenu = require('react-native-side-menu');
 
-class ProfilePage extends Component {
+class ProfileContent extends Component {
   constructor(props) {
     super(props);
     this.state = {
     };
+  }
+
+  _navigate(name) {
+    this.props.navigator.push({
+      name: name,
+      passProps: {
+        name: name
+      }
+    })
   }
 
   render() {
@@ -27,16 +38,36 @@ class ProfilePage extends Component {
             style={ profileStyles.pic }
             source={require('../img/images.png')}/>
         </View>
-         <TouchableHighlight onPress={ () => {
-          this.props.navigator.popToTop('Home')
-        }}>
+         <TouchableOpacity onPress={ () => this._navigate('Post') }>
           <Text>
-            Home
+            Add Post
           </Text>
-        </TouchableHighlight>
+        </TouchableOpacity>
+         <TouchableOpacity onPress={ () => !this.props.isOpen}>
+          <Text>
+            Menu
+          </Text>
+        </TouchableOpacity>
       </View>
     );
   }
 }
 
-module.exports = ProfilePage
+// class ProfilePage extends Component {
+//   constructor(props) {
+//     super(props);
+//     this.state = {
+//       isOpen: false,
+//     };
+//   }
+
+//   render() {
+//     return (
+//       <SideMenu menu={Menu}>
+//         <ProfileContent isOpen={this.props.isOpen} />
+//       </SideMenu>
+//     )
+//   }
+
+// }
+module.exports = ProfileContent

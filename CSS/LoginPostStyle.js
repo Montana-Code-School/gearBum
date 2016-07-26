@@ -65,7 +65,10 @@ const loginPostStyles = StyleSheet.create({
     flex: 1,
   },
   selectHeader: {
-    backgroundColor: 'white',
+    backgroundColor: 'rgba(0, 0, 0, .75)',
+    padding: 10,
+    height: 40,
+    color: 'white',
   }
 })
 

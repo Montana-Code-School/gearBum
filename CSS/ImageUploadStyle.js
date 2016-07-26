@@ -23,7 +23,7 @@ const imageUploadStyles = StyleSheet.create({
     height: 200,
     borderColor: 'black',
     borderWidth: 1,
-    padding: 5,
+    padding: 0,
   },
   firstImageGrid: {
     flex: 1,

@@ -41,10 +41,11 @@ export default class GearBum extends Component {
   }
 
   render() {
+    global.___DEV___ = false
     return (
       <Navigator
         style={{ flex:1 }}
-        initialRoute={{ name: 'Post' }}
+        initialRoute={{ name: 'Activity' }}
         renderScene={ this.renderScene }
         configureScene={(route, routeStack) =>
           Navigator.SceneConfigs.HorizontalSwipeJump} />

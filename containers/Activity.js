@@ -26,7 +26,7 @@ class Activity extends Component {
   }
   _onPressButtonGet(category){
     var self = this
-    fetch("http://localhost:3000/api/v1/equip/" + category , {method: "GET"})
+    fetch("https://gearbum.herokuapp.com/api/v1/equip/" + category , {method: "GET"})
       .then((response) => response.json())
       .then((responseData) => {
         self.setState({results: responseData})

@@ -13,8 +13,10 @@ import {
 } from 'react-native';
 // var { Icon } = require ('react-native-icons');
 var PickerItemIOS = PickerIOS.Item;
-const SideMenu = require('react-native-side-menu'); 
+const SideMenu = require('react-native-side-menu');
+import { RNS3 } from 'react-native-aws3';
 
+//STYLES
 import loginPostStyles from '../CSS/LoginPostStyle';
 import homeStyles from '../CSS/HomeStyle';
 var ImageUpload = require('./ImageUpload').component;
@@ -29,11 +31,10 @@ class Post extends Component {
       price: '',
       description: '',
       location: '',
-      image: [],
       imageUri: [],
-      displayAddPhotos: false
+    displayAddPhotos: false
     };
-  }
+  }   
 
   _navigate(name) {
     this.props.navigator.push({
@@ -45,6 +46,8 @@ class Post extends Component {
   }
 
   submitPost(){
+    const {category, price, description, location} = this.state
+    this.uploadImage()
     console.log('the state', this.state)
     fetch("http://localhost:3000/api/v1/equip/", {
     method: 'POST',
@@ -52,9 +55,9 @@ class Post extends Component {
       'Accept': 'application/json',
       'Content-Type': 'application/json'
     },
-      body: JSON.stringify(this.state)
+      body: JSON.stringify({category, price, description, location})
     }).then(function(response) {
-      return response.json()
+      console.log('response', response.json())
     }).catch(function(ex) {
       console.log('parsing failed', ex)
     })
@@ -66,24 +69,75 @@ class Post extends Component {
       return (
         <View>
           <ImageUpload getImage={this.getImage.bind(this)}/>
-          <ScrollView style={ imageUploadStyles.addImageContainer } stickyHeaderIndices={[0]}>
-            <Text style={ loginPostStyles.selectHeader }>Selected Images: </Text>
-            <View style={ imageUploadStyles.addImageGrid }>
-              {self.state.imageUri.map((image)=>
-                <Image style={ imageUploadStyles.image } source={{ uri: image }} key={image}/>
-              )}          
-            </View>
-          </ScrollView>
+            <ScrollView style={ imageUploadStyles.addImageContainer } stickyHeaderIndices={[0]}>
+              <Text style={ loginPostStyles.selectHeader }>Selected Images: </Text>
+              <View style={ imageUploadStyles.addImageGrid }>
+                {self.state.imageUri.map((image)=>
+                  <Image style={ imageUploadStyles.image } source={{ uri: image }} key={image}/>
+                )}          
+              </View>
+            </ScrollView>
         </View>
       )
     }      
   }
-  
-  getImage(uri){
-    this.setState({imageUri: this.state.imageUri.concat([uri])})
-    NativeModules.ReadImageData.readImage(uri, (image) => {
-      this.setState({image: this.state.image.concat([image])})
+
+  uploadImage(){
+    // this.setState({displayAddPhotos: false})
+    
+    // console.log('uploading Image')
+    // var options = {
+    //   keyPrefix: "uploads/",
+    //   bucket: "gearbum",
+    //   region: "us-west-2",
+    //   accessKey: "AKIAIR74NPB35CTH7OZA",
+    //   secretKey: "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",
+    //   successActionStatus: 201
+    // }
+    // var photo = {
+    //   uri: 'assets-library://asset/asset.JPG?id=ED7AC36B-A150-4C38-BB8C-B6D696F4F2ED&ext=JPG',
+    //   name: 'testphoto.jpg',
+    //   type: 'image/jpeg',
+    // }
+    // RNS3.put(photo, options).then(response => {
+    //   console.log('Promise Resolved', response)
+    //   if (response.status !== 201) {
+    //     throw new Error("Failed to upload image to S3");
+    //   }
+    //   console.log(response.body);
+    // }); 
+    var photo = {
+      uri:  'assets-library://asset/asset.JPG?id=ED7AC36B-A150-4C38-BB8C-B6D696F4F2ED&ext=JPG',
+      type: 'image/jpeg',
+      name: 'photo.jpg',
+    };
+    var form = new FormData();
+    form.append("ProfilePicture", photo);
+    fetch(
+      Constants.API_USER + 'me/profilePicture',
+      {
+        body: form,
+        method: "PUT",
+        headers: {
+          'Content-Type': 'multipart/form-data',
+          'Authorization': 'Bearer ' + user.token
+        }
+      }
+    ).then((response) => response.json())
+    .catch((error) => {
+      alert("ERROR " + error)
     })
+    .then((responseData) => {
+      alert("Succes "+ responseData)
+    }).done();
+
+
+  }
+
+
+  getImage(uri){
+    console.log(uri)
+    this.setState({imageUri: this.state.imageUri.concat([uri])})
   }
 
   render() {

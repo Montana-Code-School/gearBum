@@ -7,9 +7,9 @@ import {
   Image,
   AlertIOS
 } from 'react-native';
-import activityStyles from '../CSS/ActivityStyle';
+import filterStyles from '../CSS/FilterStyles';
 
-class Activity extends Component {
+class Filter extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -35,34 +35,34 @@ class Activity extends Component {
   display(){
     if (this.state.results === ''){
       return (
-        <View style={ activityStyles.picMenu }>
-          <TouchableHighlight style={ activityStyles.picBtn } onPress={() => this._onPressButtonGet('bike')}>
+        <View style={ filterStyles.picMenu }>
+          <TouchableHighlight style={ filterStyles.picBtn } onPress={() => this._onPressButtonGet('bike')}>
             <Image 
-              style={ activityStyles.pic }
+              style={ filterStyles.pic }
               source={require('../img/sports.png')}
             />
           </TouchableHighlight>
-          <TouchableHighlight style={ activityStyles.picBtn } onPress={() => this._onPressButtonGet('snow')}>  
+          <TouchableHighlight style={ filterStyles.picBtn } onPress={() => this._onPressButtonGet('snow')}>  
             <Image 
-              style={ activityStyles.pic }
+              style={ filterStyles.pic }
               source={require('../img/ski-lift.png')}
             />
           </TouchableHighlight>
-          <TouchableHighlight style={ activityStyles.picBtn } onPress={() => this._onPressButtonGet('camp')}>    
+          <TouchableHighlight style={ filterStyles.picBtn } onPress={() => this._onPressButtonGet('camp')}>    
             <Image 
-              style={ activityStyles.pic }
+              style={ filterStyles.pic }
               source={require('../img/night-camping.png')}
             />
           </TouchableHighlight>
-          <TouchableHighlight style={ activityStyles.picBtn } onPress={() => this._onPressButtonGet('boat')}>
+          <TouchableHighlight style={ filterStyles.picBtn } onPress={() => this._onPressButtonGet('boat')}>
             <Image 
-              style={ activityStyles.pic }
+              style={ filterStyles.pic }
               source={require('../img/boat.png')}
             />
           </TouchableHighlight>
-          <TouchableHighlight style={ activityStyles.picBtn } onPress={() => this._onPressButtonGet('golf')}>
+          <TouchableHighlight style={ filterStyles.picBtn } onPress={() => this._onPressButtonGet('golf')}>
             <Image 
-              style={ activityStyles.pic }
+              style={ filterStyles.pic }
               source={require('../img/golf.png')}
             />
           </TouchableHighlight>
@@ -94,7 +94,7 @@ class Activity extends Component {
 
   render() {
     return (
-      <View style={ activityStyles.mainActivity }>
+      <View style={ filterStyles.mainFilter }>
         <TouchableHighlight onPress={ () => this.props.navigator.pop() }>
           <Text>
             Home
@@ -102,11 +102,11 @@ class Activity extends Component {
         </TouchableHighlight>
         {this.display()}
           <Text>
-            Activity
+            Filter Gear Listings
           </Text>
       </View>
     );
   }
 }
 
-module.exports = Activity
+module.exports = Filter

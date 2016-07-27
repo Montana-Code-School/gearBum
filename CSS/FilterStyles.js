@@ -4,8 +4,8 @@ import {
  } from 'react-native';
 
 
-const activityStyles = StyleSheet.create({
-    mainActivity: {
+const filterStyles = StyleSheet.create({
+    mainFilter: {
     justifyContent: 'space-around',
     flex: 1,
     flexDirection: 'column',
@@ -31,4 +31,5 @@ const activityStyles = StyleSheet.create({
   },
 })
 
-module.exports = activityStyles
+module.exports = filterStyles
+

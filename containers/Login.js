@@ -111,7 +111,7 @@ class Login extends Component {
         })
       }).then(function(response) {
         return response.json()
-      }).then(() => this._navigate('Home')
+      }).then(() => this._navigate('FindGear')
       ).catch(function(ex) {
         AlertIOS.alert("Login Failed")
         console.log('parsing failed', ex)

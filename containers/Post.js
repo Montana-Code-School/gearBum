@@ -9,13 +9,14 @@ import {
   TextInput,
   PickerIOS,
   NativeModules,
-  ScrollView
+  ScrollView,
 } from 'react-native';
 // var { Icon } = require ('react-native-icons');
 var PickerItemIOS = PickerIOS.Item;
 const SideMenu = require('react-native-side-menu');
 import { RNS3 } from 'react-native-aws3';
-
+// import accessKey from '../Keys';
+// import secretKey from '../Keys';
 //STYLES
 import loginPostStyles from '../CSS/LoginPostStyle';
 import homeStyles from '../CSS/HomeStyle';
@@ -83,6 +84,7 @@ class Post extends Component {
   }
 
   uploadImage(){
+    //**** ACCESS AND SECRET KEYS EXIST IN KEYS.JS FILE
     // this.setState({displayAddPhotos: false})
     
     // console.log('uploading Image')
@@ -90,8 +92,8 @@ class Post extends Component {
     //   keyPrefix: "uploads/",
     //   bucket: "gearbum",
     //   region: "us-west-2",
-    //   accessKey: "AKIAIR74NPB35CTH7OZA",
-    //   secretKey: "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",
+    //   accessKey: accessKey,
+    //   secretKey: secretKey,
     //   successActionStatus: 201
     // }
     // var photo = {

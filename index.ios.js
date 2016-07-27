@@ -14,11 +14,13 @@ import {
   Navigator,
   Image
 } from 'react-native';
-import Activity from './containers/Activity';
+import Filter from './containers/Filter';
 import Home from './containers/Home';
 import Post from './containers/Post';
 import Login from './containers/Login';
 import ProfilePage from './containers/Profile';
+import FindGear from './containers/FindGear';
+import SelectedListing from './containers/SelectedListing';
 
 export default class GearBum extends Component {
 
@@ -26,8 +28,8 @@ export default class GearBum extends Component {
     if(route.name == 'Home') {
       return <Home navigator={navigator} {...route.passProps}  />
     }
-    if(route.name == 'Activity') {
-      return <Activity navigator={navigator} {...route.passProps}  />
+    if(route.name == 'Filter') {
+      return <Filter navigator={navigator} {...route.passProps}  />
     }
     if(route.name == 'Post') {
       return <Post navigator={navigator} {...route.passProps}  />
@@ -38,6 +40,12 @@ export default class GearBum extends Component {
     if(route.name == 'ProfilePage') {
       return <ProfilePage navigator={navigator} {...route.passProps} />
     }
+    if(route.name == 'FindGear') {
+      return <FindGear navigator={navigator} {...route.passProps} />
+    }
+    if(route.name == 'SelectedListing') {
+      return <SelectedListing navigator={navigator} {...route.passProps} />
+    }
   }
 
   render() {
@@ -45,7 +53,7 @@ export default class GearBum extends Component {
     return (
       <Navigator
         style={{ flex:1 }}
-        initialRoute={{ name: 'ProfilePage' }}
+        initialRoute={{ name: 'FindGear' }}
         renderScene={ this.renderScene }
         configureScene={(route, routeStack) =>
           Navigator.SceneConfigs.HorizontalSwipeJump} />

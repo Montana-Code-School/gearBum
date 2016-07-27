@@ -49,7 +49,7 @@ class Post extends Component {
     const {category, price, description, location} = this.state
     this.uploadImage()
     console.log('the state', this.state)
-    fetch("http://localhost:3000/api/v1/equip/", {
+    fetch("https://gearbum.herokuapp.com/api/v1/equip/", {
     method: 'POST',
     headers: {
       'Accept': 'application/json',

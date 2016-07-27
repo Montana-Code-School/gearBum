@@ -99,7 +99,7 @@ class Login extends Component {
     if (!this.validateEmail(this.state.email)) {
       AlertIOS.alert("Please enter a valid email address.")
     } else {
-      fetch('http://localhost:3000/api/v1/login/', {
+      fetch('https://gearbum.herokuapp.com/api/v1/login/', {
         method: 'POST',
         headers: {
           'Accept': 'application/json',
@@ -127,7 +127,7 @@ class Login extends Component {
       AlertIOS.alert("Please enter a valid email address.")
     } else {
       var self = this
-      fetch('http://localhost:3000/api/v1/signup/', {
+      fetch('https://gearbum.herokuapp.com/api/v1/signup/', {
         method: 'POST',
         headers: {
           'Accept': 'application/json',

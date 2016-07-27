@@ -8,66 +8,84 @@ import {
   TextInput
 } from 'react-native';
 import profileStyles from '../CSS/ProfileStyle';
+import homeStyles from '../CSS/HomeStyle'
 import Menu from '../components/SideMenu';
 const SideMenu = require('react-native-side-menu');
+const uri = 'http://lorempixel.com/output/people-q-c-640-480-9.jpg';
 
-class ProfileContent extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-    };
-  }
-
-  _navigate(name) {
-    this.props.navigator.push({
-      name: name,
-      passProps: {
-        name: name
-      }
-    })
+class Button extends Component {
+  handlePress(e) {
+    if (this.props.onPress) {
+      this.props.onPress(e);
+    }
   }
 
   render() {
-    return (
-      <View style={ profileStyles.profileContainer }>
-        <Text>
-          Provider Home Page
-        </Text>
-        <View style={ profileStyles.picBorder }>
-          <Image
-            style={ profileStyles.pic }
-            source={require('../img/images.png')}/>
-        </View>
-         <TouchableOpacity onPress={ () => this._navigate('Post') }>
-          <Text>
-            Add Post
-          </Text>
-        </TouchableOpacity>
-         <TouchableOpacity onPress={ () => !this.props.isOpen}>
-          <Text>
-            Menu
-          </Text>
-        </TouchableOpacity>
-      </View>
+   return (
+      <TouchableOpacity
+        onPress={this.handlePress.bind(this)}
+        style={this.props.style}>
+        <Text>{this.props.children}</Text>
+      </TouchableOpacity>
     );
   }
 }
 
-// class ProfilePage extends Component {
-//   constructor(props) {
-//     super(props);
-//     this.state = {
-//       isOpen: false,
-//     };
-//   }
+class ProfilePage extends Component {
+  state = {
+    isOpen: false,
+  }
 
-//   render() {
-//     return (
-//       <SideMenu menu={Menu}>
-//         <ProfileContent isOpen={this.props.isOpen} />
-//       </SideMenu>
-//     )
-//   }
+  toggle(){
+    this.setState({
+      isOpen: !this.state.isOpen
+    })
+    console.log(this.state.isOpen)
+  }
 
-// }
-module.exports = ProfileContent
+  updateMenuState(isOpen) {
+    this.setState({ isOpen, });
+  }
+
+  render() {
+    const menu = <Menu />
+    return (
+      <SideMenu
+        menu={menu}
+        isOpen={this.state.isOpen}
+        onChange={(isOpen) => this.updateMenuState(isOpen)}>
+        <View style={ profileStyles.profileContainer }>
+        <View style={ profileStyles.imgContainer }>
+          <Image
+            style={ profileStyles.img }
+            source={{uri: 'http://lorempixel.com/output/people-q-c-640-480-9.jpg'}}/>
+        </View>
+        <Text style={ profileStyles.userName }>
+          Username
+        </Text>
+        <View style={ profileStyles.descriptionHeaderContainer}>
+          <Text style={ homeStyles.textWhite}>
+            About Username
+          </Text>
+        </View>
+        <View style={ profileStyles.descriptionContainer}>
+          <Text>
+            User Description
+            Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
+          </Text>
+        </View>
+         <Button
+         style={ profileStyles.menuIconContainer} 
+         onPress={() => this.toggle()}>
+          <Image
+            style={ profileStyles.imgMenuIcon}
+            source={require('../img/gear.png')} 
+          />
+        </Button>
+      </View>
+      </SideMenu>
+    )
+  }
+
+}
+module.exports = ProfilePage

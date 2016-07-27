@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
 import {
   StyleSheet,
+  Dimensions,
   Text,
   TouchableOpacity,
   View,
+  ScrollView,
   Image,
   TextInput
 } from 'react-native';
@@ -27,11 +29,13 @@ class Menu extends Component {
 
   render() {
     return (
-      <View style={ profileStyles.profileContainer }>
-        <Text>
-          Side Menu
-        </Text>
-      </View>
+      <ScrollView style={ profileStyles.sideMenu } scrollsToTop={false}>
+        <View style={ profileStyles.sideMenuBox }>
+          <Text>
+            Side Menu
+          </Text>
+        </View>
+      </ScrollView>
     );
   }
 }

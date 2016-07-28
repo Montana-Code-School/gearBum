@@ -9,7 +9,7 @@ import {
   Image,
   TextInput
 } from 'react-native';
-import profileStyles from '../CSS/ProfileStyle';
+import homeStyles from '../CSS/HomeStyle';
 
 class Menu extends Component {
   constructor(props) {
@@ -29,12 +29,29 @@ class Menu extends Component {
 
   render() {
     return (
-      <ScrollView style={ profileStyles.sideMenu } scrollsToTop={false}>
-        <View style={ profileStyles.sideMenuBox }>
-          <Text>
-            Side Menu
-          </Text>
-        </View>
+      <ScrollView style={ homeStyles.sideMenu } scrollsToTop={false}>
+        <View style={ homeStyles.sideMenuContainer }>
+          <View style={ homeStyles.sideMenuLinks }>
+            <Text style={ homeStyles.sideMenuText }>
+              My Account
+            </Text>
+          </View>
+          <View style={ homeStyles.sideMenuLinks }>
+            <Text style={ homeStyles.sideMenuText }>
+              Account Settings
+            </Text>
+          </View>
+          <View style={ homeStyles.sideMenuLinks }>
+            <Text style={ homeStyles.sideMenuText }>
+              Search Gear
+            </Text>
+          </View>
+          <View style={ homeStyles.sideMenuLinks }>
+            <Text style={ homeStyles.sideMenuText }>
+              Rent Gear
+            </Text>
+          </View>
+         </View> 
       </ScrollView>
     );
   }

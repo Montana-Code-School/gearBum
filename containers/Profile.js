@@ -10,26 +10,9 @@ import {
 import profileStyles from '../CSS/ProfileStyle';
 import homeStyles from '../CSS/HomeStyle'
 import Menu from '../components/SideMenu';
+import Button from '../components/Button';
 const SideMenu = require('react-native-side-menu');
 const uri = 'http://lorempixel.com/output/people-q-c-640-480-9.jpg';
-
-class Button extends Component {
-  handlePress(e) {
-    if (this.props.onPress) {
-      this.props.onPress(e);
-    }
-  }
-
-  render() {
-   return (
-      <TouchableOpacity
-        onPress={this.handlePress.bind(this)}
-        style={this.props.style}>
-        <Text>{this.props.children}</Text>
-      </TouchableOpacity>
-    );
-  }
-}
 
 class ProfilePage extends Component {
   state = {
@@ -75,10 +58,10 @@ class ProfilePage extends Component {
           </Text>
         </View>
          <Button
-         style={ profileStyles.menuIconContainer} 
-         onPress={() => this.toggle()}>
+         style={ homeStyles.menuIconContainer} 
+         onPress={this.props.toggle}>
           <Image
-            style={ profileStyles.imgMenuIcon}
+            style={ homeStyles.imgMenuIcon}
             source={require('../img/gear.png')} 
           />
         </Button>

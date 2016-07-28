@@ -1,10 +1,21 @@
 
 import React, { Component } from 'react';
 import {
-  StyleSheet
+  StyleSheet,
+  Dimensions
  } from 'react-native';
 
-const imageUploadStyles = StyleSheet.create({
+import EStyleSheet from 'react-native-extended-stylesheet';
+const red = '#bc2025'
+const window = Dimensions.get('window');
+
+function vw(percentageWidth) {
+  return Dimensions.get('window').width * (percentageWidth / 100);
+}
+function vh(percentageHeight) {
+  return Dimensions.get('window').height * (percentageHeight / 100);
+}
+const imageUploadStyles = EStyleSheet.create({
   container: {
     flex: 1,
     marginTop: 20,

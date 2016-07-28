@@ -21,6 +21,7 @@ import Login from './containers/Login';
 import ProfilePage from './containers/Profile';
 import FindGear from './containers/FindGear';
 import SelectedListing from './containers/SelectedListing';
+import EStyleSheet from 'react-native-extended-stylesheet';
 
 export default class GearBum extends Component {
 
@@ -49,11 +50,12 @@ export default class GearBum extends Component {
   }
 
   render() {
+    EStyleSheet.build();
     global.___DEV___ = false
     return (
       <Navigator
         style={{ flex:1 }}
-        initialRoute={{ name: 'FindGear' }}
+        initialRoute={{ name: 'Filter' }}
         renderScene={ this.renderScene }
         configureScene={(route, routeStack) =>
           Navigator.SceneConfigs.HorizontalSwipeJump} />

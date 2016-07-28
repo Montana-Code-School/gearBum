@@ -11,6 +11,9 @@ import {
 } from 'react-native';
 import findGearStyles from '../CSS/FindGearStyles';
 import homeStyles from '../CSS/HomeStyle';
+import Menu from '../components/SideMenu';
+import Button from '../components/Button';
+const SideMenu = require('react-native-side-menu');
 
 class FindGear extends Component {
   constructor(props) {
@@ -35,54 +38,86 @@ class FindGear extends Component {
         self.setState({results: responseData})
       })
   }
+  state = {
+    isOpen: false,
+  }
+
+  toggle(){
+    this.setState({
+      isOpen: !this.state.isOpen
+    })
+    console.log(this.state.isOpen)
+  }
+
+  updateMenuState(isOpen) {
+    this.setState({ isOpen, });
+  }
 
   render() {
+    const menu = <Menu />
     return (
+      <SideMenu
+        menu={menu}
+        isOpen={this.state.isOpen}
+        onChange={(isOpen) => this.updateMenuState(isOpen)}>
       <View style={ findGearStyles.mainFindGear }>
-        <Text style={ findGearStyles.header }>
-          Find Gear
-        </Text>
+        <View style={ homeStyles.headerContainer }>
+          <Text style={ homeStyles.headerText }>
+            GEARBUM
+          </Text>
+        </View>
         <View style={ findGearStyles.resultsContainer }>
           <ScrollView style={ findGearStyles.resultsScrollView }>
+            <View style={ findGearStyles.resultsItemsContainer }>  
               {this.state.results.map((equipment)=>{
                 return (
-                  <TouchableOpacity onPress={()=>this._navigate('SelectedListing')}>
-                    <View style={ findGearStyles.resultsItems }>
-                      <Image 
+                  <TouchableOpacity
+                    style={ findGearStyles.resultsTouch } 
+                    onPress={()=>this._navigate('SelectedListing')}
+                    key={`touch-${equipment.equipid}`}>
+                      <Image
+                        key={`image-${equipment.equipid}`}
                         style={ findGearStyles.resultsImg }
-                        source={require('../img/sweetbike.jpeg')}/>
-                      <Text key={equipment.equipid}>
-                        {equipment.category}
-                        {'\n'}
-                        {equipment.price}
-                        {'\n'}
-                        {equipment.location}
-                        {'\n'}
-                        {'\n'}
-                      </Text>
-                    </View>
+                        source={{ uri: 'http://www.neatorama.com/wp-content/uploads/2012/04/candy_bike.jpg'}}>
+                        <Text 
+                          style={ findGearStyles.resultsText }
+                          key={equipment.equipid}>
+                          {equipment.location} {equipment.price}                        
+                          {'\n'}
+                        </Text>
+                      </Image>
                   </TouchableOpacity>
                 )
               })}
+            </View>
           </ScrollView>  
         </View>
         <View style={ findGearStyles.optionsContainer }>
           <TouchableOpacity 
-            style={ findGearStyles.optionsBtn }
+            style={ findGearStyles.optionsBtnLeft }
             onPress={() => this._navigate('Filter')}>
-            <Text style={ homeStyles.textWhite }>
+            <Text style={ findGearStyles.optionsBtnText }>
               Filter
             </Text>
           </TouchableOpacity>
           <TouchableOpacity 
             style={ findGearStyles.optionsBtn }
             onPress={() => this._navigate('Post')}>
-            <Text style={ homeStyles.textWhite }>
+            <Text style={ findGearStyles.optionsBtnText }>
               Rent Your Gear
             </Text>
           </TouchableOpacity>
         </View>
       </View>
+        <Button
+         style={ homeStyles.menuIconContainer} 
+         onPress={() => this.toggle()}>
+          <Image
+            style={ homeStyles.imgMenuIcon}
+            source={require('../img/whiteGear.png')} 
+          />
+        </Button>
+      </SideMenu>
     );
   }
 }

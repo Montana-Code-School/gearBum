@@ -4,8 +4,18 @@ import {
   Dimensions,
  } from 'react-native';
 
+
+import EStyleSheet from 'react-native-extended-stylesheet';
+const red = '#bc2025'
 const window = Dimensions.get('window');
-const profileStyles = StyleSheet.create({
+
+function vw(percentageWidth) {
+  return Dimensions.get('window').width * (percentageWidth / 100);
+}
+function vh(percentageHeight) {
+  return Dimensions.get('window').height * (percentageHeight / 100);
+}
+const profileStyles = EStyleSheet.create({
   profileContainer: {
     flex: 1,
     alignItems: 'center',
@@ -24,39 +34,16 @@ const profileStyles = StyleSheet.create({
     width: 140,
     height: 140,
   },
-  sideMenu: {
-    backgroundColor: '#bc2025',
-    flex: 1,
-    width: window.width,
-    height: window.height,
-  },
-  sideMenuBox: {
-    width: 40,
-    height: 40,
-    backgroundColor: 'black',
-  },
   userName: {
     color: 'grey',
     margin: 15,
-  },
-  menuIconContainer: {
-    position: 'absolute',
-    top: 30,
-    left: 30,
-    width: 20,
-    height: 20,
-  },
-  imgMenuIcon: {
-    resizeMode: 'cover',
-    width: 20,
-    height: 20,
   },
   descriptionHeaderContainer: {
     justifyContent: 'center',
     alignItems: 'center',
     height: 40,
     width: window.width,
-    backgroundColor: '#bc2025',
+    backgroundColor: red,
   },
   descriptionContainer: {
     width: window.width,

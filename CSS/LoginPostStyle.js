@@ -1,11 +1,21 @@
 import React, { Component } from 'react';
 import {
-  StyleSheet
+  StyleSheet,
+  Dimensions
  } from 'react-native';
 
 
+import EStyleSheet from 'react-native-extended-stylesheet';
+const red = '#bc2025'
+const window = Dimensions.get('window');
 
-const loginPostStyles = StyleSheet.create({
+function vw(percentageWidth) {
+  return Dimensions.get('window').width * (percentageWidth / 100);
+}
+function vh(percentageHeight) {
+  return Dimensions.get('window').height * (percentageHeight / 100);
+}
+const loginPostStyles = EStyleSheet.create({
   backgroundImage: {//not currently in use
   flex: 1,
   },
@@ -47,7 +57,7 @@ const loginPostStyles = StyleSheet.create({
     width: 150,
     height: 40,
     alignItems: 'center',
-    backgroundColor: '#bc2025',
+    backgroundColor: red,
     justifyContent: 'center',
   },
   loginBtn: {
@@ -55,7 +65,7 @@ const loginPostStyles = StyleSheet.create({
     width: 350,
     height: 40,
     alignItems: 'center',
-    backgroundColor: '#bc2025',
+    backgroundColor: red,
     justifyContent: 'center',
   },
   bodyContainer: {

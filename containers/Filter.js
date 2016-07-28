@@ -8,6 +8,10 @@ import {
   AlertIOS
 } from 'react-native';
 import filterStyles from '../CSS/FilterStyles';
+import homeStyles from '../CSS/HomeStyle';
+import Menu from '../components/SideMenu';
+import Button from '../components/Button';
+const SideMenu = require('react-native-side-menu');
 
 class Filter extends Component {
   constructor(props) {
@@ -15,6 +19,20 @@ class Filter extends Component {
     this.state = {
       results: ''
     };
+  }
+  state = {
+    isOpen: false,
+  }
+
+  toggle(){
+    this.setState({
+      isOpen: !this.state.isOpen
+    })
+    console.log(this.state.isOpen)
+  }
+
+  updateMenuState(isOpen) {
+    this.setState({ isOpen, });
   }
   _navigate(name) {
     this.props.navigator.push({
@@ -93,18 +111,32 @@ class Filter extends Component {
   }
 
   render() {
+    const menu = <Menu />
     return (
-      <View style={ filterStyles.mainFilter }>
-        <TouchableHighlight onPress={ () => this.props.navigator.pop() }>
-          <Text>
-            Home
+      <SideMenu
+        menu={menu}
+        isOpen={this.state.isOpen}
+        onChange={(isOpen) => this.updateMenuState(isOpen)}>
+        <View style={ homeStyles.headerContainer }>
+          <Text style={ homeStyles.headerText }>
+            GEARBUM
           </Text>
-        </TouchableHighlight>
-        {this.display()}
-          <Text>
-            Filter Gear Listings
-          </Text>
-      </View>
+        </View>
+        <View style={ filterStyles.mainFilter }>
+          {this.display()}
+            <Text>
+              Filter Gear Listings
+            </Text>
+        </View>
+        <Button
+           style={ homeStyles.menuIconContainer} 
+           onPress={() => this.toggle()}>
+            <Image
+              style={ homeStyles.imgMenuIcon}
+              source={require('../img/whiteGear.png')} 
+            />
+          </Button>
+      </SideMenu>
     );
   }
 }

@@ -19,10 +19,25 @@ const selectedListingStyles = EStyleSheet.create({
     flex: 1,
     flexDirection: 'column',
     alignItems: 'center',
+    backgroundColor: 'white',
   },
-  header: {
-  	marginTop: 50,
-  	marginBottom: 20,
+  backBtnContainer: {
+
+  },
+  backBtn: {
+    paddingTop: 30,
+  },
+  backBtnText: {
+
+  },
+  equipContainer: {
+  	height: vh(91),
+    width: vw(100),
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  equipText: {
+    
   },
 })
 

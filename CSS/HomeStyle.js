@@ -69,7 +69,7 @@ const homeStyles = EStyleSheet.create({
     height: 20,
   },
   sideMenu: {
-    backgroundColor: 'black',
+    backgroundColor: 'rgba(0,0,0,.7)',
     flex: 1,
     width: window.width,
     height: window.height,

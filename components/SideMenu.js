@@ -31,26 +31,26 @@ class Menu extends Component {
     return (
       <ScrollView style={ homeStyles.sideMenu } scrollsToTop={false}>
         <View style={ homeStyles.sideMenuContainer }>
-          <View style={ homeStyles.sideMenuLinks }>
+          <TouchableOpacity style={ homeStyles.sideMenuLinks }>
             <Text style={ homeStyles.sideMenuText }>
               My Account
             </Text>
-          </View>
-          <View style={ homeStyles.sideMenuLinks }>
+          </TouchableOpacity>
+          <TouchableOpacity style={ homeStyles.sideMenuLinks }>
             <Text style={ homeStyles.sideMenuText }>
               Account Settings
             </Text>
-          </View>
-          <View style={ homeStyles.sideMenuLinks }>
+          </TouchableOpacity>
+          <TouchableOpacity style={ homeStyles.sideMenuLinks }>
             <Text style={ homeStyles.sideMenuText }>
               Search Gear
             </Text>
-          </View>
-          <View style={ homeStyles.sideMenuLinks }>
+          </TouchableOpacity>
+          <TouchableOpacity style={ homeStyles.sideMenuLinks }>
             <Text style={ homeStyles.sideMenuText }>
               Rent Gear
             </Text>
-          </View>
+          </TouchableOpacity>
          </View> 
       </ScrollView>
     );

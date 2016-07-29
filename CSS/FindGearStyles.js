@@ -55,6 +55,10 @@ const findGearStyles = StyleSheet.create({
   	fontSize: 10,
   	backgroundColor: 'rgba(0,0,0,.3)',
   },
+  hiddenComponent: {
+  	height: 0,
+  	opacity: 0,
+  },
   optionsContainer: {
   	flex: 1,
   	flexDirection: 'row',

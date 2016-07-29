@@ -14,38 +14,39 @@ import {
   Navigator,
   Image
 } from 'react-native';
-import Filter from './containers/Filter';
+import FilterGear from './containers/FilterGear';
 import Home from './containers/Home';
 import Post from './containers/Post';
 import Login from './containers/Login';
 import ProfilePage from './containers/Profile';
-import FindGear from './containers/FindGear';
+import SearchGear from './containers/SearchGear';
 import SelectedListing from './containers/SelectedListing';
 import EStyleSheet from 'react-native-extended-stylesheet';
 
 export default class GearBum extends Component {
 
   renderScene(route, navigator) {
+    const { passProps } = route
     if(route.name == 'Home') {
-      return <Home navigator={navigator} {...route.passProps}  />
+      return <Home navigator={navigator} {...passProps}  />
     }
-    if(route.name == 'Filter') {
-      return <Filter navigator={navigator} {...route.passProps}  />
+    if(route.name == 'FilterGear') {
+      return <FilterGear navigator={navigator} {...passProps}  />
     }
     if(route.name == 'Post') {
-      return <Post navigator={navigator} {...route.passProps}  />
+      return <Post navigator={navigator} {...passProps}  />
     }
     if(route.name == 'Login') {
-      return <Login navigator={navigator} {...route.passProps} />
+      return <Login navigator={navigator} {...passProps} />
     }
     if(route.name == 'ProfilePage') {
-      return <ProfilePage navigator={navigator} {...route.passProps} />
+      return <ProfilePage navigator={navigator} {...passProps} />
     }
-    if(route.name == 'FindGear') {
-      return <FindGear navigator={navigator} {...route.passProps} />
+    if(route.name == 'SearchGear') {
+      return <SearchGear navigator={navigator} {...passProps} />
     }
     if(route.name == 'SelectedListing') {
-      return <SelectedListing navigator={navigator} {...route.passProps} />
+      return <SelectedListing navigator={navigator} {...passProps}/>
     }
   }
 
@@ -55,7 +56,7 @@ export default class GearBum extends Component {
     return (
       <Navigator
         style={{ flex:1 }}
-        initialRoute={{ name: 'Filter' }}
+        initialRoute={{ name: 'SearchGear' }}
         renderScene={ this.renderScene }
         configureScene={(route, routeStack) =>
           Navigator.SceneConfigs.HorizontalSwipeJump} />

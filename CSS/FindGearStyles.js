@@ -28,7 +28,7 @@ const findGearStyles = StyleSheet.create({
   },
   resultsContainer: {
   	alignItems: 'center',
-  	height: vh(86),
+  	height: vh(85),
   },
   resultsItemsContainer: {
   	flexDirection: 'row',

@@ -23,7 +23,7 @@ const homeStyles = EStyleSheet.create({
   },
   headerContainer: {
     alignItems: 'center',
-    height: vh(9),
+    height: vh(10),
     width: vw(100),
     backgroundColor: red,
   },
@@ -31,6 +31,7 @@ const homeStyles = EStyleSheet.create({
     paddingTop: 30,
     color: 'white',
     fontWeight: 'bold',
+    fontSize: 14,
   },
   container: {
     justifyContent: 'center',
@@ -65,8 +66,8 @@ const homeStyles = EStyleSheet.create({
   },
   imgMenuIcon: {
     resizeMode: 'cover',
-    width: 20,
-    height: 20,
+    width: 30,
+    height: 30,
   },
   sideMenu: {
     backgroundColor: 'rgba(0,0,0,1)',

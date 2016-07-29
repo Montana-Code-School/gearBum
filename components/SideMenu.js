@@ -10,6 +10,7 @@ import {
   TextInput
 } from 'react-native';
 import homeStyles from '../CSS/HomeStyle';
+import {serverUrl} from '../constants/serverConstants';
 
 class Menu extends Component {
   constructor(props) {
@@ -27,9 +28,15 @@ class Menu extends Component {
     })
   }
 
+  logout() {
+   var self = this
+    fetch(serverUrl + "/api/v1/logout", {method: "GET"})
+      .then(() => this._navigate('Login'))
+  }
+
   render() {
     return (
-      <ScrollView style={ homeStyles.sideMenu } scrollsToTop={false}>
+      <View style={ homeStyles.sideMenu }>
       <View style={ homeStyles.sideMenuIconContainer }>
        <Image
           source={require('../img/whiteGear.png')} 
@@ -65,8 +72,15 @@ class Menu extends Component {
               Rent Gear
             </Text>
           </TouchableOpacity>
+          <TouchableOpacity 
+          onPress={ () => this.logout()}  
+          style={ homeStyles.sideMenuLinks }>
+            <Text style={ homeStyles.sideMenuText }>
+              Logout
+            </Text>
+          </TouchableOpacity>
          </View> 
-      </ScrollView>
+      </View>
     );
   }
 }

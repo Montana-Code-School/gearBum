@@ -35,7 +35,33 @@ class Post extends Component {
       imageUri: [],
     displayAddPhotos: false
     };
-  }   
+  }
+
+  componentDidMount() {
+    navigator.geolocation.getCurrentPosition(
+      (position) => {
+        var currentLocation = JSON.stringify(position);
+        this.setState({location: currentLocation})
+        console.log('LOOOCATIONNNN', this.state.location);
+      },
+      (error) => alert(error.message),
+      {enableHighAccuracy: true, timeout: 20000, maximumAge: 1000}
+    );
+    this.watchID = navigator.geolocation.watchPosition((position) => {
+      var newLocation = JSON.stringify(position);
+      this.setState({location: newLocation});
+    });
+  }
+
+  componentWillUnmount() {
+    navigator.geolocation.clearWatch(this.watchID);
+  }
+
+  // getLocation() {
+  //   if(this.state.location === ''){
+  //     this.setState({location: 'Please Enable Location Services for Accurate Location'})
+  //   }
+  // }   
 
   _navigate(name) {
     this.props.navigator.push({
@@ -203,7 +229,7 @@ class Post extends Component {
               placeholder="Location"
               style={ loginPostStyles.inputBar }
               onChangeText={(location) => this.setState({location})}
-              value={this.state.location}
+              value={this.state.location} //want to call this.getLocation for Location Services warning
             />
             <TouchableOpacity
               style={ loginPostStyles.loginBtn } 

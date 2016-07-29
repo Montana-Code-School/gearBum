@@ -59,7 +59,7 @@ class ProfilePage extends Component {
         </View>
          <Button
          style={ homeStyles.menuIconContainer} 
-         onPress={this.props.toggle}>
+         onPress={() => this.toggle()}>
           <Image
             style={ homeStyles.imgMenuIcon}
             source={require('../img/gear.png')} 

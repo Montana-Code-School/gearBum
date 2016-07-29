@@ -50,13 +50,16 @@ export default class GearBum extends Component {
   render() {
     EStyleSheet.build();
     global.___DEV___ = false
+    const sceneConfig = {
+      ...Navigator.SceneConfigs.HorizontalSwipeJump,
+      gestures: {}
+    }
     return (
       <Navigator
         style={{ flex:1 }}
-        initialRoute={{ name: 'SearchGear' }}
+        initialRoute={{ name: 'Login' }}
         renderScene={ this.renderScene }
-        configureScene={(route, routeStack) =>
-          Navigator.SceneConfigs.HorizontalSwipeJump} />
+        configureScene={() => sceneConfig } />
     )
   }
 }

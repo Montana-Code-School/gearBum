@@ -11,6 +11,8 @@ import homeStyles from '../CSS/HomeStyle';
 import Menu from '../components/SideMenu';
 import Button from '../components/Button';
 const SideMenu = require('react-native-side-menu');
+import {serverUrl} from '../constants/serverConstants';
+
 
 class SelectedListing extends Component {
   constructor(props) {
@@ -33,7 +35,7 @@ class SelectedListing extends Component {
     var self = this
     console.log('receiving props', this.props)
     if(this.props.equipid){
-      fetch("https://gearbum.herokuapp.com/api/v1/equip/detail/" + this.props.equipid , {method: "GET"})
+      fetch(serverUrl+"/api/v1/equip/detail/" + this.props.equipid, {method: "GET"})
         .then((response) => response.json())
         .then((responseData) => {
           self.setState({selectedEquip: responseData[0]})
@@ -59,7 +61,7 @@ class SelectedListing extends Component {
   }
 
  render() {
-  const menu = <Menu />
+  const menu = <Menu navigator={this.props.navigator} />
 	return (
     <SideMenu
         menu={menu}
@@ -71,16 +73,12 @@ class SelectedListing extends Component {
             GEARBUM
           </Text>
          </View>
-         <View style={ selectedListingStyles.backBtnContainer }>
-          <TouchableOpacity
-            style={ selectedListingStyles.backBtn } 
-            onPress={ () => this.props.navigator.pop() }>
-            <Text style={ selectedListingStyles.backBtnText }>
-              Back
-            </Text>
-          </TouchableOpacity>
+         <View style={ selectedListingStyles.listingContainer }>
+         <View style={ selectedListingStyles.imgContainer }>
+         <Image
+            style={ selectedListingStyles.img }
+            source={{uri: 'http://lorempixel.com/output/people-q-c-640-480-9.jpg'}}/>
          </View>
-         <View style={ selectedListingStyles.equipContainer }>
     	    <Text style={ selectedListingStyles.equipText }>
             Equipment Details:
             {'\n'}

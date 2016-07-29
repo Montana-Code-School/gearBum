@@ -16,14 +16,13 @@ function vh(percentageHeight) {
   return Dimensions.get('window').height * (percentageHeight / 100);
 }
 const loginPostStyles = EStyleSheet.create({
-  backgroundImage: {//not currently in use
-  flex: 1,
-  },
+
   mainPost: {
     justifyContent: 'space-around',
     flex: 1,
     flexDirection: 'column',
     alignItems: 'center',
+    backgroundColor: 'white',
   },
   inputBar: {
     height: 40,
@@ -73,6 +72,8 @@ const loginPostStyles = EStyleSheet.create({
   },
   scrollView: {
     flex: 1,
+    height: vh(100),
+    backgroundColor: 'white',
   },
   selectHeader: {
     backgroundColor: 'rgba(0, 0, 0, .75)',

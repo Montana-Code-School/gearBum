@@ -11,17 +11,17 @@ import {
   NativeModules,
   ScrollView,
 } from 'react-native';
-// var { Icon } = require ('react-native-icons');
 var PickerItemIOS = PickerIOS.Item;
-const SideMenu = require('react-native-side-menu');
+import Menu from '../components/SideMenu';
+import Button from '../components/Button';
 import { RNS3 } from 'react-native-aws3';
-// import accessKey from '../Keys';
-// import secretKey from '../Keys';
-//STYLES
+const SideMenu = require('react-native-side-menu');
 import loginPostStyles from '../CSS/LoginPostStyle';
 import homeStyles from '../CSS/HomeStyle';
 var ImageUpload = require('./ImageUpload').component;
 var imageUploadStyles = require ('../CSS/ImageUploadStyle');
+import {serverUrl} from '../constants/serverConstants';
+
 
 class Post extends Component {
   constructor(props) {
@@ -46,11 +46,26 @@ class Post extends Component {
     })
   }
 
+  state = {
+    isOpen: false,
+  }
+
+  toggleMenu(){
+    this.setState({
+      isOpen: !this.state.isOpen
+    })
+    console.log(this.state.isOpen)
+  }
+
+  updateMenuState(isOpen) {
+    this.setState({ isOpen, });
+  }
+
   submitPost(){
     const {category, price, description, location} = this.state
     this.uploadImage()
     console.log('the state', this.state)
-    fetch("https://gearbum.herokuapp.com/api/v1/equip/", {
+    fetch(serverUrl+ "/api/v1/equip/", {
     method: 'POST',
     headers: {
       'Accept': 'application/json',
@@ -143,14 +158,19 @@ class Post extends Component {
   }
 
   render() {
+    const menu = <Menu navigator={this.props.navigator} />
     return (
+      <SideMenu
+        menu={menu}
+        isOpen={this.state.isOpen}
+        onChange={(isOpen) => this.updateMenuState(isOpen)}>
       <ScrollView style={ loginPostStyles.scrollView }> 
         <View style={ loginPostStyles.mainPost }>
-          <TouchableHighlight onPress={ () => this.props.navigator.pop() }>
-            <Text>
-              Home
-            </Text>
-          </TouchableHighlight>
+         <View style={ homeStyles.headerContainer }>
+          <Text style={ homeStyles.headerText }>
+            GEARBUM
+          </Text>
+        </View>
           <View style={ loginPostStyles.inputContainer }>
             <View>
               <Text>Please choose a gear category:</Text>
@@ -202,6 +222,15 @@ class Post extends Component {
           </TouchableOpacity>
         </View>
       </ScrollView>
+       <Button
+         style={ homeStyles.menuIconContainer} 
+         onPress={() => this.toggleMenu()}>
+        <Image
+          style={ homeStyles.imgMenuIcon}
+          source={require('../img/whiteGear.png')} 
+        />
+      </Button>
+      </SideMenu>
     );
   }
 }

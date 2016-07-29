@@ -11,6 +11,8 @@ import {
 } from 'react-native';
 import findGearStyles from '../CSS/FindGearStyles';
 import homeStyles from '../CSS/HomeStyle';
+import {serverUrl} from '../constants/serverConstants';
+
 
 class FindAllGear extends Component {
 
@@ -36,7 +38,7 @@ class FindAllGear extends Component {
 
   componentWillMount(){
     var self = this
-    fetch("https://gearbum.herokuapp.com/api/v1/equip", {method: "GET"})
+    fetch(serverUrl + "/api/v1/equip", {method: "GET"})
       .then((response) => response.json())
       .then((responseData) => {
         self.setState({results: responseData})
@@ -66,7 +68,7 @@ class FindAllGear extends Component {
                       <Text 
                         style={ findGearStyles.resultsText }
                         key={equipment.equipid}>
-                        {equipment.location} {equipment.price} {equipment.equipid}                   
+                        {equipment.location} {equipment.price}                   
                         {'\n'}
                       </Text>
                     </Image>

@@ -12,6 +12,7 @@ import {
 import findGearStyles from '../CSS/FindGearStyles';
 import filterStyles from '../CSS/FilterStyles';
 import homeStyles from '../CSS/HomeStyle';
+import {serverUrl} from '../constants/serverConstants';
 
 class FilterGear extends Component {
 
@@ -35,7 +36,7 @@ class FilterGear extends Component {
 
   _onPressButtonGet(category){
     var self = this
-    fetch("https://gearbum.herokuapp.com/api/v1/equip/category/" + category , {method: "GET"})
+    fetch(serverUrl + "/api/v1/equip/category/" + category , {method: "GET"})
       .then((response) => response.json())
       .then((responseData) => {
         self.setState({results: responseData})
@@ -82,51 +83,50 @@ class FilterGear extends Component {
               source={require('../img/golf.png')}
             />
           </TouchableOpacity>
-          <View style={ filterStyles.backBtnContainer }>
-              <TouchableOpacity onPress={()=> this.props.toggleFxn()}>
-                <Text style={ filterStyles.backBtnText }>
-                  Search All Gear
-                </Text>
-              </TouchableOpacity>
-            </View>
+          <View style={ filterStyles.picBtn }>
+            <TouchableOpacity onPress={()=> this.props.toggleFxn()}>
+              <Image 
+                style={ filterStyles.pic }
+                source={require('../img/blackGear.png')}
+              />
+            </TouchableOpacity>
+          </View>
         </View>
       )
     } else {
       return (
         <View style={ findGearStyles.resultsContainer }>
-          <ScrollView style={ findGearStyles.resultsScrollView }>
-            <View style={ filterStyles.backBtnContainer }>
-              <TouchableOpacity
-                style={ filterStyles.backBtn } 
-                onPress={()=> this.setState({results: []})}>
-                <Text style={ filterStyles.backBtnText }>
-                  Back
-                </Text>
-              </TouchableOpacity>
-            </View>
-            <View style={ findGearStyles.resultsItemsContainer }>  
-              {this.state.results.map((equipment)=>{
-                return (
-                  <TouchableOpacity
-                    style={ findGearStyles.resultsTouch } 
-                    onPress={()=> this.toSelectedListing(equipment.equipid)}
-                    key={`touch-${equipment.equipid}`}>
-                      <Image
-                        key={`image-${equipment.equipid}`}
-                        style={ findGearStyles.resultsImg }
-                        source={require('../img/sweetbike.jpeg')}>
-                        <Text 
-                          style={ findGearStyles.resultsText }
-                          key={equipment.equipid}>
-                          {equipment.location} {equipment.price}                     
-                          {'\n'}
-                        </Text>
-                      </Image>
-                  </TouchableOpacity>
-                )
-              })}
-            </View>
-          </ScrollView>  
+          <View style={ filterStyles.backBtnContainer }>
+            <TouchableOpacity
+              style={ filterStyles.backBtn } 
+              onPress={()=> this.setState({results: []})}>
+              <Text style={ filterStyles.backBtnText }>
+                Back
+              </Text>
+            </TouchableOpacity>
+          </View>
+          <View style={ findGearStyles.resultsItemsContainer }>  
+            {this.state.results.map((equipment)=>{
+              return (
+                <TouchableOpacity
+                  style={ findGearStyles.resultsTouch } 
+                  onPress={()=> this.toSelectedListing(equipment.equipid)}
+                  key={`touch-${equipment.equipid}`}>
+                    <Image
+                      key={`image-${equipment.equipid}`}
+                      style={ findGearStyles.resultsImg }
+                      source={require('../img/sweetbike.jpeg')}>
+                      <Text 
+                        style={ findGearStyles.resultsText }
+                        key={equipment.equipid}>
+                        {equipment.location} {equipment.price}                     
+                        {'\n'}
+                      </Text>
+                    </Image>
+                </TouchableOpacity>
+              )
+            })}
+          </View> 
         </View>
       )
     }
@@ -134,7 +134,7 @@ class FilterGear extends Component {
 
   render(){
     return (
-      <View>
+      <View style={ filterStyles.mainFilter}>
         {this.display()}
       </View>
     )

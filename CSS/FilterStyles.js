@@ -19,7 +19,9 @@ const filterStyles = StyleSheet.create({
     flex: 1,
     flexDirection: 'column',
     alignItems: 'center',
+    justifyContent: 'center',
     backgroundColor: 'white',
+    height: vh(76),
   },
   picMenu: {
     flexDirection: 'row',

@@ -21,23 +21,40 @@ const selectedListingStyles = EStyleSheet.create({
     alignItems: 'center',
     backgroundColor: 'white',
   },
-  backBtnContainer: {
-
-  },
-  backBtn: {
-    paddingTop: 30,
-  },
-  backBtnText: {
-
-  },
-  equipContainer: {
-  	height: vh(91),
-    width: vw(100),
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
   equipText: {
     
+  },
+  listingContainer: {
+    flex: 1,
+    alignItems: 'center',
+    backgroundColor: 'white',
+  },
+  imgContainer: {
+    width: vw(100),
+    height: 240,
+    overflow: 'hidden',
+  },
+  img: {
+    resizeMode: 'cover',
+    width: vw(100),
+    height: 240,
+  },
+  userName: {
+    color: 'grey',
+    margin: 15,
+  },
+  descriptionHeaderContainer: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    height: 40,
+    width: window.width,
+    backgroundColor: red,
+  },
+  descriptionContainer: {
+    width: window.width,
+    backgroundColor: '#f6f6f6',
+    padding: 30,
+    alignItems: 'center'
   },
 })
 

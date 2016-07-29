@@ -11,6 +11,8 @@ import {
 } from 'react-native';
 import loginPostStyles from '../CSS/LoginPostStyle';
 import homeStyles from '../CSS/HomeStyle';
+import {serverUrl} from '../constants/serverConstants';
+
 
 class Login extends Component {
   constructor(props) {
@@ -99,7 +101,7 @@ class Login extends Component {
     if (!this.validateEmail(this.state.email)) {
       AlertIOS.alert("Please enter a valid email address.")
     } else {
-      fetch('https://gearbum.herokuapp.com/api/v1/login/', {
+      fetch(serverUrl +'/api/v1/login/', {
         method: 'POST',
         headers: {
           'Accept': 'application/json',
@@ -127,7 +129,7 @@ class Login extends Component {
       AlertIOS.alert("Please enter a valid email address.")
     } else {
       var self = this
-      fetch('https://gearbum.herokuapp.com/api/v1/signup/', {
+      fetch(serverUrl+ '/api/v1/signup/', {
         method: 'POST',
         headers: {
           'Accept': 'application/json',

@@ -30,23 +30,37 @@ class Menu extends Component {
   render() {
     return (
       <ScrollView style={ homeStyles.sideMenu } scrollsToTop={false}>
+      <View style={ homeStyles.sideMenuIconContainer }>
+       <Image
+          source={require('../img/whiteGear.png')} 
+          style={ homeStyles.sideMenuIcon } 
+        />
+      </View>
         <View style={ homeStyles.sideMenuContainer }>
-          <TouchableOpacity style={ homeStyles.sideMenuLinks }>
+          <TouchableOpacity 
+            onPress={ () => this._navigate('ProfilePage')}  
+            style={ homeStyles.sideMenuLinks }>
             <Text style={ homeStyles.sideMenuText }>
-              My Account
+              My Profile
             </Text>
           </TouchableOpacity>
-          <TouchableOpacity style={ homeStyles.sideMenuLinks }>
+          <TouchableOpacity 
+          onPress={ () => this._navigate()}  
+          style={ homeStyles.sideMenuLinks }>
             <Text style={ homeStyles.sideMenuText }>
               Account Settings
             </Text>
           </TouchableOpacity>
-          <TouchableOpacity style={ homeStyles.sideMenuLinks }>
+          <TouchableOpacity 
+          onPress={ () => this._navigate('SearchGear')}  
+          style={ homeStyles.sideMenuLinks }>
             <Text style={ homeStyles.sideMenuText }>
               Search Gear
             </Text>
           </TouchableOpacity>
-          <TouchableOpacity style={ homeStyles.sideMenuLinks }>
+          <TouchableOpacity 
+          onPress={ () => this._navigate('Post')}  
+          style={ homeStyles.sideMenuLinks }>
             <Text style={ homeStyles.sideMenuText }>
               Rent Gear
             </Text>

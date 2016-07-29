@@ -31,7 +31,7 @@ class ProfilePage extends Component {
   }
 
   render() {
-    const menu = <Menu />
+    const menu = <Menu navigator={this.props.navigator} />
     return (
       <SideMenu
         menu={menu}

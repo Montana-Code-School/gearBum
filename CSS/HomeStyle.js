@@ -69,26 +69,42 @@ const homeStyles = EStyleSheet.create({
     height: 20,
   },
   sideMenu: {
-    backgroundColor: 'rgba(0,0,0,.7)',
+    backgroundColor: 'rgba(0,0,0,1)',
     flex: 1,
     width: window.width,
     height: window.height,
+  },
+  sideMenuIconContainer: {
+    height: 150,
+    width: vw(66),
+    flex: 1,
+    flexDirection: 'column',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  sideMenuIcon: {
+    resizeMode: 'cover',
+    width: 60,
+    height: 60,
   },
   sideMenuContainer: {
     height: window.height,
     flex: 1,
     flexDirection: 'column',
     alignItems: 'center',
-    paddingTop: 50,
   },
   sideMenuLinks: {
+    backgroundColor: 'rgba(255,255,255,0.1)',
     height: 40,
-    width: vw(70),
+    width: vw(100),
+    borderBottomWidth: 3,
+    borderBottomColor: 'rgba(255,255,255,0.02)',
+    padding: 10,
+    zIndex: 10,
   },
   sideMenuText: {
     color: 'white',
-    fontWeight: 'bold',
-    fontSize: 20,
+    fontSize: 14,
   },
 })
 

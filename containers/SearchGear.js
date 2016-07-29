@@ -42,7 +42,7 @@ class SearchGear extends Component {
     isOpen: false,
   }
 
-  toggle(){
+  toggleMenu(){
     this.setState({
       isOpen: !this.state.isOpen
     })
@@ -74,7 +74,7 @@ class SearchGear extends Component {
   }
 
   render() {
-    const menu = <Menu />
+    const menu = <Menu navigator={this.props.navigator} />
     return (
       <SideMenu
         menu={menu}
@@ -106,7 +106,7 @@ class SearchGear extends Component {
       </View>
       <Button
        style={ homeStyles.menuIconContainer} 
-       onPress={() => this.toggle()}>
+       onPress={() => this.toggleMenu()}>
         <Image
           style={ homeStyles.imgMenuIcon}
           source={require('../img/whiteGear.png')} 

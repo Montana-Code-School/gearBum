@@ -14,25 +14,19 @@ import {
   Navigator,
   Image
 } from 'react-native';
-import FilterGear from './containers/FilterGear';
-import Home from './containers/Home';
 import Post from './containers/Post';
 import Login from './containers/Login';
 import ProfilePage from './containers/Profile';
 import SearchGear from './containers/SearchGear';
 import SelectedListing from './containers/SelectedListing';
+import SideMenu from './components/SideMenu';
 import EStyleSheet from 'react-native-extended-stylesheet';
 
 export default class GearBum extends Component {
 
   renderScene(route, navigator) {
     const { passProps } = route
-    if(route.name == 'Home') {
-      return <Home navigator={navigator} {...passProps}  />
-    }
-    if(route.name == 'FilterGear') {
-      return <FilterGear navigator={navigator} {...passProps}  />
-    }
+
     if(route.name == 'Post') {
       return <Post navigator={navigator} {...passProps}  />
     }
@@ -47,6 +41,9 @@ export default class GearBum extends Component {
     }
     if(route.name == 'SelectedListing') {
       return <SelectedListing navigator={navigator} {...passProps}/>
+    }
+    if(route.name == 'SideMenu') {
+      return <SideMenu navigator={navigator} {...passProps}/>
     }
   }
 

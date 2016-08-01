@@ -13,6 +13,7 @@ import {
   MapView,
 } from 'react-native';
 var PickerItemIOS = PickerIOS.Item;
+import Geocoder from 'react-native-geocoder';
 import Menu from '../components/SideMenu';
 import Button from '../components/Button';
 import { RNS3 } from 'react-native-aws3';
@@ -32,18 +33,21 @@ class Post extends Component {
       category: 'Bike',
       price: '',
       description: '',
-      location: '',
+      latitude: 0,
+      longitude: 0,
+      address: '',
       imageUri: [],
-    displayAddPhotos: false
+      displayAddPhotos: false
     };
   }
 
   componentDidMount() {
     navigator.geolocation.getCurrentPosition(
       (position) => {
-        var currentLocation = JSON.stringify(position);
-        this.setState({location: currentLocation})
-        console.log('LOOOCATIONNNN', this.state.location);
+        var lat = parseFloat(position.coords.latitude);
+        var long = parseFloat(position.coords.longitude);
+        this.setState({latitude: lat, longitude: long})
+        console.log('LOOOCATIONNNN', this.state.latitude, this.state.longitude);
       },
       (error) => alert(error.message),
       {enableHighAccuracy: true, timeout: 20000, maximumAge: 1000}
@@ -89,7 +93,7 @@ class Post extends Component {
   }
 
   submitPost(){
-    const {category, price, description, location} = this.state
+    const {category, price, description, latitude, longitude} = this.state
     this.uploadImage()
     console.log('the state', this.state)
     fetch(serverUrl+ "/api/v1/equip/", {
@@ -98,7 +102,7 @@ class Post extends Component {
       'Accept': 'application/json',
       'Content-Type': 'application/json'
     },
-      body: JSON.stringify({category, price, description, location})
+      body: JSON.stringify({category, price, description, latitude, longitude})
     }).then(function(response) {
       console.log('response', response.json())
     }).catch(function(ex) {
@@ -178,10 +182,13 @@ class Post extends Component {
 
   }
 
-
   getImage(uri){
     console.log(uri)
     this.setState({imageUri: this.state.imageUri.concat([uri])})
+  }
+
+  hideMap(){
+    this.state.address
   }
 
   render() {
@@ -227,8 +234,9 @@ class Post extends Component {
               value={this.state.description}
             />
             <MapView
+              region={{latitude: this.state.latitude, longitude: this.state.longitude, latitudeDelta: 0.025, longitudeDelta: 0.025}}
+              annotations={[{latitude: this.state.latitude, longitude: this.state.longitude}]}
               style={ homeStyles.map }
-              showsUserLocation={true}
             />
             <TouchableOpacity
               style={ loginPostStyles.loginBtn } 

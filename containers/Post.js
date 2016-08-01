@@ -10,6 +10,7 @@ import {
   PickerIOS,
   NativeModules,
   ScrollView,
+  MapView,
 } from 'react-native';
 var PickerItemIOS = PickerIOS.Item;
 import Menu from '../components/SideMenu';
@@ -225,11 +226,9 @@ class Post extends Component {
               onChangeText={(description) => this.setState({description})}
               value={this.state.description}
             />
-            <TextInput
-              placeholder="Location"
-              style={ loginPostStyles.inputBar }
-              onChangeText={(location) => this.setState({location})}
-              value={this.state.location} //want to call this.getLocation for Location Services warning
+            <MapView
+              style={ homeStyles.map }
+              showsUserLocation={true}
             />
             <TouchableOpacity
               style={ loginPostStyles.loginBtn } 

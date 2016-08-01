@@ -33,6 +33,18 @@ const homeStyles = EStyleSheet.create({
     fontWeight: 'bold',
     fontSize: 14,
   },
+  //horizontal rule
+  hr: {
+    borderTopColor: '#d3d3d3',
+    borderTopWidth: 0.75,
+    width: vw(90),
+    alignSelf: 'center',
+    margin: 15,
+  },
+  map: {
+    height: 200,
+    width: vw(100),
+  },
   container: {
     justifyContent: 'center',
     alignItems: 'center',

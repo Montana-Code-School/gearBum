@@ -7,6 +7,7 @@ import {
   Image,
   TextInput
 } from 'react-native';
+import Gravatar from 'react-native-avatar-gravatar';
 import profileStyles from '../CSS/ProfileStyle';
 import homeStyles from '../CSS/HomeStyle'
 import Menu from '../components/SideMenu';
@@ -38,11 +39,7 @@ class ProfilePage extends Component {
         isOpen={this.state.isOpen}
         onChange={(isOpen) => this.updateMenuState(isOpen)}>
         <View style={ profileStyles.profileContainer }>
-        <View style={ profileStyles.imgContainer }>
-          <Image
-            style={ profileStyles.img }
-            source={{uri: 'http://lorempixel.com/output/people-q-c-640-480-9.jpg'}}/>
-        </View>
+        <Gravatar emailAddress="suziequz@msn.com"  size={140} mask='circle' />
         <Text style={ profileStyles.userName }>
           Username
         </Text>

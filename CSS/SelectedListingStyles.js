@@ -21,40 +21,78 @@ const selectedListingStyles = EStyleSheet.create({
     alignItems: 'center',
     backgroundColor: 'white',
   },
-  equipText: {
-    
-  },
   listingContainer: {
     flex: 1,
-    alignItems: 'center',
     backgroundColor: 'white',
   },
   imgContainer: {
+    flex: 1, 
+    overflow: 'hidden', 
     width: vw(100),
-    height: 240,
-    overflow: 'hidden',
-  },
+    height: vh(90),
+  }, 
   img: {
     resizeMode: 'cover',
     width: vw(100),
-    height: 240,
+    height: 250,
   },
-  userName: {
-    color: 'grey',
-    margin: 15,
+  imgTextContainer: {
+    flexDirection: 'column',
+    justifyContent: 'flex-end',
+    flex: 1,
+    height:75,
   },
-  descriptionHeaderContainer: {
-    justifyContent: 'center',
-    alignItems: 'center',
+  imgText: {
+    textAlign: 'right', 
+    color: 'white', 
+    padding: 10, 
+    fontSize: 16,
+    fontWeight: 'bold',
+    width: 90,
     height: 40,
-    width: window.width,
-    backgroundColor: red,
+    backgroundColor: 'rgba(0, 0, 0, 0.6)',
+    marginBottom: 15,
   },
-  descriptionContainer: {
-    width: window.width,
-    backgroundColor: '#f6f6f6',
-    padding: 30,
-    alignItems: 'center'
+  equipTitle: {
+    height: 80,
+    width: vw(80),
+    fontSize: 30,
+    fontWeight: 'bold',
+    padding: 15,
+  },
+  userInfoContainer: {
+    height: 60,
+    width: vw(90),
+    flex: 1,
+    alignSelf: 'center',
+    flexDirection: 'row',
+    justifyContent: 'space-between'
+  },
+  userInfoText: {
+    textAlign: 'left',
+    fontSize: 12,
+    lineHeight: 16,
+  },
+  userImgContainer: {
+    height: 40,
+    width: 40,
+    borderRadius: 40,
+    overflow: 'hidden',
+  },
+  userImg: {
+    height: 40,
+    width: 40,
+    resizeMode: 'cover',
+  },
+  equipText: {
+    padding: 15,
+    fontSize: 12,
+    fontWeight: '200',
+    lineHeight: 18,
+  },
+  map: {
+    height: 200,
+    width: vw(100),
   },
 })
 

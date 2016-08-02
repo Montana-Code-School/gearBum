@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import {
   StyleSheet,
+  Switch,
   Text,
   Image,
   TouchableHighlight,
@@ -31,42 +32,40 @@ class Post extends Component {
     this.state = {
       categoryList: ['Bike', 'Snow', 'Camp', 'Boat', 'Golf'],
       category: 'Bike',
+      title: '',
       price: '',
       description: '',
+      useLocation: false,
       latitude: 0,
       longitude: 0,
       address: '',
       imageUri: [],
+      imageAddress: '',
       displayAddPhotos: false
     };
   }
 
-  // componentDidMount() {
-  //   navigator.geolocation.getCurrentPosition(
-  //     (position) => {
-  //       var lat = parseFloat(position.coords.latitude);
-  //       var long = parseFloat(position.coords.longitude);
-  //       this.setState({latitude: lat, longitude: long})
-  //       console.log('LOOOCATIONNNN', this.state.latitude, this.state.longitude);
-  //     },
-  //     (error) => alert(error.message),
-  //     {enableHighAccuracy: true, timeout: 20000, maximumAge: 1000}
-  //   );
-  //   this.watchID = navigator.geolocation.watchPosition((position) => {
-  //     var newLocation = JSON.stringify(position);
-  //     this.setState({location: newLocation});
-  //   });
-  // }
+  componentDidMount() {
+    if(this.state.useLocation){
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          var lat = parseFloat(position.coords.latitude);
+          var long = parseFloat(position.coords.longitude);
+          this.setState({latitude: lat, longitude: long});
+        },
+        (error) => alert(error.message),
+        {enableHighAccuracy: true, timeout: 20000, maximumAge: 1000}
+      );
+      this.watchID = navigator.geolocation.watchPosition((position) => {
+        var newLocation = JSON.stringify(position);
+        this.setState({location: newLocation});
+      });
+    }
+  }
 
-  // componentWillUnmount() {
-  //   navigator.geolocation.clearWatch(this.watchID);
-  // }
-
-  // getLocation() {
-  //   if(this.state.location === ''){
-  //     this.setState({location: 'Please Enable Location Services for Accurate Location'})
-  //   }
-  // }   
+  componentWillUnmount() {
+    navigator.geolocation.clearWatch(this.watchID);
+  }  
 
   _navigate(name) {
     this.props.navigator.push({
@@ -85,7 +84,6 @@ class Post extends Component {
     this.setState({
       isOpen: !this.state.isOpen
     })
-    console.log(this.state.isOpen)
   }
 
   updateMenuState(isOpen) {
@@ -93,19 +91,20 @@ class Post extends Component {
   }
 
   submitPost(){
-    const {category, price, description, latitude, longitude} = this.state
-    this.uploadImage(this.state.imageUri[0])
-    console.log('the state', this.state)
-    fetch(serverUrl+ "/api/v1/equip/", {
+    this.uploadImage(this.state.imageUri)
+    this.geocodeAddress()
+    const {category, price, description, imageAddress, title, latitude, longitude } = this.state
+    fetch(serverUrl + "/api/v1/equip/create", {
     method: 'POST',
     headers: {
       'Accept': 'application/json',
       'Content-Type': 'application/json'
     },
-      body: JSON.stringify({category, price, description, latitude, longitude})
-    }).then(function(response) {
-      // console.log('response', response.json())
-    }).catch(function(ex) {
+      body: JSON.stringify({category, price, description, imageAddress, title, latitude, longitude})
+    })
+    .then((response)=>response.json())
+    .then((json)=> console.log('received this from the server', json))
+    .catch(function(ex) {
       console.log('parsing failed', ex)
     })
   }
@@ -120,8 +119,7 @@ class Post extends Component {
               <Text style={ loginPostStyles.selectHeader }>Selected Images: </Text>
               <View style={ imageUploadStyles.addImageGrid }>
                 {self.state.imageUri.map((image)=>
-                  // <Image style={ imageUploadStyles.image } source={{ uri: image }} key={image}/>
-                  <Text> Selected Image </Text>
+                  <Image style={ imageUploadStyles.image } source={{ uri: image }} key={image}/>
                 )}          
               </View>
             </ScrollView>
@@ -132,9 +130,6 @@ class Post extends Component {
 
   uploadImage(uri){
     this.setState({displayAddPhotos: false})
-    
-    console.log('image uri', uri)
-    console.log('secret key', secretKey)
     var options = {
       keyPrefix: "uploads/",
       bucket: "gearbum",
@@ -143,49 +138,32 @@ class Post extends Component {
       secretKey: secretKey,
       successActionStatus: 201
     }
-    var photo = {
-      uri: uri,
-      name: 'newImage.jpg',
-      type: 'image/jpeg',
-    }
-    RNS3.put(photo, options).then(response => {
-      console.log('Promise Resolved', response)
-      if (response.status !== 201) {
-        throw new Error("Failed to upload image to S3");
+    uri.map((img) => {
+      var fileName = img.slice(36, -8)
+      var photo = {
+        uri: img,
+        name: fileName + '.jpg',
+        type: 'image/jpeg',
       }
-      console.log(response.body);
-    }); 
-
-    // var form = new FormData();
-    // form.append("ProfilePicture", photo);
-    // fetch(
-    //   Constants.API_USER + 'me/profilePicture',
-    //   {
-    //     body: form,
-    //     method: "PUT",
-    //     headers: {
-    //       'Content-Type': 'multipart/form-data',
-    //       'Authorization': 'Bearer ' + user.token
-    //     }
-    //   }
-    // ).then((response) => response.json())
-    // .catch((error) => {
-    //   alert("ERROR " + error)
-    // })
-    // .then((responseData) => {
-    //   alert("Succes "+ responseData)
-    // }).done();
-
-
+      RNS3.put(photo, options).then(response => {
+        if (response.status !== 201) {
+          throw new Error("Failed to upload image to S3");
+        }
+        this.setState({imageAddress: response.body.postResponse.location})
+      });
+    })
   }
 
   getImage(uri){
-    console.log(uri)
     this.setState({imageUri: this.state.imageUri.concat([uri])})
   }
-
-  hideMap(){
-    this.state.address
+  
+  geocodeAddress(){
+    if(this.state.address){
+      Geocoder.geocodeAddress(this.state.address).then(res => {
+        this.setState({latitude: res[0].position.lat, longitude: res[0].position.lng})
+      })
+    }
   }
 
   render() {
@@ -195,13 +173,13 @@ class Post extends Component {
         menu={menu}
         isOpen={this.state.isOpen}
         onChange={(isOpen) => this.updateMenuState(isOpen)}>
-      <ScrollView style={ loginPostStyles.scrollView }> 
         <View style={ loginPostStyles.mainPost }>
          <View style={ homeStyles.headerContainer }>
           <Text style={ homeStyles.headerText }>
             GEARBUM
           </Text>
         </View>
+        <ScrollView>
           <View style={ loginPostStyles.inputContainer }>
             <View>
               <Text>Please choose a gear category:</Text>
@@ -218,6 +196,12 @@ class Post extends Component {
                 </PickerIOS>
             </View>
             <TextInput
+              placeholder="Title"
+              style={ loginPostStyles.inputBar }
+              onChangeText={(title) => this.setState({title})}
+              value={this.state.title}
+            />
+            <TextInput
               placeholder="Price"
               style={ loginPostStyles.inputBar }
               onChangeText={(price) => this.setState({price})}
@@ -230,11 +214,23 @@ class Post extends Component {
               onChangeText={(description) => this.setState({description})}
               value={this.state.description}
             />
-            <MapView
-              region={{latitude: this.state.latitude, longitude: this.state.longitude, latitudeDelta: 0.025, longitudeDelta: 0.025}}
-              annotations={[{latitude: this.state.latitude, longitude: this.state.longitude}]}
-              style={ homeStyles.map }
+            <TextInput
+              placeholder="Location"
+              style={ loginPostStyles.inputBar }
+              onChangeText={(address) => this.setState({address})}
+              value={this.state.address}
             />
+            <View style={ loginPostStyles.switchContainer }>
+              <Switch
+                onTintColor= "#bc2025"
+                tintColor= "#d3d3d3"
+                thumbTintColor= "#d3d3d3"
+                onValueChange={(value) => this.setState({useLocation: value})}
+                value={this.state.useLocation} />
+              <Text style={ loginPostStyles.switchText }>
+                Use my current location
+              </Text>
+            </View>
             <TouchableOpacity
               style={ loginPostStyles.loginBtn } 
               onPress={ () => this.setState({displayAddPhotos: !this.state.displayAddPhotos})}
@@ -250,9 +246,9 @@ class Post extends Component {
               Post your listing
             </Text>
           </TouchableOpacity>
+          </ScrollView>
         </View>
-      </ScrollView>
-       <Button
+      <Button
          style={ homeStyles.menuIconContainer} 
          onPress={() => this.toggleMenu()}>
         <Image

@@ -24,9 +24,6 @@ class FindAllGear extends Component {
   }
 
   _navigate(name, equipid) {
-    console.log('passing this equipid', equipid)
-    console.log('passing name', name) 
-
     this.props.navigator.push({
       name: name,
       passProps: {
@@ -46,7 +43,6 @@ class FindAllGear extends Component {
   }
 
   toSelectedListing(equipid) {
-    console.log('equip id',equipid)
     this._navigate('SelectedListing', equipid)
   }
 

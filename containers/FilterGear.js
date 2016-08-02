@@ -24,7 +24,6 @@ class FilterGear extends Component {
   }
 
   _navigate(name,equipid) {
-    console.log('passing this equipid', equipid)
     this.props.navigator.push({
       name: name,
       passProps: {
@@ -44,12 +43,10 @@ class FilterGear extends Component {
   }
 
   toSelectedListing(equipid) {
-    console.log('equip id',equipid)
     this._navigate('SelectedListing', equipid)
   }
 
   display(){
-    console.log(this.state.results)
     if (this.state.results.length === 0){
       return (
         <View style={ filterStyles.picMenu }>

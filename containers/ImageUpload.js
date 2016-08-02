@@ -1,6 +1,3 @@
-
-
-
 const React = require('react');
 const ReactNative = require('react-native');
 
@@ -36,7 +33,6 @@ const reactImageProject = React.createClass({
   storeImages(data) {
     const assets = data.edges;
     const images = assets.map((asset) => asset.node.image)
-    console.log('daattttaaa', data)
     this.setState({
       images: images,
     });
@@ -53,7 +49,7 @@ const reactImageProject = React.createClass({
         { this.state.images.map((image) => {
             return (
               <TouchableHighlight onPress={this.props.getImage.bind(null, image.uri)} style={imageUploadStyles.image} key={image.uri}>
-                <Text>image</Text>
+                <Image style={ imageUploadStyles.image } source={{ uri: image.uri }} key={image}/> 
               </TouchableHighlight>
             );
           })

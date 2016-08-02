@@ -24,7 +24,7 @@ const reactImageProject = React.createClass({
     };
   },
 
-  componentDidMount() {
+  componentWillMount() {
     const fetchParams = {
       first: 25,
     };
@@ -53,7 +53,7 @@ const reactImageProject = React.createClass({
         { this.state.images.map((image) => {
             return (
               <TouchableHighlight onPress={this.props.getImage.bind(null, image.uri)} style={imageUploadStyles.image} key={image.uri}>
-                <Text>image.uri</Text>
+                <Text>image</Text>
               </TouchableHighlight>
             );
           })

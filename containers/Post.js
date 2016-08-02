@@ -23,7 +23,7 @@ import homeStyles from '../CSS/HomeStyle';
 var ImageUpload = require('./ImageUpload').component;
 var imageUploadStyles = require ('../CSS/ImageUploadStyle');
 import {serverUrl} from '../constants/serverConstants';
-
+import {accessKey, secretKey} from '../keys'
 
 class Post extends Component {
   constructor(props) {
@@ -41,26 +41,26 @@ class Post extends Component {
     };
   }
 
-  componentDidMount() {
-    navigator.geolocation.getCurrentPosition(
-      (position) => {
-        var lat = parseFloat(position.coords.latitude);
-        var long = parseFloat(position.coords.longitude);
-        this.setState({latitude: lat, longitude: long})
-        console.log('LOOOCATIONNNN', this.state.latitude, this.state.longitude);
-      },
-      (error) => alert(error.message),
-      {enableHighAccuracy: true, timeout: 20000, maximumAge: 1000}
-    );
-    this.watchID = navigator.geolocation.watchPosition((position) => {
-      var newLocation = JSON.stringify(position);
-      this.setState({location: newLocation});
-    });
-  }
+  // componentDidMount() {
+  //   navigator.geolocation.getCurrentPosition(
+  //     (position) => {
+  //       var lat = parseFloat(position.coords.latitude);
+  //       var long = parseFloat(position.coords.longitude);
+  //       this.setState({latitude: lat, longitude: long})
+  //       console.log('LOOOCATIONNNN', this.state.latitude, this.state.longitude);
+  //     },
+  //     (error) => alert(error.message),
+  //     {enableHighAccuracy: true, timeout: 20000, maximumAge: 1000}
+  //   );
+  //   this.watchID = navigator.geolocation.watchPosition((position) => {
+  //     var newLocation = JSON.stringify(position);
+  //     this.setState({location: newLocation});
+  //   });
+  // }
 
-  componentWillUnmount() {
-    navigator.geolocation.clearWatch(this.watchID);
-  }
+  // componentWillUnmount() {
+  //   navigator.geolocation.clearWatch(this.watchID);
+  // }
 
   // getLocation() {
   //   if(this.state.location === ''){
@@ -94,7 +94,7 @@ class Post extends Component {
 
   submitPost(){
     const {category, price, description, latitude, longitude} = this.state
-    this.uploadImage()
+    this.uploadImage(this.state.imageUri[0])
     console.log('the state', this.state)
     fetch(serverUrl+ "/api/v1/equip/", {
     method: 'POST',
@@ -104,7 +104,7 @@ class Post extends Component {
     },
       body: JSON.stringify({category, price, description, latitude, longitude})
     }).then(function(response) {
-      console.log('response', response.json())
+      // console.log('response', response.json())
     }).catch(function(ex) {
       console.log('parsing failed', ex)
     })
@@ -120,7 +120,8 @@ class Post extends Component {
               <Text style={ loginPostStyles.selectHeader }>Selected Images: </Text>
               <View style={ imageUploadStyles.addImageGrid }>
                 {self.state.imageUri.map((image)=>
-                  <Image style={ imageUploadStyles.image } source={{ uri: image }} key={image}/>
+                  // <Image style={ imageUploadStyles.image } source={{ uri: image }} key={image}/>
+                  <Text> Selected Image </Text>
                 )}          
               </View>
             </ScrollView>
@@ -129,55 +130,51 @@ class Post extends Component {
     }      
   }
 
-  uploadImage(){
-    //**** ACCESS AND SECRET KEYS EXIST IN KEYS.JS FILE
-    // this.setState({displayAddPhotos: false})
+  uploadImage(uri){
+    this.setState({displayAddPhotos: false})
     
-    // console.log('uploading Image')
-    // var options = {
-    //   keyPrefix: "uploads/",
-    //   bucket: "gearbum",
-    //   region: "us-west-2",
-    //   accessKey: accessKey,
-    //   secretKey: secretKey,
-    //   successActionStatus: 201
-    // }
-    // var photo = {
-    //   uri: 'assets-library://asset/asset.JPG?id=ED7AC36B-A150-4C38-BB8C-B6D696F4F2ED&ext=JPG',
-    //   name: 'testphoto.jpg',
-    //   type: 'image/jpeg',
-    // }
-    // RNS3.put(photo, options).then(response => {
-    //   console.log('Promise Resolved', response)
-    //   if (response.status !== 201) {
-    //     throw new Error("Failed to upload image to S3");
-    //   }
-    //   console.log(response.body);
-    // }); 
+    console.log('image uri', uri)
+    console.log('secret key', secretKey)
+    var options = {
+      keyPrefix: "uploads/",
+      bucket: "gearbum",
+      region: "us-west-2",
+      accessKey: accessKey,
+      secretKey: secretKey,
+      successActionStatus: 201
+    }
     var photo = {
-      uri:  'assets-library://asset/asset.JPG?id=ED7AC36B-A150-4C38-BB8C-B6D696F4F2ED&ext=JPG',
+      uri: uri,
+      name: 'newImage.jpg',
       type: 'image/jpeg',
-      name: 'photo.jpg',
-    };
-    var form = new FormData();
-    form.append("ProfilePicture", photo);
-    fetch(
-      Constants.API_USER + 'me/profilePicture',
-      {
-        body: form,
-        method: "PUT",
-        headers: {
-          'Content-Type': 'multipart/form-data',
-          'Authorization': 'Bearer ' + user.token
-        }
+    }
+    RNS3.put(photo, options).then(response => {
+      console.log('Promise Resolved', response)
+      if (response.status !== 201) {
+        throw new Error("Failed to upload image to S3");
       }
-    ).then((response) => response.json())
-    .catch((error) => {
-      alert("ERROR " + error)
-    })
-    .then((responseData) => {
-      alert("Succes "+ responseData)
-    }).done();
+      console.log(response.body);
+    }); 
+
+    // var form = new FormData();
+    // form.append("ProfilePicture", photo);
+    // fetch(
+    //   Constants.API_USER + 'me/profilePicture',
+    //   {
+    //     body: form,
+    //     method: "PUT",
+    //     headers: {
+    //       'Content-Type': 'multipart/form-data',
+    //       'Authorization': 'Bearer ' + user.token
+    //     }
+    //   }
+    // ).then((response) => response.json())
+    // .catch((error) => {
+    //   alert("ERROR " + error)
+    // })
+    // .then((responseData) => {
+    //   alert("Succes "+ responseData)
+    // }).done();
 
 
   }

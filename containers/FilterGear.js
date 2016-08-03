@@ -104,6 +104,7 @@ class FilterGear extends Component {
           </View>
           <View style={ findGearStyles.resultsItemsContainer }>  
             {this.state.results.map((equipment)=>{
+              var thumbNail = equipment.photos.split(' ')
               return (
                 <TouchableOpacity
                   style={ findGearStyles.resultsTouch } 
@@ -112,7 +113,7 @@ class FilterGear extends Component {
                     <Image
                       key={`image-${equipment.equipid}`}
                       style={ findGearStyles.resultsImg }
-                      source={require('../img/sweetbike.jpeg')}>
+                      source={{uri: thumbNail[0]}}>
                       <Text 
                         style={ findGearStyles.resultsText }
                         key={equipment.equipid}>

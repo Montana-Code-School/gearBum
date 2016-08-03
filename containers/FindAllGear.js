@@ -52,6 +52,7 @@ class FindAllGear extends Component {
         <ScrollView style={ findGearStyles.resultsScrollView }>
           <View style={ findGearStyles.resultsItemsContainer }>  
             {this.state.results.map((equipment)=>{
+              var thumbNail = equipment.photos.split(' ')
               return (
                 <TouchableOpacity
                   style={ findGearStyles.resultsTouch } 
@@ -60,7 +61,7 @@ class FindAllGear extends Component {
                     <Image
                       key={`image-${equipment.equipid}`}
                       style={ findGearStyles.resultsImg }
-                      source={{ uri: 'http://www.neatorama.com/wp-content/uploads/2012/04/candy_bike.jpg'}}>
+                      source={{uri: thumbNail[0]}}>
                       <Text 
                         style={ findGearStyles.resultsText }
                         key={equipment.equipid}>

@@ -57,7 +57,7 @@ export default class GearBum extends Component {
     return (
       <Navigator
         style={{ flex:1 }}
-        initialRoute={{ name: 'Post' }}
+        initialRoute={{ name: 'SearchGear' }}
         renderScene={ this.renderScene }
         configureScene={() => sceneConfig } />
     )

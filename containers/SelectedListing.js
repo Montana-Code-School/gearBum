@@ -22,7 +22,10 @@ class SelectedListing extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      selectedEquip: {}
+      selectedEquip: {},
+      displayPhoto: [],
+      displayLat: 0,
+      displayLong: 0
     };
   }
 
@@ -37,16 +40,21 @@ class SelectedListing extends Component {
 
   componentWillMount(){
     var self = this
-    console.log('receiving props', this.props)
-    // if(this.props.equipid){
-      fetch(serverUrl+"/api/v1/equip/detail/1", {method: "GET"})
+    if(this.props.equipid){ 
+      fetch(serverUrl+"/api/v1/equip/detail/" + this.props.equipid, {method: "GET"})
         .then((response) => response.json())
         .then((responseData) => {
           self.setState({selectedEquip: responseData[0]})
-          console.log('responseData', responseData)
+          var thumbNail = self.state.selectedEquip.photos.split(' ')
+          self.setState({displayPhoto: this.state.displayPhoto.concat(thumbNail)})
+          var lat = Number(this.state.selectedEquip.latitude)
+          var long = Number(this.state.selectedEquip.longitude)
+          self.setState({displayLat: lat})
+          self.setState({displayLong: long})
+          console.log('latitude', this.state.selectedEquip.latitude)
         })
         .catch(err => console.log(err))
-    //}
+    }
   }
 
   state = {
@@ -79,7 +87,7 @@ class SelectedListing extends Component {
         </View>
         <ParallaxScrollView
           style={selectedListingStyles.imgContainer}
-          renderBackground={() => <Image source={{ uri: `https://placekitten.com/414/350` }} style={ selectedListingStyles.img }/>}
+          renderBackground={() => <Image source={{uri: this.state.displayPhoto[0]}} style={ selectedListingStyles.img }/>}
           renderForeground={() => 
             <View style={ selectedListingStyles.imgTextContainer }>
               <Text style={ selectedListingStyles.imgText }>{this.state.selectedEquip.price}</Text>
@@ -88,13 +96,13 @@ class SelectedListing extends Component {
           parallaxHeaderHeight={ 250 }>
           <View style={ selectedListingStyles.listingContainer }>
             <Text style={ selectedListingStyles.equipTitle }>
-              {this.state.selectedEquip.description}
+              {this.state.selectedEquip.title}
             </Text>
             <View style={ homeStyles.hr }/>
             <View style={ selectedListingStyles.userInfoContainer}>
               <View>
                 <Text style={ selectedListingStyles.userInfoText }>{this.state.selectedEquip.category} </Text>
-                <Text style={ selectedListingStyles.userInfoText }>Rented by Luke W. </Text>
+                <Text style={ selectedListingStyles.userInfoText }>{this.state.selectedEquip.providerid} </Text>
               </View>
               <View style={ selectedListingStyles.userImgContainer }>
                 <Image
@@ -104,12 +112,12 @@ class SelectedListing extends Component {
             </View>
             <View style={ homeStyles.hr }/>
             <Text style={ selectedListingStyles.equipText }>
-              Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
+              {this.state.selectedEquip.description}
             </Text>
             <MapView
               style={ homeStyles.map }
-              region={{latitude: 51.5, longitude: -0.127, latitudeDelta: 0.025, longitudeDelta: 0.025}}
-              annotations={[{latitude: 51.5, longitude: -0.127}]}/>
+              region={{latitude: this.state.displayLat, longitude: this.state.displayLong, latitudeDelta: 0.025, longitudeDelta: 0.025}}
+              annotations={[{latitude: this.state.displayLat, longitude: this.state.displayLong}]}/>
           </View>
         </ParallaxScrollView>
   	  </View>

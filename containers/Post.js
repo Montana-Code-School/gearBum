@@ -32,20 +32,20 @@ class Post extends Component {
     this.state = {
       categoryList: ['Bike', 'Snow', 'Camp', 'Boat', 'Golf'],
       category: 'Bike',
-      title: '',
-      price: '',
-      description: '',
+      title: 'Road Bike',
+      price: '45',
+      description: 'really fast bike',
       useLocation: false,
       latitude: 0,
       longitude: 0,
       address: '',
       imageUri: [],
-      imageAddress: '',
+      photos: [],
       displayAddPhotos: false
     };
   }
 
-  componentDidMount() {
+  setLocation() {
     if(this.state.useLocation){
       navigator.geolocation.getCurrentPosition(
         (position) => {
@@ -56,10 +56,6 @@ class Post extends Component {
         (error) => alert(error.message),
         {enableHighAccuracy: true, timeout: 20000, maximumAge: 1000}
       );
-      this.watchID = navigator.geolocation.watchPosition((position) => {
-        var newLocation = JSON.stringify(position);
-        this.setState({location: newLocation});
-      });
     }
   }
 
@@ -90,25 +86,6 @@ class Post extends Component {
     this.setState({ isOpen, });
   }
 
-  submitPost(){
-    this.uploadImage(this.state.imageUri)
-    this.geocodeAddress()
-    const {category, price, description, imageAddress, title, latitude, longitude } = this.state
-    fetch(serverUrl + "/api/v1/equip/create", {
-    method: 'POST',
-    headers: {
-      'Accept': 'application/json',
-      'Content-Type': 'application/json'
-    },
-      body: JSON.stringify({category, price, description, imageAddress, title, latitude, longitude})
-    })
-    .then((response)=>response.json())
-    .then((json)=> console.log('received this from the server', json))
-    .catch(function(ex) {
-      console.log('parsing failed', ex)
-    })
-  }
-
   addPhotos() {
     var self = this
     if(this.state.displayAddPhotos) {
@@ -129,28 +106,39 @@ class Post extends Component {
   }
 
   uploadImage(uri){
-    this.setState({displayAddPhotos: false})
-    var options = {
-      keyPrefix: "uploads/",
-      bucket: "gearbum",
-      region: "us-west-2",
-      accessKey: accessKey,
-      secretKey: secretKey,
-      successActionStatus: 201
-    }
-    uri.map((img) => {
-      var fileName = img.slice(36, -8)
-      var photo = {
-        uri: img,
-        name: fileName + '.jpg',
-        type: 'image/jpeg',
+    return new Promise((resolve, reject) =>{
+      this.setState({displayAddPhotos: false})
+      var options = {
+        keyPrefix: "uploads/",
+        bucket: "gearbum",
+        region: "us-west-2",
+        accessKey: accessKey,
+        secretKey: secretKey,
+        successActionStatus: 201
       }
-      RNS3.put(photo, options).then(response => {
-        if (response.status !== 201) {
-          throw new Error("Failed to upload image to S3");
+      Promise.all(uri.map((img) => {
+        var fileName = img.slice(36, -8)
+        var photo = {
+          uri: img,
+          name: fileName + '.jpg',
+          type: 'image/jpeg',
         }
-        this.setState({imageAddress: response.body.postResponse.location})
-      });
+        return RNS3.put(photo, options)
+      }))
+      .then((results) => {
+        var photoURLs = this.state.photos
+        console.log('results', results)
+        results.map(response => {
+          if (response.status !== 201) {
+            reject("Failed to upload image to S3");
+          }
+          console.log('IMAGE URL', response.body.postResponse.location)
+          photoURLs = photoURLs.concat([response.body.postResponse.location])
+        })
+        this.setState({photos: photoURLs})
+         resolve(console.log("Image upload success"))
+
+      })
     })
   }
 
@@ -159,11 +147,63 @@ class Post extends Component {
   }
   
   geocodeAddress(){
-    if(this.state.address){
-      Geocoder.geocodeAddress(this.state.address).then(res => {
-        this.setState({latitude: res[0].position.lat, longitude: res[0].position.lng})
+    return new Promise((resolve, reject) => {
+      console.log("ADDRESS", this.state.address)
+      var self = this
+      if(!this.state.address && !this.state.useLocation){
+        reject("No Address Found")
+      }
+      if(this.state.useLocation){
+        this.setLocation()
+      }
+      if(this.state.address && !this.state.useLocation){
+        Geocoder.geocodeAddress(this.state.address).then(res => {
+          self.setState({latitude: res[0].position.lat, longitude: res[0].position.lng})
+          console.log('got some latitudes, dudes.')
+        })
+      }
+      resolve()
+    }) 
+  }
+
+  submitPost(){
+      const {category, price, description, photos, title, latitude, longitude } = this.state
+      console.log('STATE OF POST', this.state)
+      fetch(serverUrl + "/api/v1/equip/create", {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+        body: JSON.stringify({category, price, description, photos, title, latitude, longitude})
       })
-    }
+      .then((response)=>response.json())
+      .then((json)=> console.log('received this from the server', json))
+      .catch(function(ex) {
+        console.log('parsing failed', ex)
+      })
+  }
+
+  postEquip (){
+    this.uploadImage(this.state.imageUri)
+    .then(() => this.geocodeAddress())    
+    .then(() => this.submitPost())
+    .then(() => this.setState({
+      category: '',
+      title: '',
+      price: '',
+      description: '',
+      useLocation: false,
+      latitude: 0,
+      longitude: 0,
+      address: '',
+      imageUri: [],
+      photos: [],
+      displayAddPhotos: false
+    }))
+    .catch(function(ex) {
+      console.log('submit post failed', ex)
+    })
   }
 
   render() {
@@ -214,12 +254,13 @@ class Post extends Component {
               onChangeText={(description) => this.setState({description})}
               value={this.state.description}
             />
-            <TextInput
-              placeholder="Location"
-              style={ loginPostStyles.inputBar }
-              onChangeText={(address) => this.setState({address})}
-              value={this.state.address}
-            />
+            {this.state.useLocation ? <Text /> : <TextInput
+                          placeholder="Location"
+                          style={ loginPostStyles.inputBar }
+                          onChangeText={(address) => this.setState({address})}
+                          value={this.state.address}
+                        />
+            }
             <View style={ loginPostStyles.switchContainer }>
               <Switch
                 onTintColor= "#bc2025"
@@ -241,7 +282,7 @@ class Post extends Component {
             </TouchableOpacity>
             {this.addPhotos()}
           </View>
-          <TouchableOpacity style={ loginPostStyles.loginBtn } onPress={ () => this.submitPost()}>
+          <TouchableOpacity style={ loginPostStyles.loginBtn } onPress={ () => this.postEquip()}>
             <Text style={ homeStyles.textWhite }>
               Post your listing
             </Text>

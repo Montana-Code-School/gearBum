@@ -24,11 +24,11 @@ class SearchGear extends Component {
     super(props);
     this.state = {
       toggleDisplay: true,
+      email: ''
     };
   }
   
-  _navigate(name,equipid) {
-    console.log('passing this equipid', equipid)
+  _navigate(name, equipid) {
     this.props.navigator.push({
       name: name,
       passProps: {
@@ -77,6 +77,7 @@ class SearchGear extends Component {
     const menu = <Menu navigator={this.props.navigator} />
     return (
       <SideMenu
+        email={this.state.email}
         menu={menu}
         isOpen={this.state.isOpen}
         onChange={(isOpen) => this.updateMenuState(isOpen)}>

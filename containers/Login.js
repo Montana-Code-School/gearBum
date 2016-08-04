@@ -102,18 +102,18 @@ class Login extends Component {
 
   filterLogin(){
     if(this.state.username !== ''){
-      this._navigate('SearchGear', this.state.email)
+      this._navigate('AccountSettings', this.state.email)
     } else {
-    this._navigate('AccountSettings', this.state.email)
+    this._navigate('SearchGear', this.state.email)
     }
   }
 
   getUserInfo(){
+    this.props.setEmail(this.state.email)
     fetch(serverUrl+"/api/v1/getUsers/" + this.state.email, {method: "GET"})
           .then((response) => response.json())
           .then((responseData) => {
             this.setState({username: responseData[0].username, bio: responseData[0].bio, picture: responseData[0].picture})
-            console.log(this.state)
           })
           .catch(err => console.log(err))
   }

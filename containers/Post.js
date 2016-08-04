@@ -127,12 +127,10 @@ class Post extends Component {
       }))
       .then((results) => {
         var photoURLs = this.state.photos
-        console.log('results', results)
         results.map(response => {
           if (response.status !== 201) {
             reject("Failed to upload image to S3");
           }
-          console.log('IMAGE URL', response.body.postResponse.location)
           photoURLs = photoURLs.concat([response.body.postResponse.location])
         })
         this.setState({photos: photoURLs})
@@ -168,7 +166,6 @@ class Post extends Component {
 
   submitPost(){
       const {category, price, description, photos, title, latitude, longitude } = this.state
-      console.log('STATE OF POST', this.state)
       fetch(serverUrl + "/api/v1/equip/create", {
       method: 'POST',
       headers: {

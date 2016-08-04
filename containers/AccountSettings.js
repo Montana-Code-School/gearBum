@@ -50,7 +50,6 @@ class AccountSettings extends Component {
      .then((response) => response.json())
           .then((responseData) => {
             this.setState({email: this.props.email, username: responseData[0].username, bio: responseData[0].bio, picture: responseData[0].picture})
-            console.log(this.state)
           })
           .catch(err => console.log(err))
   }

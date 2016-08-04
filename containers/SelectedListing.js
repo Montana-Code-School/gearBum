@@ -51,7 +51,6 @@ class SelectedListing extends Component {
           var long = Number(this.state.selectedEquip.longitude)
           self.setState({displayLat: lat})
           self.setState({displayLong: long})
-          console.log('latitude', this.state.selectedEquip.latitude)
         })
         .catch(err => console.log(err))
     }
@@ -65,7 +64,6 @@ class SelectedListing extends Component {
     this.setState({
       isOpen: !this.state.isOpen
     })
-    console.log(this.state.isOpen)
   }
 
   updateMenuState(isOpen) {

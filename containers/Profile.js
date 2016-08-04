@@ -7,15 +7,29 @@ import {
   Image,
   TextInput
 } from 'react-native';
+import ProfileForm from '../components/ProfileForm';
 import Gravatar from 'react-native-avatar-gravatar';
 import profileStyles from '../CSS/ProfileStyle';
 import homeStyles from '../CSS/HomeStyle'
 import Menu from '../components/SideMenu';
 import Button from '../components/Button';
+import {serverUrl} from '../constants/serverConstants';
 const SideMenu = require('react-native-side-menu');
 const uri = 'http://lorempixel.com/output/people-q-c-640-480-9.jpg';
 
 class ProfilePage extends Component {
+
+  constructor(props) {
+    super(props);
+    this.state = {
+      email: '',
+      username: '',
+      bio: '',
+      picture: '',
+      toggleDisplay: true
+    };
+  }
+
   state = {
     isOpen: false,
   }
@@ -24,11 +38,38 @@ class ProfilePage extends Component {
     this.setState({
       isOpen: !this.state.isOpen
     })
-    console.log(this.state.isOpen)
   }
 
   updateMenuState(isOpen) {
     this.setState({ isOpen, });
+  }
+
+  componentDidMount(){
+    fetch(serverUrl +"/api/v1/getUsers/" + this.props.email, {method: "GET"})
+    .then((response) => response.json())
+    .then((responseData) => {
+      this.setState({email: this.props.email, username: responseData[0].username, bio: responseData[0].bio, picture: responseData[0].picture})
+    }).catch(err => console.log(err))
+  }
+
+  display(){
+    if(this.state.toggleDisplay){
+      return(
+          <View style={ profileStyles.descriptionContainer}>
+            <Text>
+              {this.state.bio ? this.state.bio : 'Tell us about yourself'}
+            </Text>
+          </View>
+      )
+    } else {
+      return(
+        <ProfileForm 
+          email={this.state.email} 
+          bio={this.state.bio} 
+          username={this.state.username} 
+        />
+      )
+    }
   }
 
   render() {
@@ -39,22 +80,22 @@ class ProfilePage extends Component {
         isOpen={this.state.isOpen}
         onChange={(isOpen) => this.updateMenuState(isOpen)}>
         <View style={ profileStyles.profileContainer }>
-        <Gravatar emailAddress="suziequz@msn.com"  size={140} mask='circle' />
+        <Gravatar emailAddress={this.state.email}  size={140} mask='circle' />
         <Text style={ profileStyles.userName }>
-          Username
+           {this.state.username ? this.state.username : 'GearBum User'}
         </Text>
         <View style={ profileStyles.descriptionHeaderContainer}>
           <Text style={ homeStyles.textWhite}>
-            About Username
+             About {this.state.username ? this.state.username : 'GearBum User'}
           </Text>
         </View>
-        <View style={ profileStyles.descriptionContainer}>
-          <Text>
-            User Description
-            Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
-          </Text>
-        </View>
-         <Button
+        {this.display()}
+        <TouchableOpacity onPress={() => this.setState({toggleDisplay: !this.state.toggleDisplay})}>
+            <Text>
+              {this.state.toggleDisplay ? 'Edit Profile' : 'View Profile'}
+            </Text>
+          </TouchableOpacity>
+        <Button
          style={ homeStyles.menuIconContainer} 
          onPress={() => this.toggle()}>
           <Image

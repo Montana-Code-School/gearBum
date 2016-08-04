@@ -23,13 +23,14 @@ class Menu extends Component {
     this.props.navigator.push({
       name: name,
       passProps: {
-        name: name
+        name: name,
       }
     })
   }
 
   logout() {
    var self = this
+   this.props.setEmail(null);
     fetch(serverUrl + "/api/v1/logout", {method: "GET"})
       .then(() => this._navigate('Login'))
   }
@@ -52,11 +53,11 @@ class Menu extends Component {
             </Text>
           </TouchableOpacity>
           <TouchableOpacity 
-          onPress={ () => this._navigate()}  
-          style={ homeStyles.sideMenuLinks }>
-            <Text style={ homeStyles.sideMenuText }>
-              Account Settings
-            </Text>
+            onPress={ () => this._navigate('AccountSettings')}  
+            style={ homeStyles.sideMenuLinks }>
+              <Text style={ homeStyles.sideMenuText }>
+                Account Settings
+              </Text>
           </TouchableOpacity>
           <TouchableOpacity 
           onPress={ () => this._navigate('SearchGear')}  

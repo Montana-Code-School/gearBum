@@ -24,24 +24,39 @@ import SideMenu from './components/SideMenu';
 import EStyleSheet from 'react-native-extended-stylesheet';
 
 export default class GearBum extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      email: ''
+    };
+  }
+
+  setEmail(email){
+    this.setState({email: email})
+  }
+
+  getEmail(){
+    return this.state.email
+  }
 
   renderScene(route, navigator) {
-    const { passProps } = route
-
+    const passProps  = route.passProps || {}
+    passProps.email = this.getEmail()
+    passProps.setEmail = this.setEmail
     if(route.name == 'Post') {
-      return <Post navigator={navigator} {...passProps}  />
+      return <Post navigator={navigator}  {...passProps}  />
     }
     if(route.name == 'Login') {
       return <Login navigator={navigator} {...passProps} />
     }
     if(route.name == 'ProfilePage') {
-      return <ProfilePage navigator={navigator} {...passProps} />
+      return <ProfilePage navigator={navigator}  {...passProps} />
     }
     if(route.name == 'SearchGear') {
-      return <SearchGear navigator={navigator} {...passProps} />
+      return <SearchGear navigator={navigator}  {...passProps} />
     }
     if(route.name == 'SelectedListing') {
-      return <SelectedListing navigator={navigator} {...passProps}/>
+      return <SelectedListing navigator={navigator}  {...passProps}/>
     }
     if(route.name == 'SideMenu') {
       return <SideMenu navigator={navigator} {...passProps}/>
@@ -50,6 +65,8 @@ export default class GearBum extends Component {
       return <AccountSettings navigator={navigator} {...passProps}/>
     }
   }
+
+
 
   render() {
     EStyleSheet.build();
@@ -63,6 +80,8 @@ export default class GearBum extends Component {
         style={{ flex:1 }}
         initialRoute={{ name: 'Login' }}
         renderScene={ this.renderScene }
+        setEmail={this.setEmail.bind(this)}
+        getEmail={this.getEmail.bind(this)}
         configureScene={() => sceneConfig } />
     )
   }

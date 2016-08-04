@@ -35,6 +35,7 @@ const profileStyles = EStyleSheet.create({
     height: 140,
   },
   userName: {
+    alignSelf: 'center',
     color: 'grey',
     margin: 15,
   },

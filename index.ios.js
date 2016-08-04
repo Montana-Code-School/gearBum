@@ -14,6 +14,7 @@ import {
   Navigator,
   Image
 } from 'react-native';
+import AccountSettings from './containers/AccountSettings';
 import Post from './containers/Post';
 import Login from './containers/Login';
 import ProfilePage from './containers/Profile';
@@ -45,6 +46,9 @@ export default class GearBum extends Component {
     if(route.name == 'SideMenu') {
       return <SideMenu navigator={navigator} {...passProps}/>
     }
+    if(route.name == 'AccountSettings') {
+      return <AccountSettings navigator={navigator} {...passProps}/>
+    }
   }
 
   render() {
@@ -57,7 +61,7 @@ export default class GearBum extends Component {
     return (
       <Navigator
         style={{ flex:1 }}
-        initialRoute={{ name: 'SearchGear' }}
+        initialRoute={{ name: 'Login' }}
         renderScene={ this.renderScene }
         configureScene={() => sceneConfig } />
     )

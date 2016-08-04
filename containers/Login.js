@@ -21,15 +21,19 @@ class Login extends Component {
       email: 'Pete@gmail.com',
       password: 'test',
       verifyPwd: '',
+      username: '',
+      bio: '',
+      picture: '',
       toggleDisplay: true
     };
   }
 
-  _navigate(name) {
+  _navigate(name, email) {
     this.props.navigator.push({
       name: name,
       passProps: {
-        name: name
+        name: name, 
+        email: email
       }
     })
   }
@@ -94,7 +98,25 @@ class Login extends Component {
         </View> 
       );
     }  
-  }r
+  }
+
+  filterLogin(){
+    if(this.state.username !== ''){
+      this._navigate('SearchGear', this.state.email)
+    } else {
+    this._navigate('AccountSettings', this.state.email)
+    }
+  }
+
+  getUserInfo(){
+    fetch(serverUrl+"/api/v1/getUsers/" + this.state.email, {method: "GET"})
+          .then((response) => response.json())
+          .then((responseData) => {
+            this.setState({username: responseData[0].username, bio: responseData[0].bio, picture: responseData[0].picture})
+            console.log(this.state)
+          })
+          .catch(err => console.log(err))
+  }
 
   login(){
     var self = this
@@ -113,8 +135,9 @@ class Login extends Component {
         })
       }).then(function(response) {
         return response.json()
-      }).then(() => this._navigate('SearchGear')
-      ).catch(function(ex) {
+      }).then(() => this.getUserInfo())
+      .then(() => this.filterLogin())
+      .catch(function(ex) {
         AlertIOS.alert("Login Failed")
         console.log('parsing failed', ex)
       })

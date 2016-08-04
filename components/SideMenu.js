@@ -16,14 +16,16 @@ class Menu extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      toggleFalse: false
     };
   }
 
-  _navigate(name) {
+  _navigate(name, display) {
     this.props.navigator.push({
       name: name,
       passProps: {
         name: name,
+        display: display
       }
     })
   }
@@ -46,14 +48,14 @@ class Menu extends Component {
       </View>
         <View style={ homeStyles.sideMenuContainer }>
           <TouchableOpacity 
-            onPress={ () => this._navigate('ProfilePage')}  
+            onPress={ () => this._navigate('ProfilePage', true)}  
             style={ homeStyles.sideMenuLinks }>
             <Text style={ homeStyles.sideMenuText }>
               My Profile
             </Text>
           </TouchableOpacity>
           <TouchableOpacity 
-            onPress={ () => this._navigate('AccountSettings')}  
+            onPress={ () => this._navigate('ProfilePage', false)}  
             style={ homeStyles.sideMenuLinks }>
               <Text style={ homeStyles.sideMenuText }>
                 Account Settings

@@ -18,9 +18,9 @@ class ProfileForm extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      email: this.props.email,
-      username: this.props.username,
-      bio: this.props.bio,
+      email: '',
+      username: '',
+      bio: '',
       picture: '',
     };
   }

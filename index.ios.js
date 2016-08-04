@@ -14,7 +14,7 @@ import {
   Navigator,
   Image
 } from 'react-native';
-import AccountSettings from './containers/AccountSettings';
+// import AccountSettings from './containers/AccountSettings';
 import Post from './containers/Post';
 import Login from './containers/Login';
 import ProfilePage from './containers/Profile';
@@ -61,9 +61,9 @@ export default class GearBum extends Component {
     if(route.name == 'SideMenu') {
       return <SideMenu navigator={navigator} {...passProps}/>
     }
-    if(route.name == 'AccountSettings') {
-      return <AccountSettings navigator={navigator} {...passProps}/>
-    }
+    // if(route.name == 'AccountSettings') {
+    //   return <AccountSettings navigator={navigator} {...passProps}/>
+    // }
   }
 
 

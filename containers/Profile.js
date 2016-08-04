@@ -45,6 +45,7 @@ class ProfilePage extends Component {
   }
 
   componentDidMount(){
+    this.setState({toggleDisplay: this.props.display})
     fetch(serverUrl +"/api/v1/getUsers/" + this.props.email, {method: "GET"})
     .then((response) => response.json())
     .then((responseData) => {
@@ -63,11 +64,7 @@ class ProfilePage extends Component {
       )
     } else {
       return(
-        <ProfileForm 
-          email={this.state.email} 
-          bio={this.state.bio} 
-          username={this.state.username} 
-        />
+        <ProfileForm />
       )
     }
   }

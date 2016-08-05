@@ -31,6 +31,7 @@ class Menu extends Component {
   }
 
   logout() {
+    console.log('PROPS OF SIDE MENU', this.props.navigator.setEmail)
    var self = this
    this.props.setEmail(null);
     fetch(serverUrl + "/api/v1/logout", {method: "GET"})

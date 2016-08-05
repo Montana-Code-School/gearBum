@@ -7,6 +7,7 @@ import {
   Image,
   TextInput
 } from 'react-native';
+import findGearStyles from '../CSS/FindGearStyles';
 import ProfileForm from '../components/ProfileForm';
 import Gravatar from 'react-native-avatar-gravatar';
 import profileStyles from '../CSS/ProfileStyle';
@@ -26,8 +27,20 @@ class ProfilePage extends Component {
       username: '',
       bio: '',
       picture: '',
-      toggleDisplay: true
+      usersid: '',
+      toggleDisplay: true,
+      gear: []
     };
+  }
+
+  _navigate(name, equipid) {
+    this.props.navigator.push({
+      name: name,
+      passProps: {
+        name: name,
+        equipid
+      }
+    })
   }
 
   state = {
@@ -46,11 +59,21 @@ class ProfilePage extends Component {
 
   componentDidMount(){
     this.setState({toggleDisplay: this.props.display})
-    fetch(serverUrl +"/api/v1/getUsers/" + this.props.email, {method: "GET"})
+    fetch(serverUrl + "/api/v1/getUsers/" + this.props.email, {method: "GET"})
     .then((response) => response.json())
     .then((responseData) => {
-      this.setState({email: this.props.email, username: responseData[0].username, bio: responseData[0].bio, picture: responseData[0].picture})
-    }).catch(err => console.log(err))
+      this.setState({email: this.props.email, username: responseData[0].username, bio: responseData[0].bio, picture: responseData[0].picture, usersid: responseData[0].usersid })
+    }).then(()=> this.fetchGear()
+    ).catch(err => console.log(err))
+  }
+
+  fetchGear(){
+    var self = this
+    fetch(serverUrl+"/api/v1/equip/userGear/" + this.state.usersid, {method: "GET"})
+      .then((response) => response.json())
+      .then((responseData) => {
+        this.setState({gear: responseData})
+      }).catch(err => console.log(err))
   }
 
   display(){
@@ -64,13 +87,18 @@ class ProfilePage extends Component {
       )
     } else {
       return(
-        <ProfileForm />
+        <ProfileForm email={this.props.email} />
       )
     }
   }
 
+  toSelectedListing(equipid) {
+    console.log("EQUIPID in toSelectedListing", equipid)
+    this._navigate('SelectedListing', equipid)
+  }
+
   render() {
-    const menu = <Menu navigator={this.props.navigator} />
+    const menu = <Menu navigator={this.props.navigator}  setEmail={this.props.setEmail}/>
     return (
       <SideMenu
         menu={menu}
@@ -87,6 +115,34 @@ class ProfilePage extends Component {
           </Text>
         </View>
         {this.display()}
+        <View style={ profileStyles.descriptionHeaderContainer}>
+          <Text style={ homeStyles.textWhite}>
+            {this.state.username ? this.state.username : 'GearBum User'}'s Gear
+          </Text>
+        </View>
+        <View style={ profileStyles.userGearContainer }>
+          {this.state.gear.map((gear) => {
+            var thumbNail = gear.photos.split(' ')
+            return (
+              <TouchableOpacity
+                style={ profileStyles.userGearTouch }
+                key={gear.equipid}
+                onPress={() => this.toSelectedListing(gear.equipid)}
+              >
+                <Image
+                  key={`image-${gear.equipid}`}
+                  style={ profileStyles.userGearImg }
+                  source={{uri: thumbNail[0]}}>
+                  <Text 
+                    style={ profileStyles.userGearText }
+                    key={gear.equipid}>
+                    {gear.location} {gear.price}
+                  </Text>
+                </Image>
+              </TouchableOpacity>
+            )
+          })}
+        </View>          
         <TouchableOpacity
           style={ profileStyles.loginBtn } 
           onPress={() => this.setState({toggleDisplay: !this.state.toggleDisplay})}>

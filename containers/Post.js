@@ -214,7 +214,7 @@ class Post extends Component {
       .catch(err => console.log(err))
   }
   render() {
-    const menu = <Menu navigator={this.props.navigator} />
+    const menu = <Menu navigator={this.props.navigator} setEmail={this.props.setEmail}/>
     return (
       <SideMenu
         menu={menu}

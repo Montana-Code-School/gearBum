@@ -52,6 +52,32 @@ const profileStyles = EStyleSheet.create({
     padding: 30,
     alignItems: 'center'
   },
+  userGearContainer: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    justifyContent: 'space-around',
+  },
+  userGearTouch: {
+    width: vw(28),
+    height: vw(28),
+    margin: vw(2),
+  }, 
+  userGearImg: {
+    resizeMode: 'cover',
+    width: vw(28),
+    height: vw(28),
+  },
+  userGearText: {
+    paddingTop: 3,
+    textAlign: 'center',
+    width: vw(28),
+    height: 20,
+    marginTop: vw(22),
+    color: 'white',
+    fontWeight: 'bold',
+    fontSize: 10,
+    backgroundColor: 'rgba(0,0,0,.3)',
+  },
   loginBtn: {
     marginTop: 10,
     alignSelf: 'center',

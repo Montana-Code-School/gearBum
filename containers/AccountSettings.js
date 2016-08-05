@@ -71,7 +71,7 @@ class AccountSettings extends Component {
   }
 
   render() {
-    const menu = <Menu navigator={this.props.navigator} />
+    const menu = <Menu navigator={this.props.navigator} setEmail={this.props.setEmail}/>
     return (
       <SideMenu
         menu={menu}

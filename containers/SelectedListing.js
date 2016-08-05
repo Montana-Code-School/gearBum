@@ -29,11 +29,13 @@ class SelectedListing extends Component {
     };
   }
 
-  _navigate(name) {
+  _navigate(name, providerid, display) {
     this.props.navigator.push({
       name: name,
       passProps: {
-        name: name
+        name: name,
+        providerid: providerid, 
+        display: display
       }
     })
   }
@@ -69,6 +71,9 @@ class SelectedListing extends Component {
   updateMenuState(isOpen) {
     this.setState({ isOpen, });
   }
+  toProfilePage(){
+    this._navigate('ProfilePage', this.state.selectedEquip.usersid, true)
+  }
 
  render() {
   const menu = <Menu navigator={this.props.navigator}  setEmail={this.props.setEmail}/>
@@ -100,7 +105,13 @@ class SelectedListing extends Component {
             <View style={ selectedListingStyles.userInfoContainer}>
               <View>
                 <Text style={ selectedListingStyles.userInfoText }>{this.state.selectedEquip.category} </Text>
-                <Text style={ selectedListingStyles.userInfoText }>{this.state.selectedEquip.usersid} </Text>
+                <TouchableOpacity 
+                  onPress={() => this.toProfilePage()}
+                >
+                  <Text style={ selectedListingStyles.userInfoText }>
+                    {this.state.selectedEquip.usersid}
+                  </Text>
+                </TouchableOpacity>
               </View>
               <View style={ selectedListingStyles.userImgContainer }>
                 <Image

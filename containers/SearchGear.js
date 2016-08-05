@@ -77,7 +77,7 @@ class SearchGear extends Component {
     const menu = <Menu navigator={this.props.navigator} setEmail={this.props.setEmail}/>
     return (
       <SideMenu
-        email={this.state.email}
+        usersid={this.props.usersid}
         menu={menu}
         isOpen={this.state.isOpen}
         onChange={(isOpen) => this.updateMenuState(isOpen)}>

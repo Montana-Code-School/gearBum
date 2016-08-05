@@ -27,21 +27,21 @@ export default class GearBum extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      email: ''
+      usersid: ''
     };
   }
 
-  setEmail(email){
-    this.setState({email: email})
+  setEmail(usersid){
+    this.setState({usersid: usersid})
   }
 
   getEmail(){
-    return this.state.email
+    return this.state.usersid
   }
 
   renderScene(route, navigator) {
     const passProps  = route.passProps || {}
-    passProps.email = this.getEmail()
+    passProps.usersid = this.getEmail()
     passProps.setEmail = this.setEmail
     if(route.name == 'Post') {
       return <Post navigator={navigator}  {...passProps}  />

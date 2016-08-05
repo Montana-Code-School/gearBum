@@ -18,12 +18,13 @@ class Login extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      email: 'Pete@gmail.com',
+      email: 'sorenct04@gmail.com',
       password: 'test',
       verifyPwd: '',
       username: '',
       bio: '',
       picture: '',
+      usersid: '',
       toggleDisplay: true
     };
   }
@@ -102,20 +103,19 @@ class Login extends Component {
 
   filterLogin(){
     if(this.state.username !== ''){
-      this._navigate('AccountSettings', this.state.email)
+      this._navigate('ProfilePage', this.state.usersid)
     } else {
-    this._navigate('SearchGear', this.state.email)
+    this._navigate('SearchGear', this.state.usersid)
     }
   }
 
   getUserInfo(){
-    this.props.setEmail(this.state.email)
-    fetch(serverUrl+"/api/v1/getUsers/" + this.state.email, {method: "GET"})
-          .then((response) => response.json())
-          .then((responseData) => {
-            this.setState({username: responseData[0].username, bio: responseData[0].bio, picture: responseData[0].picture})
-          })
-          .catch(err => console.log(err))
+    fetch(serverUrl+"/api/v1/getUsersEmail/" + this.state.email, {method: "GET"})
+      .then((response) => response.json())
+      .then((responseData) => {
+        this.setState({usersid: responseData[0].usersid, username: responseData[0].username, bio: responseData[0].bio, picture: responseData[0].picture})
+      }).then(()=> this.props.setEmail(this.state.usersid))
+      .catch(err => console.log(err))
   }
 
   login(){

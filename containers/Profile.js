@@ -58,18 +58,20 @@ class ProfilePage extends Component {
   }
 
   componentDidMount(){
-    this.setState({toggleDisplay: this.props.display})
-    fetch(serverUrl + "/api/v1/getUsers/" + this.props.email, {method: "GET"})
+    console.log("ID", this.props.usersid)
+    const id = !this.props.providerid ? this.props.usersid : this.props.providerid
+    fetch(serverUrl + "/api/v1/getUsers/" + id, {method: "GET"})
     .then((response) => response.json())
     .then((responseData) => {
-      this.setState({email: this.props.email, username: responseData[0].username, bio: responseData[0].bio, picture: responseData[0].picture, usersid: responseData[0].usersid })
+      console.log("FETCH ON PROFILE BY ID", responseData)
+      this.setState({email: responseData[0].email, username: responseData[0].username, bio: responseData[0].bio, picture: responseData[0].picture, usersid: this.props.usersid })
     }).then(()=> this.fetchGear()
     ).catch(err => console.log(err))
   }
 
   fetchGear(){
     var self = this
-    fetch(serverUrl+"/api/v1/equip/userGear/" + this.state.usersid, {method: "GET"})
+    fetch(serverUrl+"/api/v1/equip/userGear/" + this.props.usersid, {method: "GET"})
       .then((response) => response.json())
       .then((responseData) => {
         this.setState({gear: responseData})
@@ -143,13 +145,13 @@ class ProfilePage extends Component {
             )
           })}
         </View>          
-        <TouchableOpacity
+        {!this.props.providerid ? <TouchableOpacity
           style={ profileStyles.loginBtn } 
           onPress={() => this.setState({toggleDisplay: !this.state.toggleDisplay})}>
             <Text style={ homeStyles.textWhite }>
               {this.state.toggleDisplay ? 'Edit Profile' : 'View Profile'}
             </Text>
-          </TouchableOpacity>
+          </TouchableOpacity> : <Text />}
         <Button
          style={ homeStyles.menuIconContainer} 
          onPress={() => this.toggle()}>

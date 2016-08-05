@@ -100,7 +100,7 @@ class SelectedListing extends Component {
             <View style={ selectedListingStyles.userInfoContainer}>
               <View>
                 <Text style={ selectedListingStyles.userInfoText }>{this.state.selectedEquip.category} </Text>
-                <Text style={ selectedListingStyles.userInfoText }>{this.state.selectedEquip.providerid} </Text>
+                <Text style={ selectedListingStyles.userInfoText }>{this.state.selectedEquip.usersid} </Text>
               </View>
               <View style={ selectedListingStyles.userImgContainer }>
                 <Image

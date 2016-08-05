@@ -52,6 +52,15 @@ const profileStyles = EStyleSheet.create({
     padding: 30,
     alignItems: 'center'
   },
+  loginBtn: {
+    marginTop: 10,
+    alignSelf: 'center',
+    width: vw(50),
+    height: 40,
+    alignItems: 'center',
+    backgroundColor: red,
+    justifyContent: 'center',
+  },
 })
 
 module.exports = profileStyles

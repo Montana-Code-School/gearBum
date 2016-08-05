@@ -51,32 +51,34 @@ class ProfileForm extends Component {
 
   render() {
     return (
+      <View>
         <View style={ formStyles.toggleContainer }>
           <TextInput
-              placeholder='Email'
-              style={ formStyles.inputBar }
-              onChangeText={(email) => this.setState({email})}
-              value={this.state.email}
-            />
-            <View />
-            <TextInput
-              placeholder='Username'
-              style={ formStyles.inputBar }
-              onChangeText={(username) => this.setState({username})}
-              value={this.state.username}
-            />
-            <TextInput
-              placeholder="Bio"
-              style={ formStyles.inputBar }
-              onChangeText={(bio) => this.setState({bio})}
-              value={this.state.bio}
-            />
-            <TouchableHighlight onPress={ () => this.updateUser()} style={ formStyles.loginBtn }>
-              <Text style={ homeStyles.textWhite }>
-                Update Profile
-              </Text>
-            </TouchableHighlight>
+            placeholder='Email'
+            style={ formStyles.inputBar }
+            onChangeText={(email) => this.setState({email})}
+            value={this.state.email}
+          />
+          <View />
+          <TextInput
+            placeholder='Username'
+            style={ formStyles.inputBar }
+            onChangeText={(username) => this.setState({username})}
+            value={this.state.username}
+          />
+          <TextInput
+            placeholder="Bio"
+            style={ formStyles.inputBar }
+            onChangeText={(bio) => this.setState({bio})}
+            value={this.state.bio}
+          />
         </View>
+        <TouchableHighlight onPress={ () => this.updateUser()} style={ formStyles.loginBtn }>
+            <Text style={ homeStyles.textWhite }>
+              Update Profile
+            </Text>
+        </TouchableHighlight>
+      </View>
     );
   }
 }

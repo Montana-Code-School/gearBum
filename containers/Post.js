@@ -41,6 +41,7 @@ class Post extends Component {
       address: '',
       imageUri: [],
       photos: [],
+      usersid: '',
       displayAddPhotos: false
     };
   }
@@ -165,14 +166,15 @@ class Post extends Component {
   }
 
   submitPost(){
-      const {category, price, description, photos, title, latitude, longitude } = this.state
+    this.getUsersId()
+      const {category, usersid, price, description, photos, title, latitude, longitude } = this.state
       fetch(serverUrl + "/api/v1/equip/create", {
       method: 'POST',
       headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json'
       },
-        body: JSON.stringify({category, price, description, photos, title, latitude, longitude})
+        body: JSON.stringify({category, usersid, price, description, photos, title, latitude, longitude})
       })
       .then((response)=>response.json())
       .then((json)=> console.log('received this from the server', json))
@@ -203,6 +205,14 @@ class Post extends Component {
     })
   }
 
+  getUsersId(){
+    fetch(serverUrl+"/api/v1/getUsers/" + this.props.email, {method: "GET"})
+      .then((response) => response.json())
+      .then((responseData) => {
+        this.setState({usersid: responseData[0].usersid})
+      })
+      .catch(err => console.log(err))
+  }
   render() {
     const menu = <Menu navigator={this.props.navigator} />
     return (

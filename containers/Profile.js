@@ -87,8 +87,10 @@ class ProfilePage extends Component {
           </Text>
         </View>
         {this.display()}
-        <TouchableOpacity onPress={() => this.setState({toggleDisplay: !this.state.toggleDisplay})}>
-            <Text>
+        <TouchableOpacity
+          style={ profileStyles.loginBtn } 
+          onPress={() => this.setState({toggleDisplay: !this.state.toggleDisplay})}>
+            <Text style={ homeStyles.textWhite }>
               {this.state.toggleDisplay ? 'Edit Profile' : 'View Profile'}
             </Text>
           </TouchableOpacity>

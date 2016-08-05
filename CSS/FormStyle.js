@@ -34,11 +34,13 @@ const formStyles = EStyleSheet.create({
     flex: 1,
   },
   inputBar: {
+    backgroundColor: 'white',
     alignSelf: 'center',
     height: 40,
-    width: vw(50),
+    width: vw(90),
     borderColor: 'black',
     borderWidth: 1,
+    marginTop: 15,
     marginBottom: 15,
     padding: 5,
   },
@@ -66,6 +68,8 @@ const formStyles = EStyleSheet.create({
   	alignItems:'center',
   	flex: 1,
     flexDirection: 'column',
+    backgroundColor: '#f6f6f6',
+    width: vw(100),
   },
   toggleBtn: {
   	margin: 5,
@@ -77,7 +81,7 @@ const formStyles = EStyleSheet.create({
   },
   loginBtn: {
     alignSelf: 'center',
-    width: vw(95),
+    width: vw(50),
     height: 40,
     alignItems: 'center',
     backgroundColor: red,

@@ -114,7 +114,7 @@ class Login extends Component {
       .then((response) => response.json())
       .then((responseData) => {
         this.setState({usersid: responseData[0].usersid, username: responseData[0].username, bio: responseData[0].bio, picture: responseData[0].picture})
-      }).then(()=> this.props.setEmail(this.state.usersid))
+      }).then(()=> this.props.setUsersid(this.state.usersid))
       .catch(err => console.log(err))
   }
 

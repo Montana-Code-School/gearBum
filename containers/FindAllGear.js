@@ -28,7 +28,7 @@ class FindAllGear extends Component {
       name: name,
       passProps: {
         name: name,
-        equipid
+        equipid,
       }
     })
   }

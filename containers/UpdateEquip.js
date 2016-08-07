@@ -26,23 +26,21 @@ var imageUploadStyles = require ('../CSS/ImageUploadStyle');
 import {serverUrl} from '../constants/serverConstants';
 import {accessKey, secretKey} from '../keys'
 
-class Post extends Component {
+class UpdateEquip extends Component {
   constructor(props) {
     super(props);
     this.state = {
       categoryList: ['Bike', 'Snow', 'Camp', 'Boat', 'Golf'],
-      category: 'Bike',
-      title: 'Road Bike',
-      price: '45',
-      description: 'really fast bike',
+      category: '',
+      title: '',
+      price: '',
+      description: '',
       useLocation: false,
       latitude: 0,
       longitude: 0,
       address: '',
       imageUri: [],
       photos: [],
-      usersid: this.props.usersid,
-      date: '',
       displayAddPhotos: false
     };
   }
@@ -180,29 +178,27 @@ class Post extends Component {
   }
 
   submitPost(){
-    if(this.props.usersid){
-      const {category, date, usersid, price, description, photos, title, latitude, longitude } = this.state
-      console.log("STATE OF THE POST FXN", this.state)
+      const {category, date, price, description, photos, title, latitude, longitude } = this.state
+      console.log(this.state)
       fetch(serverUrl + "/api/v1/equip/create", {
-      method: 'POST',
+      method: 'PUT',
       headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json'
       },
-        body: JSON.stringify({category, date, usersid, price, description, photos, title, latitude, longitude})
+        body: JSON.stringify({category, date, price, description, photos, title, latitude, longitude})
       })
       .then((response)=>response.json())
       .then((json)=> console.log('received this from the server', json))
       .catch(function(ex) {
         console.log('parsing failed', ex)
       })
-    }
   }
 
   postEquip (){
     this.uploadImage(this.state.imageUri)
-    .then(() => this.geocodeAddress())
-    .then(() => this.getDate()) 
+    .then(() => this.geocodeAddress())    
+    .then(() => this.getDate())     
     .then(() => this.submitPost())
     .then(() => this.setState({
       category: '',
@@ -221,6 +217,29 @@ class Post extends Component {
       console.log('submit post failed', ex)
     })
   }
+  deleteEquip(){
+
+  }
+
+  componentWillMount(){
+    var self = this
+    if(this.props.equipid){ 
+      fetch(serverUrl+"/api/v1/equip/detail/" + this.props.equipid, {method: "GET"})
+      .then((response) => response.json())
+      .then((responseData) => {
+        var thumbNail = responseData[0].photos.split(' ')
+        self.setState({
+          category: responseData[0].category, 
+          title: responseData[0].title, 
+          price: responseData[0].price, 
+          description: responseData[0].description,
+          latitude: responseData[0].latitude,
+          longitude: responseData[0].longitude,
+          photos: this.state.photos.concat(thumbNail)
+        })
+      }).catch(err => console.log(err))
+    }
+  } 
 
   render() {
     const menu = <Menu navigator={this.props.navigator} setUsersid={this.props.setUsersid}/>
@@ -270,12 +289,14 @@ class Post extends Component {
               onChangeText={(description) => this.setState({description})}
               value={this.state.description}
             />
-            {this.state.useLocation ? <Text /> : <TextInput
-                          placeholder="Location"
-                          style={ loginPostStyles.inputBar }
-                          onChangeText={(address) => this.setState({address})}
-                          value={this.state.address}
-                        />
+            {this.state.useLocation ? 
+              <Text /> : 
+              <TextInput
+                placeholder="Location"
+                style={ loginPostStyles.inputBar }
+                onChangeText={(address) => this.setState({address})}
+                value={this.state.address}
+              />
             }
             <View style={ loginPostStyles.switchContainer }>
               <Switch
@@ -300,7 +321,12 @@ class Post extends Component {
           </View>
           <TouchableOpacity style={ loginPostStyles.loginBtn } onPress={ () => this.postEquip()}>
             <Text style={ homeStyles.textWhite }>
-              Post your listing
+              Update listing
+            </Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={ loginPostStyles.deleteBtn } onPress={ () => this.deleteEquip()}>
+            <Text style={ homeStyles.textWhite }>
+              Delete listing
             </Text>
           </TouchableOpacity>
           </ScrollView>
@@ -318,4 +344,4 @@ class Post extends Component {
   }
 }
 
-module.exports = Post
+module.exports = UpdateEquip

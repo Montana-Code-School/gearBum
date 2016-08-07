@@ -74,7 +74,7 @@ class SearchGear extends Component {
   }
 
   render() {
-    const menu = <Menu navigator={this.props.navigator} setEmail={this.props.setEmail}/>
+    const menu = <Menu navigator={this.props.navigator} setUsersid={this.props.setUsersid}/>
     return (
       <SideMenu
         usersid={this.props.usersid}

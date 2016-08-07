@@ -40,6 +40,16 @@ class SelectedListing extends Component {
     })
   }
 
+  getUserName(){
+    console.log('get username', this.state.selectedEquip.usersid)
+    fetch(serverUrl + "/api/v1/getUsers/" + this.state.selectedEquip.usersid, {method: "GET"})
+    .then((response) => response.json())
+    .then((responseData) => {
+      console.log("FETCH ON PROFILE BY ID", responseData)
+      this.setState({username: responseData[0].username})
+    }).catch(err => console.log(err))
+  }
+
   componentWillMount(){
     var self = this
     if(this.props.equipid){ 
@@ -53,7 +63,7 @@ class SelectedListing extends Component {
           var long = Number(this.state.selectedEquip.longitude)
           self.setState({displayLat: lat})
           self.setState({displayLong: long})
-        })
+        }).then(() => this.getUserName())
         .catch(err => console.log(err))
     }
   }
@@ -76,7 +86,7 @@ class SelectedListing extends Component {
   }
 
  render() {
-  const menu = <Menu navigator={this.props.navigator}  setEmail={this.props.setEmail}/>
+  const menu = <Menu navigator={this.props.navigator}  setUsersid={this.props.setUsersid}/>
 	return (
     <SideMenu
         menu={menu}
@@ -109,7 +119,7 @@ class SelectedListing extends Component {
                   onPress={() => this.toProfilePage()}
                 >
                   <Text style={ selectedListingStyles.userInfoText }>
-                    {this.state.selectedEquip.usersid}
+                    {this.state.username}
                   </Text>
                 </TouchableOpacity>
               </View>

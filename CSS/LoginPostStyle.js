@@ -83,6 +83,15 @@ const loginPostStyles = EStyleSheet.create({
     backgroundColor: red,
     justifyContent: 'center',
   },
+  deleteBtn: {
+    marginTop: 10,
+    alignSelf: 'center',
+    width: vw(95),
+    height: 40,
+    alignItems: 'center',
+    backgroundColor: red,
+    justifyContent: 'center',
+  },
   bodyContainer: {
   	alignItems: 'center',
   },

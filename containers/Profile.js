@@ -38,7 +38,7 @@ class ProfilePage extends Component {
       name: name,
       passProps: {
         name: name,
-        equipid
+        equipid,
       }
     })
   }
@@ -71,7 +71,8 @@ class ProfilePage extends Component {
 
   fetchGear(){
     var self = this
-    fetch(serverUrl+"/api/v1/equip/userGear/" + this.props.usersid, {method: "GET"})
+    const id = !this.props.providerid ? this.props.usersid : this.props.providerid
+    fetch(serverUrl+"/api/v1/equip/userGear/" + id, {method: "GET"})
       .then((response) => response.json())
       .then((responseData) => {
         this.setState({gear: responseData})
@@ -95,12 +96,18 @@ class ProfilePage extends Component {
   }
 
   toSelectedListing(equipid) {
-    console.log("EQUIPID in toSelectedListing", equipid)
-    this._navigate('SelectedListing', equipid)
+    console.log('providerid', this.props.providerid, 'usersid', this.state.usersid)
+    if (parseInt(this.props.providerid) === parseInt(this.state.usersid)) {
+      this._navigate('UpdateEquip', equipid)
+    } else if(!this.props.providerid){
+      this._navigate('UpdateEquip', equipid)
+    } else {
+      this._navigate('SelectedListing', equipid)
+    }
   }
 
   render() {
-    const menu = <Menu navigator={this.props.navigator}  setEmail={this.props.setEmail}/>
+    const menu = <Menu navigator={this.props.navigator} setUsersid={this.props.setUsersid}/>
     return (
       <SideMenu
         menu={menu}
@@ -145,13 +152,16 @@ class ProfilePage extends Component {
             )
           })}
         </View>          
-        {!this.props.providerid ? <TouchableOpacity
+        {!this.props.providerid ? 
+          <TouchableOpacity
           style={ profileStyles.loginBtn } 
           onPress={() => this.setState({toggleDisplay: !this.state.toggleDisplay})}>
             <Text style={ homeStyles.textWhite }>
               {this.state.toggleDisplay ? 'Edit Profile' : 'View Profile'}
             </Text>
-          </TouchableOpacity> : <Text />}
+          </TouchableOpacity> : 
+          <Text />
+        }
         <Button
          style={ homeStyles.menuIconContainer} 
          onPress={() => this.toggle()}>

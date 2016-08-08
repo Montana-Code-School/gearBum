@@ -54,12 +54,17 @@ class ProfileForm extends Component {
       <View>
         <View style={ formStyles.toggleContainer }>
           <TextInput
-            placeholder='Email'
             style={ formStyles.inputBar }
             onChangeText={(email) => this.setState({email})}
             value={this.state.email}
           />
-          <View />
+          <TextInput
+            placeholder='Password'
+            secureTextEntry={true}
+            style={ formStyles.inputBar }
+            onChangeText={(password) => this.setState({password})}
+            value={this.state.password}
+          />
           <TextInput
             placeholder='Username'
             style={ formStyles.inputBar }

@@ -78,6 +78,13 @@ const profileStyles = EStyleSheet.create({
     fontSize: 10,
     backgroundColor: 'rgba(0,0,0,.3)',
   },
+   noGearText: {
+    paddingTop: 3,
+    textAlign: 'center',
+    height: 20,
+    marginTop: 10,
+    fontSize: 10,
+  },
   loginBtn: {
     marginTop: 10,
     alignSelf: 'center',

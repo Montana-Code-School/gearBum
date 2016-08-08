@@ -12,6 +12,7 @@ import {
   NativeModules,
   ScrollView,
   MapView,
+  AlertIOS,
 } from 'react-native';
 var PickerItemIOS = PickerIOS.Item;
 import Geocoder from 'react-native-geocoder';
@@ -143,7 +144,7 @@ class UpdateEquip extends Component {
   getImage(uri){
     this.setState({imageUri: this.state.imageUri.concat([uri])})
   }
-  
+
   geocodeAddress(){
     return new Promise((resolve, reject) => {
       console.log("ADDRESS", this.state.address)
@@ -157,10 +158,9 @@ class UpdateEquip extends Component {
       if(this.state.address && !this.state.useLocation){
         Geocoder.geocodeAddress(this.state.address).then(res => {
           self.setState({latitude: res[0].position.lat, longitude: res[0].position.lng})
-          console.log('got some latitudes, dudes.')
+          resolve({latitude: res[0].position.lat, longitude: res[0].position.lng})
         })
       }
-      resolve()
     }) 
   }
 
@@ -177,10 +177,10 @@ class UpdateEquip extends Component {
       })
   }
 
-  submitPost(){
+  updatePost(){
       const {category, date, price, description, photos, title, latitude, longitude } = this.state
       console.log(this.state)
-      fetch(serverUrl + "/api/v1/equip/create", {
+      fetch(serverUrl + "/api/v1/equip/" + this.props.equipid, {
       method: 'PUT',
       headers: {
         'Accept': 'application/json',
@@ -199,7 +199,7 @@ class UpdateEquip extends Component {
     this.uploadImage(this.state.imageUri)
     .then(() => this.geocodeAddress())    
     .then(() => this.getDate())     
-    .then(() => this.submitPost())
+    .then(() => this.updatePost())
     .then(() => this.setState({
       category: '',
       title: '',
@@ -217,8 +217,31 @@ class UpdateEquip extends Component {
       console.log('submit post failed', ex)
     })
   }
-  deleteEquip(){
 
+  deleteEquip(){
+    AlertIOS.alert(
+      'Delete Listing',
+      'Are you sure you want to delete this listing?',
+      [
+        {text: 'Cancel', onPress: () => console.log('Cancel Pressed'), style: 'cancel'},
+        {text: 'OK', onPress: () => this.deleteRoute()},
+      ],
+    );
+  }
+
+  deleteRoute(){
+    fetch(serverUrl + "/api/v1/equip/" + this.props.equipid, {
+      method: 'DELETE',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+    }})
+    .then(function(response) {
+      return response.json()
+    }).then(() => this._navigate('ProfilePage')
+    ).catch(function(ex) {
+      console.log('parsing failed', ex)
+    }) 
   }
 
   componentWillMount(){
@@ -227,14 +250,18 @@ class UpdateEquip extends Component {
       fetch(serverUrl+"/api/v1/equip/detail/" + this.props.equipid, {method: "GET"})
       .then((response) => response.json())
       .then((responseData) => {
+        var lat = Number(responseData[0].latitude)
+        var lng = Number(responseData[0].longitude)
+        Geocoder.geocodePosition({lat, lng}).then( res => {
+          var address = res[0].locality + ', ' + res[0].adminArea
+          self.setState({address: address})
+        })
         var thumbNail = responseData[0].photos.split(' ')
         self.setState({
           category: responseData[0].category, 
           title: responseData[0].title, 
           price: responseData[0].price, 
           description: responseData[0].description,
-          latitude: responseData[0].latitude,
-          longitude: responseData[0].longitude,
           photos: this.state.photos.concat(thumbNail)
         })
       }).catch(err => console.log(err))

@@ -102,20 +102,22 @@ class Login extends Component {
   }
 
   filterLogin(){
-    if(this.state.username !== ''){
-      this._navigate('ProfilePage', this.state.usersid)
+    if(!this.state.username){
+      this._navigate('ProfilePage', this.props.usersid)
     } else {
-    this._navigate('SearchGear', this.state.usersid)
+    this._navigate('SearchGear', this.props.usersid)
     }
   }
 
   getUserInfo(){
-    fetch(serverUrl+"/api/v1/getUsersEmail/" + this.state.email, {method: "GET"})
-      .then((response) => response.json())
-      .then((responseData) => {
-        this.setState({usersid: responseData[0].usersid, username: responseData[0].username, bio: responseData[0].bio, picture: responseData[0].picture})
-      }).then(()=> this.props.setUsersid(this.state.usersid))
-      .catch(err => console.log(err))
+    return fetch(serverUrl + "/api/v1/getUsersEmail/" + this.state.email, {method: "GET"})
+        .then((response) => response.json())
+        .then((responseData) => {
+          this.setState({usersid: responseData[0].usersid, username: responseData[0].username, bio: responseData[0].bio, picture: responseData[0].picture})
+        }).then(()=> {
+          this.props.setUsersid(this.state.usersid)
+          return Promise.resolve(true)
+        }).catch(err => console.log(err))
   }
 
   login(){

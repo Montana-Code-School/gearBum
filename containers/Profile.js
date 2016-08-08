@@ -70,9 +70,8 @@ class ProfilePage extends Component {
   }
 
   fetchGear(){
-    var self = this
     const id = !this.props.providerid ? this.props.usersid : this.props.providerid
-    fetch(serverUrl+"/api/v1/equip/userGear/" + id, {method: "GET"})
+    fetch(serverUrl + "/api/v1/equip/userGear/" + id, {method: "GET"})
       .then((response) => response.json())
       .then((responseData) => {
         this.setState({gear: responseData})
@@ -90,10 +89,23 @@ class ProfilePage extends Component {
       )
     } else {
       return(
-        <ProfileForm email={this.props.email} />
+        <ProfileForm email={this.state.email} />
       )
     }
   }
+
+  // displayGear (){
+  //   <View style={ profileStyles.userGearContainer }> 
+  //     {(() => {if(this.state.gear.length !== 0){
+  //       )
+  //     } else {
+  //       return (
+  //         <Text style={ profileStyles.noGearText }>You have no gear listed</Text>
+  //       )
+  //     }
+  //   })()}
+  // </View>
+  // }
 
   toSelectedListing(equipid) {
     console.log('providerid', this.props.providerid, 'usersid', this.state.usersid)
@@ -129,29 +141,32 @@ class ProfilePage extends Component {
             {this.state.username ? this.state.username : 'GearBum User'}'s Gear
           </Text>
         </View>
-        <View style={ profileStyles.userGearContainer }>
-          {this.state.gear.map((gear) => {
-            var thumbNail = gear.photos.split(' ')
-            return (
-              <TouchableOpacity
-                style={ profileStyles.userGearTouch }
-                key={gear.equipid}
-                onPress={() => this.toSelectedListing(gear.equipid)}
-              >
-                <Image
-                  key={`image-${gear.equipid}`}
-                  style={ profileStyles.userGearImg }
-                  source={{uri: thumbNail[0]}}>
-                  <Text 
-                    style={ profileStyles.userGearText }
-                    key={gear.equipid}>
-                    {gear.location} {gear.price}
-                  </Text>
-                </Image>
-              </TouchableOpacity>
-            )
-          })}
-        </View>          
+        {this.state.gear.length !== 0 ?
+          <View style={ profileStyles.userGearContainer }> 
+            {this.state.gear.map((gear) => {
+              var thumbNail = gear.photos.split(' ')
+              return (
+                <TouchableOpacity
+                  style={ profileStyles.userGearTouch }
+                  key={gear.equipid}
+                  onPress={() => this.toSelectedListing(gear.equipid)}
+                >
+                  <Image
+                    key={`image-${gear.equipid}`}
+                    style={ profileStyles.userGearImg }
+                    source={{uri: thumbNail[0]}}>
+                    <Text 
+                      style={ profileStyles.userGearText }
+                      key={gear.equipid}>
+                      {gear.location} {gear.price}
+                    </Text>
+                  </Image>
+                </TouchableOpacity> 
+              )
+            })}
+          </View> :
+          <Text style={ profileStyles.noGearText }>You have no gear listed</Text>
+        }       
         {!this.props.providerid ? 
           <TouchableOpacity
           style={ profileStyles.loginBtn } 

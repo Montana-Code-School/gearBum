@@ -21,19 +21,16 @@ class Menu extends Component {
     };
   }
 
-  _navigate(name, providerid) {
+  _navigate(name) {
     this.props.navigator.push({
       name: name,
       passProps: {
         name: name,
-        providerid: providerid
       }
     })
   }
 
   logout() {
-    console.log('PROPS OF SIDE MENU', this.props.navigator.setUsersid)
-    var self = this
     this.props.setUsersid(null);
     fetch(serverUrl + "/api/v1/logout", {method: "GET"})
       .then(() => this._navigate('Login'))
@@ -50,7 +47,7 @@ class Menu extends Component {
       </View>
         <View style={ homeStyles.sideMenuContainer }>
           <TouchableOpacity 
-            onPress={ () => this._navigate('ProfilePage', this.props.usersid)}  
+            onPress={ () => this._navigate('ProfilePage')}  
             style={ homeStyles.sideMenuLinks }>
             <Text style={ homeStyles.sideMenuText }>
               My Profile

@@ -31,10 +31,10 @@ class Post extends Component {
     super(props);
     this.state = {
       categoryList: ['Bike', 'Snow', 'Camp', 'Boat', 'Golf'],
-      category: 'Bike',
-      title: 'Road Bike',
-      price: '45',
-      description: 'really fast bike',
+      category: '',
+      title: '',
+      price: '',
+      description: '',
       useLocation: false,
       latitude: 0,
       longitude: 0,
@@ -159,10 +159,9 @@ class Post extends Component {
       if(this.state.address && !this.state.useLocation){
         Geocoder.geocodeAddress(this.state.address).then(res => {
           self.setState({latitude: res[0].position.lat, longitude: res[0].position.lng})
-          console.log('got some latitudes, dudes.')
+          resolve({latitude: res[0].position.lat, longitude: res[0].position.lng})
         })
       }
-      resolve()
     }) 
   }
 

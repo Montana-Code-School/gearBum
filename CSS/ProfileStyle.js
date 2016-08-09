@@ -39,6 +39,9 @@ const profileStyles = EStyleSheet.create({
     color: 'grey',
     margin: 15,
   },
+  scrollView: {
+    height: vh(65),
+  },
   descriptionHeaderContainer: {
     justifyContent: 'center',
     alignItems: 'center',

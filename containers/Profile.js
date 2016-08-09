@@ -4,6 +4,7 @@ import {
   Text,
   TouchableOpacity,
   View,
+  ScrollView,
   Image,
   TextInput
 } from 'react-native';
@@ -94,19 +95,6 @@ class ProfilePage extends Component {
     }
   }
 
-  // displayGear (){
-  //   <View style={ profileStyles.userGearContainer }> 
-  //     {(() => {if(this.state.gear.length !== 0){
-  //       )
-  //     } else {
-  //       return (
-  //         <Text style={ profileStyles.noGearText }>You have no gear listed</Text>
-  //       )
-  //     }
-  //   })()}
-  // </View>
-  // }
-
   toSelectedListing(equipid) {
     console.log('providerid', this.props.providerid, 'usersid', this.state.usersid)
     if (parseInt(this.props.providerid) === parseInt(this.state.usersid)) {
@@ -135,48 +123,50 @@ class ProfilePage extends Component {
              About {this.state.username ? this.state.username : 'GearBum User'}
           </Text>
         </View>
+        <ScrollView style={ profileStyles.scrollView}>
         {this.display()}
         <View style={ profileStyles.descriptionHeaderContainer}>
           <Text style={ homeStyles.textWhite}>
             {this.state.username ? this.state.username : 'GearBum User'}'s Gear
           </Text>
         </View>
-        {this.state.gear.length !== 0 ?
-          <View style={ profileStyles.userGearContainer }> 
-            {this.state.gear.map((gear) => {
-              var thumbNail = gear.photos.split(' ')
-              return (
-                <TouchableOpacity
-                  style={ profileStyles.userGearTouch }
-                  key={gear.equipid}
-                  onPress={() => this.toSelectedListing(gear.equipid)}
-                >
-                  <Image
-                    key={`image-${gear.equipid}`}
-                    style={ profileStyles.userGearImg }
-                    source={{uri: thumbNail[0]}}>
-                    <Text 
-                      style={ profileStyles.userGearText }
-                      key={gear.equipid}>
-                      {gear.location} {gear.price}
-                    </Text>
-                  </Image>
-                </TouchableOpacity> 
-              )
-            })}
-          </View> :
-          <Text style={ profileStyles.noGearText }>You have no gear listed</Text>
-        }       
-        {!this.props.providerid ? 
-          <TouchableOpacity
-          style={ profileStyles.loginBtn } 
-          onPress={() => this.setState({toggleDisplay: !this.state.toggleDisplay})}>
-            <Text style={ homeStyles.textWhite }>
-              {this.state.toggleDisplay ? 'Edit Profile' : 'View Profile'}
-            </Text>
-          </TouchableOpacity> : 
-          <Text />
-        }
+          {this.state.gear.length !== 0 ?
+            <View style={ profileStyles.userGearContainer }> 
+              {this.state.gear.map((gear) => {
+                var thumbNail = gear.photos.split(' ')
+                return (
+                  <TouchableOpacity
+                    style={ profileStyles.userGearTouch }
+                    key={gear.equipid}
+                    onPress={() => this.toSelectedListing(gear.equipid)}
+                  >
+                    <Image
+                      key={`image-${gear.equipid}`}
+                      style={ profileStyles.userGearImg }
+                      source={{uri: thumbNail[0]}}>
+                      <Text 
+                        style={ profileStyles.userGearText }
+                        key={gear.equipid}>
+                        {gear.location} {gear.price}
+                      </Text>
+                    </Image>
+                  </TouchableOpacity> 
+                )
+              })}
+            </View> :
+            <Text style={ profileStyles.noGearText }>You have no gear listed</Text>
+          }       
+          {!this.props.providerid ? 
+            <TouchableOpacity
+            style={ profileStyles.loginBtn } 
+            onPress={() => this.setState({toggleDisplay: !this.state.toggleDisplay})}>
+              <Text style={ homeStyles.textWhite }>
+                {this.state.toggleDisplay ? 'Edit Profile' : 'View Profile'}
+              </Text>
+            </TouchableOpacity> : 
+            <Text />
+          }
+        </ScrollView>
         <Button
          style={ homeStyles.menuIconContainer} 
          onPress={() => this.toggle()}>

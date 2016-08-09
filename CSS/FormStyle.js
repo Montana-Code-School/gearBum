@@ -86,6 +86,7 @@ const formStyles = EStyleSheet.create({
     alignItems: 'center',
     backgroundColor: red,
     justifyContent: 'center',
+    margin: 10,
   },
   bodyContainer: {
   	alignItems: 'center',

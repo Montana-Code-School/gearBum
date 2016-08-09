@@ -41,17 +41,16 @@ const filterStyles = StyleSheet.create({
     height:100
   },
   backBtnContainer: {
-    borderColor: 'black',
-    borderWidth: 1,
     alignItems: 'center',
     justifyContent: 'center',
     margin: 20,
-    height: 40,
-    width: 100,
+    width: vw(50),
+    height: vh(7),
   },
   backBtn: {
-    height: 38,
-    width: 98,
+    backgroundColor: red,
+    width: vw(50),
+    height: vh(7),
     alignItems: 'center',    
     justifyContent: 'center',
 

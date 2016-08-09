@@ -106,6 +106,11 @@ class UpdateEquip extends Component {
     }      
   }
 
+  selectPhotos(){
+    this.setState({displayAddPhotos: !this.state.displayAddPhotos})
+    this.setState({imageUri: []})
+  }
+
   uploadImage(uri){
     return new Promise((resolve, reject) =>{
       this.setState({displayAddPhotos: false})
@@ -338,7 +343,7 @@ class UpdateEquip extends Component {
             </View>
             <TouchableOpacity
               style={ loginPostStyles.loginBtn } 
-              onPress={ () => this.setState({displayAddPhotos: !this.state.displayAddPhotos})}
+              onPress={ () => this.selectPhotos()}
             >
               <Text style={ homeStyles.textWhite }>
                 Select Photo

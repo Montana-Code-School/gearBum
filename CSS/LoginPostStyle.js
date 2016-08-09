@@ -35,8 +35,8 @@ const loginPostStyles = EStyleSheet.create({
   },
   inputBar: {
     alignSelf: 'center',
-    height: 40,
-    width: vw(95),
+    height: vh(6),
+    width: vw(80),
     borderColor: 'black',
     borderWidth: 1,
     marginBottom: 15,
@@ -44,8 +44,8 @@ const loginPostStyles = EStyleSheet.create({
   },
    inputArea: {
     alignSelf: 'center',
-    height: 150,
-    width: vw(95),
+    height: vh(11),
+    width: vw(80),
     borderColor: 'black',
     borderWidth: 1,
     marginBottom: 15,
@@ -55,7 +55,7 @@ const loginPostStyles = EStyleSheet.create({
     flex: 1,
     flexDirection: 'row',
     justifyContent: 'flex-start',
-    width: vw(95),
+    width: vw(80),
     alignItems: 'center',
     marginBottom: 15,
   },
@@ -77,7 +77,7 @@ const loginPostStyles = EStyleSheet.create({
   },
   loginBtn: {
     alignSelf: 'center',
-    width: vw(95),
+    width: vw(80),
     height: 40,
     alignItems: 'center',
     backgroundColor: red,
@@ -86,7 +86,7 @@ const loginPostStyles = EStyleSheet.create({
   deleteBtn: {
     marginTop: 10,
     alignSelf: 'center',
-    width: vw(95),
+    width: vw(80),
     height: 40,
     alignItems: 'center',
     backgroundColor: red,

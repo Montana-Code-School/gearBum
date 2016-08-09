@@ -9,6 +9,7 @@ import {
   Image,
 } from 'react-native';
 import ParallaxScrollView from 'react-native-parallax-scroll-view';
+import Gravatar from 'react-native-avatar-gravatar';
 import selectedListingStyles from '../CSS/SelectedListingStyles';
 import homeStyles from '../CSS/HomeStyle';
 import Menu from '../components/SideMenu';
@@ -25,7 +26,9 @@ class SelectedListing extends Component {
       selectedEquip: {},
       displayPhoto: [],
       displayLat: 0,
-      displayLong: 0
+      displayLong: 0,
+      username: '',
+      email: ''
     };
   }
 
@@ -46,7 +49,7 @@ class SelectedListing extends Component {
     .then((response) => response.json())
     .then((responseData) => {
       console.log("FETCH ON PROFILE BY ID", responseData)
-      this.setState({username: responseData[0].username})
+      this.setState({username: responseData[0].username, email: responseData[0].email})
     }).catch(err => console.log(err))
   }
 
@@ -123,11 +126,9 @@ class SelectedListing extends Component {
                   </Text>
                 </TouchableOpacity>
               </View>
-              <View style={ selectedListingStyles.userImgContainer }>
-                <Image
-                  style={ selectedListingStyles.userImg }
-                  source={{uri: 'http://lorempixel.com/output/people-q-c-640-480-9.jpg'}}/>
-              </View>
+            <View>
+              <Gravatar emailAddress={this.state.email} size={80} mask='circle' />
+            </View>
             </View>
             <View style={ homeStyles.hr }/>
             <Text style={ selectedListingStyles.equipText }>
@@ -137,6 +138,12 @@ class SelectedListing extends Component {
               style={ homeStyles.map }
               region={{latitude: this.state.displayLat, longitude: this.state.displayLong, latitudeDelta: 0.025, longitudeDelta: 0.025}}
               annotations={[{latitude: this.state.displayLat, longitude: this.state.displayLong}]}/>
+            <View style={ selectedListingStyles.mailContainer }>
+              <Image
+                style={ selectedListingStyles.mailImg } 
+                source={require('../img/mail.png')} />
+              <Text style={ selectedListingStyles.mailText }>Contact {this.state.username} to reserve this gear</Text>
+            </View>
           </View>
         </ParallaxScrollView>
   	  </View>

@@ -184,25 +184,28 @@ class Login extends Component {
              source={require('../img/gearBumlogo1.png')} 
              />
             <Text style={homeStyles.welcome}>
-              Welcome to Gear Bum!
+              Welcome to GEARBUM!
             </Text>
           </View>
         <View style={ loginPostStyles.bodyContainer }>
           <View style={ loginPostStyles.toggleContainer }>
-            <TouchableOpacity 
-              onPress={ () => this.setState({toggleDisplay: true})}
-              style={ loginPostStyles.toggleBtn }>
-              <Text style={ homeStyles.textWhite }>
-                Login
-              </Text>
-            </TouchableOpacity>
-            <TouchableOpacity 
-              onPress={ () => this.setState({toggleDisplay: false})}
-              style={ loginPostStyles.toggleBtn }>  
-              <Text style={ homeStyles.textWhite }>
-                Create Account
-              </Text>  
-            </TouchableOpacity>
+            {!this.state.toggleDisplay ?
+              <TouchableOpacity 
+                onPress={ () => this.setState({toggleDisplay: true})}
+                style={ loginPostStyles.toggleBtn }>
+                <Text style={ homeStyles.textWhite }>
+                  Back to Login
+                </Text>
+              </TouchableOpacity> 
+              :
+              <TouchableOpacity 
+                onPress={ () => this.setState({toggleDisplay: false})}
+                style={ loginPostStyles.toggleBtn }>  
+                <Text style={ homeStyles.textWhite }>
+                  Create Account
+                </Text>  
+              </TouchableOpacity>
+            }
           </View>
           {this.display()}
         </View>

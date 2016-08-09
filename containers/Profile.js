@@ -58,7 +58,7 @@ class ProfilePage extends Component {
     this.setState({ isOpen, });
   }
 
-  componentDidMount(){
+  componentWillMount(){
     console.log("ID", this.props.usersid)
     const id = !this.props.providerid ? this.props.usersid : this.props.providerid
     fetch(serverUrl + "/api/v1/getUsers/" + id, {method: "GET"})
@@ -114,20 +114,20 @@ class ProfilePage extends Component {
         isOpen={this.state.isOpen}
         onChange={(isOpen) => this.updateMenuState(isOpen)}>
         <View style={ profileStyles.profileContainer }>
-        <Gravatar emailAddress={this.state.email}  size={140} mask='circle' />
+          <Gravatar emailAddress={this.state.email}  size={140} mask='circle' />
         <Text style={ profileStyles.userName }>
-           {this.state.username ? this.state.username : 'GearBum User'}
+           {this.state.username ? this.state.username : 'GEARBUM User'}
         </Text>
         <View style={ profileStyles.descriptionHeaderContainer}>
           <Text style={ homeStyles.textWhite}>
-             About {this.state.username ? this.state.username : 'GearBum User'}
+             About {this.state.username ? this.state.username : 'GEARBUM User'}
           </Text>
         </View>
         <ScrollView style={ profileStyles.scrollView}>
         {this.display()}
         <View style={ profileStyles.descriptionHeaderContainer}>
           <Text style={ homeStyles.textWhite}>
-            {this.state.username ? this.state.username : 'GearBum User'}'s Gear
+            {this.state.username ? this.state.username : 'GEARBUM User'}'s Gear
           </Text>
         </View>
           {this.state.gear.length !== 0 ?

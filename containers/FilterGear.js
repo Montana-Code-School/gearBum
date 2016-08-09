@@ -10,6 +10,7 @@ import {
   ScrollView,
 } from 'react-native';
 import findGearStyles from '../CSS/FindGearStyles';
+import loginPostStyles from '../CSS/LoginPostStyle';
 import filterStyles from '../CSS/FilterStyles';
 import homeStyles from '../CSS/HomeStyle';
 import {serverUrl} from '../constants/serverConstants';
@@ -97,7 +98,7 @@ class FilterGear extends Component {
             <TouchableOpacity
               style={ filterStyles.backBtn } 
               onPress={()=> this.setState({results: []})}>
-              <Text style={ filterStyles.backBtnText }>
+              <Text style={ homeStyles.textWhite }>
                 Back
               </Text>
             </TouchableOpacity>

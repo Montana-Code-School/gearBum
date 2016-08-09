@@ -70,23 +70,15 @@ const selectedListingStyles = EStyleSheet.create({
   },
   userInfoText: {
     textAlign: 'left',
-    fontSize: 12,
-    lineHeight: 16,
+    fontSize: 16,
+    lineHeight: 18,
   },
   userImgContainer: {
-    height: 40,
-    width: 40,
-    borderRadius: 40,
     overflow: 'hidden',
-  },
-  userImg: {
-    height: 40,
-    width: 40,
-    resizeMode: 'cover',
   },
   equipText: {
     padding: 15,
-    fontSize: 12,
+    fontSize: 14,
     fontWeight: '200',
     lineHeight: 18,
   },
@@ -94,6 +86,23 @@ const selectedListingStyles = EStyleSheet.create({
     height: 200,
     width: vw(100),
   },
+  mailContainer: {
+    marginTop: 10,
+    height: 60,
+    flex: 1,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  mailImg: {
+    width: vw(10),
+    height: vw(10),
+    marginRight: 5,
+  },
+  mailText: {
+    fontSize: 16,
+    lineHeight: 18,
+  },  
 })
 
   module.exports = selectedListingStyles

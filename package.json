@@ -8,6 +8,7 @@
   "dependencies": {
     "react": "15.2.1",
     "react-native": "^0.31.0-rc.1",
+    "react-native-avatar-gravatar": "0.0.4",
     "react-native-aws3": "0.0.2",
     "react-native-extended-stylesheet": "^0.3.0",
     "react-native-geocoder": "^0.4.3",

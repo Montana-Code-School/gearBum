@@ -166,7 +166,7 @@ class ProfilePage extends Component {
                 {this.state.toggleDisplay ? 'Edit Profile' : 'View Profile'}
               </Text>
             </TouchableOpacity> : 
-            <Text />
+            <Text style={ profileStyles.noEdit }/>
           }
         </ScrollView>
       </View>

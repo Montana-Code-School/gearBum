@@ -96,6 +96,10 @@ const profileStyles = EStyleSheet.create({
     alignItems: 'center',
     backgroundColor: red,
     justifyContent: 'center',
+    marginBottom: 30,
+  },
+  noEdit: {
+    marginBottom: 30,
   },
 })
 

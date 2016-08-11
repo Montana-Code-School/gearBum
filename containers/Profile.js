@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import ReactNative from 'react-native';
 import {
   StyleSheet,
   Text,
@@ -6,6 +7,7 @@ import {
   View,
   ScrollView,
   Image,
+  findNodeHandle,
   TextInput
 } from 'react-native';
 import findGearStyles from '../CSS/FindGearStyles';
@@ -90,7 +92,7 @@ class ProfilePage extends Component {
       )
     } else {
       return(
-        <ProfileForm email={this.state.email} />
+        <ProfileForm toggleDisplay={()=> this.setState({toggleDisplay: !this.state.toggleDisplay})} email={this.state.email} username={this.state.username} bio={this.state.bio} />
       )
     }
   }
@@ -113,16 +115,16 @@ class ProfilePage extends Component {
         menu={menu}
         isOpen={this.state.isOpen}
         onChange={(isOpen) => this.updateMenuState(isOpen)}>
+        <View style={ homeStyles.headerContainer }>
+          <Text style={ homeStyles.headerText }>
+            GEARBUM
+          </Text>
+        </View>
         <View style={ profileStyles.profileContainer }>
           <Gravatar emailAddress={this.state.email}  size={140} mask='circle' />
         <Text style={ profileStyles.userName }>
            {this.state.username ? this.state.username : 'GEARBUM User'}
         </Text>
-        <View style={ profileStyles.descriptionHeaderContainer}>
-          <Text style={ homeStyles.textWhite}>
-             About {this.state.username ? this.state.username : 'GEARBUM User'}
-          </Text>
-        </View>
         <ScrollView style={ profileStyles.scrollView}>
         {this.display()}
         <View style={ profileStyles.descriptionHeaderContainer}>
@@ -167,15 +169,15 @@ class ProfilePage extends Component {
             <Text />
           }
         </ScrollView>
-        <Button
+      </View>
+      <Button
          style={ homeStyles.menuIconContainer} 
          onPress={() => this.toggle()}>
           <Image
             style={ homeStyles.imgMenuIcon}
-            source={require('../img/gear.png')} 
+            source={require('../img/whiteGear.png')} 
           />
         </Button>
-      </View>
       </SideMenu>
     )
   }

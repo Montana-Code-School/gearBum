@@ -7,6 +7,7 @@ import {
   View,
   TextInput,
   AlertIOS,
+  ScrollView,
   Image,
 } from 'react-native';
 import loginPostStyles from '../CSS/LoginPostStyle';
@@ -178,15 +179,14 @@ class Login extends Component {
   render() {
     return (
       <View style={ loginPostStyles.mainPost }>
+      <ScrollView style={ loginPostStyles.scrollViewLogin}>
         <View style={homeStyles.container}>
-            <Image
-             resizeMode="stretch"
-             source={require('../img/gearBumlogo1.png')} 
-             />
-            <Text style={homeStyles.welcome}>
-              Welcome to GEARBUM!
-            </Text>
-          </View>
+          <Image
+            style={ loginPostStyles.logoImg }
+           resizeMode="contain"
+           source={require('../img/gearBumlogo1.png')} 
+           />
+        </View>
         <View style={ loginPostStyles.bodyContainer }>
           <View style={ loginPostStyles.toggleContainer }>
             {!this.state.toggleDisplay ?
@@ -209,6 +209,7 @@ class Login extends Component {
           </View>
           {this.display()}
         </View>
+      </ScrollView>
       </View>
     );
   }

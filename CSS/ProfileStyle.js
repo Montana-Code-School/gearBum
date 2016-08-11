@@ -20,7 +20,7 @@ const profileStyles = EStyleSheet.create({
     flex: 1,
     alignItems: 'center',
     backgroundColor: 'white',
-    paddingTop: 60,
+    paddingTop: 30,
     paddingBottom: 60,
   },
   imgContainer: {
@@ -51,7 +51,7 @@ const profileStyles = EStyleSheet.create({
   },
   descriptionContainer: {
     width: window.width,
-    backgroundColor: '#f6f6f6',
+    backgroundColor: '#d3d3d3',
     padding: 30,
     alignItems: 'center'
   },

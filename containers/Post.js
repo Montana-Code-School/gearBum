@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import ReactNative from 'react-native';
 import {
   StyleSheet,
   Switch,
@@ -11,6 +12,7 @@ import {
   PickerIOS,
   NativeModules,
   ScrollView,
+  findNodeHandle,
   MapView,
 } from 'react-native';
 var PickerItemIOS = PickerIOS.Item;
@@ -31,7 +33,7 @@ class Post extends Component {
     super(props);
     this.state = {
       categoryList: ['Bike', 'Snow', 'Camp', 'Boat', 'Golf'],
-      category: '',
+      category: 'Bike',
       title: '',
       price: '',
       description: '',
@@ -191,6 +193,7 @@ class Post extends Component {
         body: JSON.stringify({category, date, usersid, price, description, photos, title, latitude, longitude})
       })
       .then((response)=>response.json())
+      .then(() => this._navigate('SearchGear'))
       .then((json)=> console.log('received this from the server', json))
       .catch(function(ex) {
         console.log('parsing failed', ex)
@@ -203,22 +206,20 @@ class Post extends Component {
     .then(() => this.geocodeAddress())
     .then(() => this.getDate()) 
     .then(() => this.submitPost())
-    .then(() => this.setState({
-      category: '',
-      title: '',
-      price: '',
-      description: '',
-      useLocation: false,
-      latitude: 0,
-      longitude: 0,
-      address: '',
-      imageUri: [],
-      photos: [],
-      displayAddPhotos: false
-    }))
     .catch(function(ex) {
       console.log('submit post failed', ex)
     })
+  }
+
+  inputFocused (refName) {
+    setTimeout(() => {
+      let scrollResponder = this.refs.scrollView.getScrollResponder();
+      scrollResponder.scrollResponderScrollNativeHandleToKeyboard(
+        findNodeHandle(this.refs[refName]),
+        110,
+        true
+      );
+    }, 50);
   }
 
   render() {
@@ -234,7 +235,7 @@ class Post extends Component {
             GEARBUM
           </Text>
         </View>
-        <ScrollView>
+        <ScrollView ref='scrollView'>
           <View style={ loginPostStyles.inputContainer }>
             <View>
               <Text>Please choose a gear category:</Text>
@@ -251,30 +252,39 @@ class Post extends Component {
                 </PickerIOS>
             </View>
             <TextInput
+              ref='title'
               placeholder="Title"
               style={ loginPostStyles.inputBar }
+              onFocus={() => this.inputFocused('title')}
               onChangeText={(title) => this.setState({title})}
               value={this.state.title}
             />
             <TextInput
+              ref='price'
               placeholder="Price"
               style={ loginPostStyles.inputBar }
+              onFocus={this.inputFocused.bind(this, 'price')}
               onChangeText={(price) => this.setState({price})}
               value={this.state.price}
             />
             <TextInput
+              ref='description'
               placeholder="Description"
               style={ loginPostStyles.inputArea }
               multiline = {true}
+              onFocus={this.inputFocused.bind(this, 'description')}
               onChangeText={(description) => this.setState({description})}
               value={this.state.description}
             />
-            {this.state.useLocation ? <Text /> : <TextInput
-                          placeholder="Location"
-                          style={ loginPostStyles.inputBar }
-                          onChangeText={(address) => this.setState({address})}
-                          value={this.state.address}
-                        />
+            {this.state.useLocation ? <Text /> : 
+              <TextInput
+                ref='location'
+                placeholder="Location"
+                style={ loginPostStyles.inputBar }
+                onFocus={this.inputFocused.bind(this, 'location')}
+                onChangeText={(address) => this.setState({address})}
+                value={this.state.address}
+              />
             }
             <View style={ loginPostStyles.switchContainer }>
               <Switch

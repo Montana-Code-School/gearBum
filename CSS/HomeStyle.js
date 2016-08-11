@@ -72,7 +72,7 @@ const homeStyles = EStyleSheet.create({
   menuIconContainer: {
     position: 'absolute',
     top: 30,
-    left: 30,
+    left: 20,
     width: 20,
     height: 20,
   },

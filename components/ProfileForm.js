@@ -1,12 +1,15 @@
 import React, { Component } from 'react';
+import ReactNative from 'react-native';
 import {
   StyleSheet,
   Text,
   TouchableHighlight,
   TouchableOpacity,
   View,
+  ScrollView,
   TextInput,
   AlertIOS,
+  findNodeHandle,
   Image,
 } from 'react-native';
 import formStyles from '../CSS/FormStyle';
@@ -19,8 +22,8 @@ class ProfileForm extends Component {
     super(props);
     this.state = {
       email: this.props.email,
-      username: '',
-      bio: '',
+      username: this.props.username,
+      bio: this.props.bio,
       picture: '',
     };
   }
@@ -35,45 +38,55 @@ class ProfileForm extends Component {
       },
       body: JSON.stringify({
         email : self.state.email,
-        password : self.state.password,
         username: self.state.username,
         bio: self.state.bio,
         picture: self.state.picture
       })
     }).then(function(response) {
       return response.json()
-    }).then(() => this.setState({toggleDisplay: !this.state.toggleDisplay})
+    }).then(() => this.props.toggleDisplay()
     ).catch(function(ex) {
       console.log("Profile Not Updated")
       console.log('parsing failed', ex)
     })
   }
 
+  inputFocused (refName) {
+    setTimeout(() => {
+      let scrollResponder = this.refs.scrollView.getScrollResponder();
+      scrollResponder.scrollResponderScrollNativeHandleToKeyboard(
+        findNodeHandle(this.refs[refName]),
+        110,
+        true
+      );
+    }, 50);
+  }
+
   render() {
     return (
-      <View>
+      <ScrollView ref='scrollView'>
         <View style={ formStyles.toggleContainer }>
           <TextInput
+            ref='email'
             style={ formStyles.inputBar }
+            onFocus={() => this.inputFocused('email')}
             onChangeText={(email) => this.setState({email})}
             value={this.state.email}
           />
           <TextInput
-            placeholder='Password'
-            secureTextEntry={true}
-            style={ formStyles.inputBar }
-            onChangeText={(password) => this.setState({password})}
-            value={this.state.password}
-          />
-          <TextInput
+            ref='username'
             placeholder='Username'
             style={ formStyles.inputBar }
+            onFocus={() => this.inputFocused('username')}
             onChangeText={(username) => this.setState({username})}
             value={this.state.username}
           />
           <TextInput
+            ref='bio'
             placeholder="Bio"
-            style={ formStyles.inputBar }
+            multiline = {true}
+            style={ formStyles.inputArea }
+            onFocus={() => this.inputFocused('bio')}
             onChangeText={(bio) => this.setState({bio})}
             value={this.state.bio}
           />
@@ -83,7 +96,7 @@ class ProfileForm extends Component {
               Update Profile
             </Text>
         </TouchableHighlight>
-      </View>
+      </ScrollView>
     );
   }
 }

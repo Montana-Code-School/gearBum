@@ -4,6 +4,7 @@ import {
   MapView,
   StyleSheet,
   Text,
+  Linking,
   TouchableOpacity,
   View,
   Image,
@@ -30,6 +31,26 @@ class SelectedListing extends Component {
       username: '',
       email: ''
     };
+  }
+
+  componentDidMount() {
+    Linking.addEventListener('url', this._handleOpenURL);
+  }
+  componentWillUnmount() {
+    Linking.removeEventListener('url', this._handleOpenURL);
+  }
+  _handleOpenURL(event) {
+    console.log(event.url);
+  }
+
+  handleClick() {
+    Linking.canOpenURL(`mailto:${this.state.email}?Subject=${this.state.selectedEquip.title}`).then(supported => {
+      if (supported) {
+        Linking.openURL(`mailto:${this.state.email}?Subject=${this.state.selectedEquip.title}`);
+      } else {
+        console.log('Don\'t know how to open URI: ' + `mailto:${this.state.email}`);
+      }
+    });
   }
 
   _navigate(name, providerid, display) {
@@ -139,10 +160,12 @@ class SelectedListing extends Component {
               region={{latitude: this.state.displayLat, longitude: this.state.displayLong, latitudeDelta: 0.025, longitudeDelta: 0.025}}
               annotations={[{latitude: this.state.displayLat, longitude: this.state.displayLong}]}/>
             <View style={ selectedListingStyles.mailContainer }>
-              <Image
-                style={ selectedListingStyles.mailImg } 
-                source={require('../img/mail.png')} />
-              <Text style={ selectedListingStyles.mailText }>Contact {this.state.username} to reserve this gear</Text>
+              <TouchableOpacity onPress={() => this.handleClick()}>
+                <Image
+                  style={ selectedListingStyles.mailImg } 
+                  source={require('../img/mail.png')} />
+                <Text style={ selectedListingStyles.mailText }>Contact {this.state.username} to reserve this gear</Text>
+              </TouchableOpacity>
             </View>
           </View>
         </ParallaxScrollView>

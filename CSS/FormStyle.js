@@ -47,7 +47,7 @@ const formStyles = EStyleSheet.create({
    inputArea: {
     alignSelf: 'center',
     height: 150,
-    width: vw(95),
+    width: vw(90),
     borderColor: 'black',
     borderWidth: 1,
     marginBottom: 15,
@@ -68,7 +68,7 @@ const formStyles = EStyleSheet.create({
   	alignItems:'center',
   	flex: 1,
     flexDirection: 'column',
-    backgroundColor: '#f6f6f6',
+    backgroundColor: '#d3d3d3',
     width: vw(100),
   },
   toggleBtn: {

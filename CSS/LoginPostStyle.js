@@ -26,6 +26,15 @@ const loginPostStyles = EStyleSheet.create({
     backgroundColor: 'white',
     paddingBottom: 50,
   },
+  scrollViewLogin: {
+    height: vh(80),
+    marginBottom: vh(30),
+    marginTop: vh(10),
+  },
+  logoImg:{
+    width: 150,
+    height: 150,
+  },
   inputContainer: {
     width: vw(100),
     alignItems: 'center',

@@ -121,7 +121,7 @@ class ProfilePage extends Component {
           </Text>
         </View>
         <View style={ profileStyles.profileContainer }>
-          <Gravatar emailAddress={this.state.email}  size={140} mask='circle' />
+          <Gravatar emailAddress={this.state.email}  size={250} mask='circle' />
         <Text style={ profileStyles.userName }>
            {this.state.username ? this.state.username : 'GEARBUM User'}
         </Text>

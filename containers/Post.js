@@ -32,8 +32,8 @@ class Post extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      categoryList: ['Bike', 'Snow', 'Camp', 'Boat', 'Golf'],
-      category: 'Bike',
+      categoryList: ['Bike', 'Winter', 'Camp', 'Water', 'Sport'],
+      category: 'Camp',
       title: '',
       price: '',
       description: '',

@@ -57,10 +57,10 @@ class FilterGear extends Component {
               source={require('../img/sports.png')}
             />
           </TouchableOpacity>
-          <TouchableOpacity style={ filterStyles.picBtn } onPress={() => this._onPressButtonGet('Snow')}>  
+          <TouchableOpacity style={ filterStyles.picBtn } onPress={() => this._onPressButtonGet('Winter')}>  
             <Image 
               style={ filterStyles.pic }
-              source={require('../img/ski-lift.png')}
+              source={require('../img/Snowflake.png')}
             />
           </TouchableOpacity>
           <TouchableOpacity style={ filterStyles.picBtn } onPress={() => this._onPressButtonGet('Camp')}>    
@@ -69,13 +69,13 @@ class FilterGear extends Component {
               source={require('../img/night-camping.png')}
             />
           </TouchableOpacity>
-          <TouchableOpacity style={ filterStyles.picBtn } onPress={() => this._onPressButtonGet('Boat')}>
+          <TouchableOpacity style={ filterStyles.picBtn } onPress={() => this._onPressButtonGet('Water')}>
             <Image 
               style={ filterStyles.pic }
               source={require('../img/boat.png')}
             />
           </TouchableOpacity>
-          <TouchableOpacity style={ filterStyles.picBtn } onPress={() => this._onPressButtonGet('Golf')}>
+          <TouchableOpacity style={ filterStyles.picBtn } onPress={() => this._onPressButtonGet('Sport')}>
             <Image 
               style={ filterStyles.pic }
               source={require('../img/golf.png')}

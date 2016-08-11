@@ -19,8 +19,8 @@ class Login extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      email: 'sorenct04@gmail.com',
-      password: 'test',
+      email: '',
+      password: '',
       verifyPwd: '',
       username: '',
       bio: '',
@@ -46,12 +46,14 @@ class Login extends Component {
         <View>
           <View style={ loginPostStyles.inputContainer }>
             <TextInput
+              autoCapitalize='none'
               placeholder='Email'
               style={ loginPostStyles.inputBar }
               onChangeText={(email) => this.setState({email})}
               value={this.state.email}
             />
             <TextInput
+            autoCapitalize='none'
               placeholder='Password'
               style={ loginPostStyles.inputBar }
               secureTextEntry={true}
@@ -72,12 +74,14 @@ class Login extends Component {
         <View>
           <View style={ loginPostStyles.inputContainer }>
             <TextInput
+            autoCapitalize='none'
               placeholder='Email'
               style={ loginPostStyles.inputBar }
               onChangeText={(email) => this.setState({email})}
               value={this.state.email}
             />
             <TextInput
+              autoCapitalize='none'
               placeholder='Password'
               style={ loginPostStyles.inputBar }
               secureTextEntry={true}
@@ -85,6 +89,7 @@ class Login extends Component {
               value={this.state.password}
             />
             <TextInput
+              autoCapitalize='none'
               placeholder="Re-Type Password"
               secureTextEntry={true}
               style={ loginPostStyles.inputBar }

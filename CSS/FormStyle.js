@@ -45,6 +45,7 @@ const formStyles = EStyleSheet.create({
     padding: 5,
   },
    inputArea: {
+    backgroundColor: 'white',
     alignSelf: 'center',
     height: 150,
     width: vw(90),

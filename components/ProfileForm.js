@@ -30,7 +30,7 @@ class ProfileForm extends Component {
 
   updateUser(){
     var self = this
-    fetch(serverUrl +'/api/v1/updateUser/' + this.state.email, {
+    fetch(serverUrl +'/api/v1/updateUser/' + this.props.email, {
       method: 'PUT',
       headers: {
         'Accept': 'application/json',
@@ -40,7 +40,6 @@ class ProfileForm extends Component {
         email : self.state.email,
         username: self.state.username,
         bio: self.state.bio,
-        picture: self.state.picture
       })
     }).then(function(response) {
       return response.json()
